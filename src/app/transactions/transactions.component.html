@@ -1,0 +1,28 @@
+
+<app-stats></app-stats>
+
+<nz-divider nzText="Recent transactions" nzOrientation="left"></nz-divider>
+<!-- component -->
+<div class="container p-2 flex mx-auto w-full items-center">
+  <ul class="flex flex-col p-4 justify-center">
+    <li
+      class="border-indigo-400 flex flex-row mb-2"
+      *ngFor="let txn of allTransactions"
+    >
+      <div
+        class="select-none cursor-pointer bg-indigo-300 rounded-md flex flex-1 items-center p-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
+      >
+        <div
+          class="flex flex-col rounded-md w-10 h-10 bg-indigo-500 justify-center items-center mr-4"
+        >
+          {{ txn.data.category }}
+        </div>
+        <div class="flex-1 pl-1 mr-16">
+          <div class="font-medium">{{ txn.data.title }}</div>
+          <div class="text-black-600 text-sm">{{ txn.data.amount }}</div>
+        </div>
+        <div class="text-black-600 text-xs">{{ txn.data.date }}</div>
+      </div>
+    </li>
+  </ul>
+</div>
