@@ -7,14 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./transactions.component.css'],
 })
 export class TransactionsComponent implements OnInit {
-  constructor(private api: AppService) {}
+  constructor(private app: AppService) {}
   loading = true;
+
   allTransactions: any[] = [];
   ngOnInit() {
-    this.api.getTransactions().subscribe((data) => {
+    this.app.getTransactions().subscribe((data) => {
       if (data) {
         this.loading = false;
-        console.log(data);
         this.allTransactions = data as any;
       }
     });
