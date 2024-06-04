@@ -1,26 +1,10 @@
-
-<div class="fixed left-0 z-50 w-full p-1">
-  <nz-page-header [nzGhost]="false">
-    <nz-page-header-title>Money wise</nz-page-header-title>
-    <nz-page-header-extra>
-      <nz-space>
-        <button *nzSpaceItem nz-button (click)="logout()">
-          Logout<span nz-icon nzType="poweroff" nzTheme="outline"></span>
-        </button>
-      </nz-space>
-    </nz-page-header-extra>
-  </nz-page-header>
-</div>
-
-
-
-<div class="fixed bottom-0 left-0 z-50 w-full p-1">
+<div class="fixed bottom-0 left-0 w-full p-1">
   <div class="h-full max-w-lg mx-auto font-medium">
     <nz-tabset [nzTabPosition]="'bottom'">
       <nz-tab [nzTitle]="home">
         <ng-template #home>
           <span nz-icon nzType="home" nzTheme="outline"></span>
-          <span >Home</span>
+          <span>Home</span>
         </ng-template>
         <div class="flex p-2 items-center dark:bg-gray-800 w-full">
           <div class="relative cursor-pointer dark:text-white">
@@ -35,7 +19,7 @@
                 <h3
                   class="my-2 ml-3 text-lg font-bold text-gray-800 dark:text-white"
                 >
-                  Hello, {{ user }}
+                  Hello, {{ username$ | async }}
                 </h3>
               </div>
             </div>
@@ -46,17 +30,16 @@
       <nz-tab [nzTitle]="txn">
         <ng-template #txn>
           <span nz-icon nzType="container" nzTheme="outline"></span>
-          <span >Transactions</span>
+          <span>Transactions</span>
         </ng-template>
         <app-transactions></app-transactions>
       </nz-tab>
       <nz-tab [nzTitle]="user">
         <ng-template #user>
           <span nz-icon nzType="user" nzTheme="outline"></span>
-          <span >Users</span>
+          <span>Users</span>
         </ng-template>
       </nz-tab>
     </nz-tabset>
   </div>
 </div>
-

@@ -1,2 +1,17 @@
-<app-login *ngIf="!isLoggedin"></app-login>
-<router-outlet></router-outlet>
+<div class="fixed w-full shadow-lg" *ngIf="isLoggedin$ | async">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Money wise</nz-page-header-title>
+    <nz-page-header-extra>
+      <nz-space>
+        <button *nzSpaceItem nz-button (click)="logout()">
+          <span nz-icon nzType="poweroff" nzTheme="outline"></span>
+        </button>
+      </nz-space>
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+
+<!-- main app container -->
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

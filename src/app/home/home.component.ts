@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component } from '@angular/core';
 
@@ -8,11 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  constructor(private app: AppService, private router: Router) {}
-  user = this.app.user;
-
-  logout() {
-    localStorage.clear();
-    this.router.navigate(['login']);
+  username$: any;
+  constructor(private app: AppService) {
+    this.username$ = this.app.userName;
   }
 }
