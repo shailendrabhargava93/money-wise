@@ -27,6 +27,10 @@ export class AppService {
     return this.http.get(this.BASE_URL + 'getall');
   }
 
+  createTransaction(data: any) {
+    return this.http.post(this.BASE_URL + 'create', data);
+  }
+
   get isLoggedIn$(): Observable<boolean> {
     return this.currentUser.pipe(
       map((user) => user != null && user.name != null && user.email != null)

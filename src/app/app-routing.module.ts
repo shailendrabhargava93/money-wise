@@ -1,3 +1,5 @@
+import { MoreComponent } from './more/more.component';
+import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
@@ -12,6 +14,16 @@ const routes: Routes = [
   {
     path: 'transactions',
     component: TransactionsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'add',
+    component: AddTransactionComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'more',
+    component: MoreComponent,
     canActivate: [authGuard],
   },
 ];

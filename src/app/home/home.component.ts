@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component } from '@angular/core';
 
@@ -8,7 +9,11 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   username$: any;
-  constructor(private app: AppService) {
+  constructor(private app: AppService, private router: Router) {
     this.username$ = this.app.userName;
+  }
+
+  onadd() {
+    this.router.navigate(['add']);
   }
 }

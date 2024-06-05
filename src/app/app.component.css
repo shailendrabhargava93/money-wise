@@ -1,0 +1,32 @@
+.layout {
+  min-height: 100vh;
+}
+
+.logo {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nz-header {
+  background: #fff;
+  padding: 0;
+}
+
+nz-content {
+  margin: 10px 2px 0;
+}
+
+.inner-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 360px;
+}
+
+nz-footer {
+  text-align: center;
+  background: #fff;
+}

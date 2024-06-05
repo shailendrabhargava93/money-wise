@@ -1,0 +1,63 @@
+<form
+  nz-form
+  [nzLayout]="'vertical'"
+  [formGroup]="form"
+  (ngSubmit)="submitForm()"
+>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
+      >Title</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <input nz-input formControlName="title" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
+      >Amount</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <input nz-input type="number" formControlName="amount" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category" nzRequired
+      >Category</nz-form-label
+    >
+
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select category"
+        formControlName="category"
+      >
+        <nz-option
+          *ngFor="let opt of options"
+          nzLabel="{{ opt }}"
+          nzValue="{{ opt }}"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Date</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-date-picker formControlName="date"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">Created By</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-tag [nzColor]="'#108ee9'">{{ userEmail$ | async }}</nz-tag>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-row class="register-area ml-4 flex justify-center">
+    <nz-form-control [nzSpan]="14" [nzOffset]="6">
+      <button nz-button nzType="primary" (click)="submitForm()">Submit</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>
