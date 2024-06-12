@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-more',
   templateUrl: './more.component.html',
-  styleUrls: ['./more.component.css']
+  styleUrls: ['./more.component.css'],
 })
-export class MoreComponent {
+export class MoreComponent implements OnInit {
+  constructor() {}
 
+  panels = [
+    {
+      name: 'Currency',
+    },
+    {
+      name: 'Categories',
+    },
+    {
+      name: 'Accounts',
+    },
+  ];
+
+  ngOnInit(): void {}
 }

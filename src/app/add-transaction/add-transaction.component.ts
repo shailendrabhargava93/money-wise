@@ -1,5 +1,7 @@
+import { CAT_ICON } from './../category-icons';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,11 +9,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './add-transaction.component.html',
   styleUrls: ['./add-transaction.component.css'],
 })
-export class AddTransactionComponent {
+export class AddTransactionComponent implements OnInit {
   form: FormGroup;
-  options = ['Bills', 'Shopping', 'Entertainment', 'Misc'];
+  categories: any[] = [];
   userEmail$ = this.app.userEmail;
-  constructor(private fb: FormBuilder, private app: AppService) {
+  constructor(
+    private fb: FormBuilder,
+    private app: AppService,
+    private message: NzMessageService
+  ) {
     this.form = this.fb.group({
       title: [null, [Validators.required]],
       amount: [null, [Validators.required]],
@@ -21,15 +27,30 @@ export class AddTransactionComponent {
     });
   }
 
+  ngOnInit() {
+    this.userEmail$.subscribe((user) =>
+      this.form.controls['user'].setValue(user)
+    );
+
+    for (var n in CAT_ICON) {
+      const icon = CAT_ICON[n as keyof typeof CAT_ICON];
+      this.categories.push({ name: n, icon: `/assets/icons/${icon}.png` });
+    }
+    this.categories.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
+    const date = new Date();
+    this.form.controls['date'].setValue(date);
+  }
+
   submitForm(): void {
     if (this.form.valid) {
       this.userEmail$.subscribe((user) =>
         this.form.controls['user'].setValue(user)
       );
-      console.log('data', this.form.value);
       this.app.createTransaction(this.form.value).subscribe((res) => {
         if (res) {
-          alert('success!');
+          this.message.success(`successfully added !`);
         }
       });
     }

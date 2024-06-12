@@ -1,1 +1,31 @@
-<p>more works!</p>
+<div class="">
+  <div nz-col>
+    <nz-card>
+      <nz-card-meta [nzAvatar]="template1" nzTitle="Account"></nz-card-meta>
+      Cash
+    </nz-card>
+    <ng-template #template1>
+      <span nz-icon nzType="account-book" nzTheme="outline"></span>
+    </ng-template>
+  </div>
+  <br />
+  <div nz-col>
+    <nz-card>
+      <nz-card-meta [nzAvatar]="template2" nzTitle="Currency"></nz-card-meta>
+      ₹ Indian Rupee
+    </nz-card>
+    <ng-template #template2>
+      <span nz-icon nzType="dollar" nzTheme="outline"></span>
+    </ng-template>
+  </div>
+  <br />
+  <div nz-col>
+    <nz-card>
+      <nz-card-meta [nzAvatar]="template3" nzTitle="Categories"></nz-card-meta>
+      All Categories
+    </nz-card>
+    <ng-template #template3>
+      <span nz-icon nzType="appstore" nzTheme="outline"></span>
+    </ng-template>
+  </div>
+</div>

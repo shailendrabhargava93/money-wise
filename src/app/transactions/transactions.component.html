@@ -1,5 +1,3 @@
-
-
 <nz-divider nzText="Recent transactions" nzOrientation="left"></nz-divider>
 <!-- component -->
 <div class="container p-2 flex mx-auto w-full items-center">
@@ -14,13 +12,13 @@
         <div
           class="flex flex-col rounded-md w-10 h-10 bg-indigo-500 justify-center items-center mr-4"
         >
-          {{ txn.data.category }}
+          <img [src]="getIcon(txn.data.category)" width="25px" height="25px" />
         </div>
         <div class="flex-1 pl-1 mr-16">
           <div class="font-medium">{{ txn.data.title }}</div>
           <div class="text-black-600 text-sm">{{ txn.data.amount }}</div>
         </div>
-        <div class="text-black-600 text-xs">{{ txn.data.date }}</div>
+        <div class="text-black-600 text-xs">{{ txn.data.date | date }}</div>
       </div>
     </li>
   </ul>

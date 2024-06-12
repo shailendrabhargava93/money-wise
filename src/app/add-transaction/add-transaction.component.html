@@ -5,22 +5,6 @@
   (ngSubmit)="submitForm()"
 >
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
-      >Title</nz-form-label
-    >
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <input nz-input formControlName="title" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
-      >Amount</nz-form-label
-    >
-    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <input nz-input type="number" formControlName="amount" />
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category" nzRequired
       >Category</nz-form-label
     >
@@ -33,11 +17,41 @@
         formControlName="category"
       >
         <nz-option
-          *ngFor="let opt of options"
-          nzLabel="{{ opt }}"
-          nzValue="{{ opt }}"
-        ></nz-option>
+          nzCustomContent
+          *ngFor="let opt of categories"
+          nzLabel="{{ opt.name }}"
+          nzValue="{{ opt.name }}"
+        >
+          <span class="flex flex-row">
+            <img
+              src="{{opt.icon}}"
+              width="25px"
+              height="25px"
+            />
+            &nbsp;&nbsp;{{ opt.name }}
+          </span>
+        </nz-option>
       </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
+      >Amount</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-input-group nzAddOnBefore="₹">
+        <input nz-input type="number" formControlName="amount" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
+      >Title</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <input nz-input formControlName="title" />
     </nz-form-control>
   </nz-form-item>
 

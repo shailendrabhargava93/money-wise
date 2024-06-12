@@ -1,3 +1,4 @@
+import { CAT_ICON } from './../category-icons';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -18,5 +19,13 @@ export class TransactionsComponent implements OnInit {
         this.allTransactions = data as any;
       }
     });
+  }
+
+  getIcon(category: string): string {
+    if (category in CAT_ICON) {
+      const icon = CAT_ICON[category as keyof typeof CAT_ICON];
+      return `/assets/icons/${icon}.png`;
+    }
+    return 'NA';
   }
 }

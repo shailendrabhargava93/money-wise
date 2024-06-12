@@ -1,0 +1,15 @@
+export enum CAT_ICON {
+  'Shopping' = 'shopping',
+  'Bills' = 'bills',
+  'Housing' = 'house',
+  'Dining Out' = 'eating',
+  'Fuel' = 'gas',
+  'Groceries' = 'groceries',
+  'Healthcare' = 'health',
+  'Internet' = 'internet',
+  'Entertainment' = 'movies',
+  'Vacation' = 'plane',
+  'Subscriptions' = 'stream',
+  'Transportation' = 'taxi',
+  'Fitness' = 'gym',
+}
