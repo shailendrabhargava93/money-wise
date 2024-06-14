@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+
   constructor(
     private app: AppService,
     private router: Router,
@@ -23,12 +24,22 @@ export class AppComponent {
     },
     {
       name: 'Transactions',
-      icon: 'container',
+      icon: 'bars',
       link: 'transactions',
     },
     {
+      icon: 'plus-circle',
+      link: 'add',
+    },
+    {
+      name: 'Budgets',
+      icon: 'pie-chart',
+      link: 'budgets',
+    },
+    {
+
       name: 'More',
-      icon: 'small-dash',
+      icon: 'ellipsis',
       link: 'more',
     },
   ];

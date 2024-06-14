@@ -41,6 +41,8 @@
           nz-icon
           nzType="poweroff"
           nz-button
+          nz-tooltip
+          nzTooltipTitle="Logout"
           (click)="logout()"
         ></span>
       </div>
@@ -51,20 +53,30 @@
       </div>
     </nz-content>
     <nz-footer>
-      <div class="fixed bottom-0 left-0 w-full p-1">
-        <div class="h-full max-w-lg mx-auto font-medium">
-          <nz-tabset [nzTabPosition]="'bottom'" nzCentered nzLinkRouter>
-            <nz-tab *ngFor="let tab of tabs">
-              <a
-                *nzTabLink
-                nz-tab-link
-                [routerLink]="[tab.link]"
-              >
-                <span nz-icon [nzType]="tab.icon"></span>
-                {{ tab.name }}
-              </a>
-            </nz-tab>
-          </nz-tabset>
+      <div
+        class="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+      >
+        <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
+          <button
+            *ngFor="let tab of tabs"
+            [routerLink]="[tab.link]"
+            [routerLinkActive]="['active']"
+            type="button"
+            nz-tooltip
+            [nzTooltipTitle]="tab.link !== 'add' ? tab.name : 'create new item'"
+            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <span
+              class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
+              nz-icon
+              [nzType]="tab.icon"
+            ></span>
+            <!-- <span
+              class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
+            >
+              {{ tab.name }}</span
+            > -->
+          </button>
         </div>
       </div>
     </nz-footer>
