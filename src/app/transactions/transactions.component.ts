@@ -9,14 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionsComponent implements OnInit {
   constructor(private app: AppService) {}
-  loading = true;
 
   allTransactions: any[] = [];
   ngOnInit() {
     this.app.getTransactions().subscribe((data) => {
       if (data) {
-        this.loading = false;
         this.allTransactions = data as any;
+        if (this.allTransactions) {
+          this.allTransactions.sort((a: any, b: any) => {
+            //asc sorting
+            return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
+          });
+        }
       }
     });
   }

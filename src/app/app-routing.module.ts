@@ -1,3 +1,4 @@
+import { BudgetsComponent } from './budgets/budgets.component';
 import { MoreComponent } from './more/more.component';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { HomeComponent } from './home/home.component';
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddTransactionComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'budgets',
+    component: BudgetsComponent,
     canActivate: [authGuard],
   },
   {

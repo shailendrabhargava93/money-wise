@@ -25,19 +25,19 @@ export class AppService {
   }
 
   getTransactions() {
-    return this.http.get(this.BASE_URL + 'getall');
+    return this.http.get(this.BASE_URL + 'txn/all');
   }
 
   createTransaction(data: any) {
-    return this.http.post(this.BASE_URL + 'create', data);
+    return this.http.post(this.BASE_URL + 'txn/create', data);
   }
 
-  // getCategories() {
-  //   return this.http.get(this.BASE_URL + 'getcategories');
-  // }
+  getBudgets() {
+    return this.http.get(this.BASE_URL + 'budget/all');
+  }
 
   createBudget(data: any) {
-    return this.http.post(this.BASE_URL + 'create-budget', data);
+    return this.http.post(this.BASE_URL + 'budget/created', data);
   }
 
   share(data: any) {

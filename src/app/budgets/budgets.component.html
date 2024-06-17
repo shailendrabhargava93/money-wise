@@ -1,0 +1,22 @@
+<div class="">
+  <div *ngFor="let budget of budgets"
+    class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden hover:shadow-2xl transition duration-500 transform hover:scale-105 cursor-pointer"
+  >
+    <div class="flex flex-col justify-start bg-indigo-500 h-20 p-4">
+      <!-- <h1 class="text-white ml-4 border-2 py-2 px-4 rounded-full">1</h1> -->
+      <p class="ml-4 text-white text-lg text-bold">{{budget.data.name}}</p>
+      <p class="ml-4 text-white text-sm">₹ 0 left of ₹ {{budget.data.totalBudget}}</p>
+    </div>
+    <p class="py-6 px-6 text-lg tracking-wide text-center">
+      {{budget.data.startDate | date: "dd.MM.yyyy"}} {{budget.data.endDate | date: "dd.MM.yyyy"}}
+    </p>
+    <div class="flex justify-center px-5 mb-2 text-sm">
+      <button
+        type="button"
+        class="border border-indigo-500 text-indigo-500 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:text-white hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
+      >
+        Details
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-<nz-layout class="layout" *ngIf="isLoggedin$ | async">
+<nz-layout class="flex flex-col h-screen layout" *ngIf="isLoggedin$ | async">
   <nz-layout>
     <nz-header>
       <div class="logo shadow-md">
@@ -48,7 +48,7 @@
       </div>
     </nz-header>
     <nz-content>
-      <div class="container inner-content">
+      <div class="overflow-y-auto inner-content">
         <router-outlet></router-outlet>
       </div>
     </nz-content>

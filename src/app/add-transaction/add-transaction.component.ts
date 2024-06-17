@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { CAT_ICON } from './../category-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
@@ -16,7 +17,8 @@ export class AddTransactionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private app: AppService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {
     this.form = this.fb.group({
       title: [null, [Validators.required]],
@@ -45,12 +47,10 @@ export class AddTransactionComponent implements OnInit {
 
   submitForm(): void {
     if (this.form.valid) {
-      this.userEmail$.subscribe((user) =>
-        this.form.controls['user'].setValue(user)
-      );
       this.app.createTransaction(this.form.value).subscribe((res) => {
         if (res) {
           this.message.success(`successfully added !`);
+          this.router.navigate(['transactions']);
         }
       });
     }
