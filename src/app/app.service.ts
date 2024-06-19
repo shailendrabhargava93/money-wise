@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 
 export interface User {
   name: string;
   email: string;
+  photo: string;
 }
 
 @Injectable({
@@ -13,15 +14,22 @@ export interface User {
 export class AppService {
   private BASE_URL = 'https://budget-app-backend-ten.vercel.app/';
   //private BASE_URL = 'http://localhost:8000/';
+
   public currentUserSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
   public currentUser: Observable<User | null>;
+
+  public isSpinningSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  public isSpinning$: Observable<boolean>;
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
     const user = JSON.parse(token as string);
     this.currentUserSubject.next(user);
     this.currentUser = this.currentUserSubject.asObservable();
+    this.isSpinning$ = this.isSpinningSub.asObservable();
   }
 
   getTransactions() {
@@ -56,5 +64,17 @@ export class AppService {
 
   get userEmail(): Observable<string | undefined> {
     return this.currentUser.pipe(map((user) => user?.email));
+  }
+
+  get userPhoto(): Observable<string | undefined> {
+    return this.currentUser.pipe(map((user) => user?.photo));
+  }
+
+  showSpinner() {
+    this.isSpinningSub.next(true);
+  }
+
+  hideSpinner() {
+    this.isSpinningSub.next(false);
   }
 }

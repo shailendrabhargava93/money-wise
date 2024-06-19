@@ -7,12 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./budgets.component.css'],
 })
 export class BudgetsComponent implements OnInit {
-  budgets: any[] = [];
+  budgets!: any[];
   constructor(private app: AppService) {}
 
   ngOnInit() {
+    this.app.showSpinner();
     this.app.getBudgets().subscribe((data) => {
       if (data) {
+        this.app.hideSpinner();
         this.budgets = data as any;
       }
     });

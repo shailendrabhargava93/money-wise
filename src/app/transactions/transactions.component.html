@@ -2,7 +2,7 @@
 
 <!-- component -->
 <div
-  class="mx-auto flex flex-col justify-center items-center p-2 mx-auto w-full"
+  class="mx-auto flex flex-col justify-center items-center p-2 mx-auto w-full "
 >
   <ul class="flex flex-col p-4">
     <li class="flex flex-row mb-2" *ngFor="let txn of allTransactions">
@@ -24,14 +24,9 @@
       </div>
     </li>
   </ul>
-  <div
-    class="mx-auto flex flex-col justify-center items-center"
-    *ngIf="allTransactions.length === 0"
-  >
-    <img
-      class="h-16 w-16 rounded-md sm:mx-0 sm:shrink-0"
-      src="assets/empty-box.png"
-    />
-    No Transactions
-  </div>
 </div>
+
+<nz-empty *ngIf="allTransactions && allTransactions.length === 0"
+  [nzNotFoundContent]="'No Transactions Found'"
+></nz-empty>
+

@@ -2,6 +2,7 @@
   nz-form
   [nzLayout]="'vertical'"
   [formGroup]="form"
+  class="p-1"
 >
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category" nzRequired
@@ -68,9 +69,9 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item nz-row class="register-area ml-4 flex justify-center">
-    <nz-form-control [nzSpan]="14" [nzOffset]="6">
-      <button nz-button nzType="primary" (click)="submitForm()">Submit</button>
+  <nz-form-item nz-row class="register-area flex content-center">
+    <nz-form-control [nzSpan]="14">
+      <button nz-button class="bg-indigo-500" nzType="primary" (click)="submitForm()">Submit</button>
     </nz-form-control>
   </nz-form-item>
 </form>

@@ -23,10 +23,9 @@ export class LoginComponent {
       .signInWithPopup(new GoogleAuthProvider())
       .then((data) => {
         this.message.success(`Loggedin successfully !`);
-        const user = { name: data.user?.displayName, email: data.user?.email };
+        const user = { name: data.user?.displayName, email: data.user?.email, photo: data.user?.photoURL };
         localStorage.setItem('user', JSON.stringify(user));
         this.app.currentUserSubject.next(user as User);
-
         this.router.navigate(['home']);
       })
       .catch((error) => {

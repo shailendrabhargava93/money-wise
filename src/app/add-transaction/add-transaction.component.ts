@@ -47,9 +47,11 @@ export class AddTransactionComponent implements OnInit {
 
   submitForm(): void {
     if (this.form.valid) {
+      this.app.showSpinner();
       this.app.createTransaction(this.form.value).subscribe((res) => {
         if (res) {
-          this.message.success(`successfully added !`);
+          this.app.hideSpinner();
+          this.message.success(`Transaction added !`);
           this.router.navigate(['transactions']);
         }
       });

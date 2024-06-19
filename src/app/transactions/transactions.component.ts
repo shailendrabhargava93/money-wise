@@ -10,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
 export class TransactionsComponent implements OnInit {
   constructor(private app: AppService) {}
 
-  allTransactions: any[] = [];
+  allTransactions!: any[];
   ngOnInit() {
+    this.app.showSpinner();
     this.app.getTransactions().subscribe((data) => {
       if (data) {
+        this.app.hideSpinner();
         this.allTransactions = data as any;
         if (this.allTransactions) {
           this.allTransactions.sort((a: any, b: any) => {

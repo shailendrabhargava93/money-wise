@@ -1,14 +1,28 @@
-<div class="">
-  <div *ngFor="let budget of budgets"
+<div class="p-1">
+  <div
+    *ngFor="let budget of budgets"
     class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden hover:shadow-2xl transition duration-500 transform hover:scale-105 cursor-pointer"
   >
     <div class="flex flex-col justify-start bg-indigo-500 h-20 p-4">
       <!-- <h1 class="text-white ml-4 border-2 py-2 px-4 rounded-full">1</h1> -->
-      <p class="ml-4 text-white text-lg text-bold">{{budget.data.name}}</p>
-      <p class="ml-4 text-white text-sm">₹ 0 left of ₹ {{budget.data.totalBudget}}</p>
+      <p class="ml-4 text-white text-lg text-bold">{{ budget.data.name }}</p>
+      <p class="ml-4 text-white text-sm">
+        ₹ 0 left of ₹ {{ budget.data.totalBudget }}
+      </p>
     </div>
-    <p class="py-6 px-6 text-lg tracking-wide text-center">
-      {{budget.data.startDate | date: "dd.MM.yyyy"}} {{budget.data.endDate | date: "dd.MM.yyyy"}}
+    <p class="py-6 px-6 text-md tracking-wide flow-root">
+      <span class="float-left">{{
+        budget.data.startDate | date : "dd MMM"
+      }}</span>
+      <span class="float-right">{{
+        budget.data.endDate | date : "dd MMM"
+      }}</span>
+      <nz-progress
+        [nzPercent]="55"
+        [nzShowInfo]="false"
+        [nzStrokeColor]="{ '0%': '#68b1d0', '100%': '#108ee9' }"
+        nzStatus="active"
+      ></nz-progress>
     </p>
     <div class="flex justify-center px-5 mb-2 text-sm">
       <button
@@ -20,3 +34,8 @@
     </div>
   </div>
 </div>
+
+<nz-empty
+  *ngIf="budgets && budgets.length === 0"
+  [nzNotFoundContent]="'No Budgets Found'"
+></nz-empty>

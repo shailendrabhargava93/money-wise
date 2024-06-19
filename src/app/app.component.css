@@ -4,8 +4,6 @@
 }
 
 .logo {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 1.5rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -17,15 +15,10 @@ nz-header {
   padding: 0;
 }
 
-nz-content {
-  margin: 10px 0px 0;
-}
-
 .inner-content {
-  padding-top: 20px;
-  padding-left: 20px;
+  padding: 10px;
   background: #fff;
-  height: 90vh;
+  height: 88vh;
   width: 100%;
 }
 
