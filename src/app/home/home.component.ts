@@ -10,5 +10,12 @@ export class HomeComponent {
   username$: any;
   constructor(private app: AppService) {
     this.username$ = this.app.userName;
+    this.app.userEmail.subscribe((user) => {
+      if (user) {
+        this.app.findBudgetForUser(user).subscribe((data) => {
+          this.app.isBudgetAvailableSub.next(true);
+        });
+      }
+    });
   }
 }

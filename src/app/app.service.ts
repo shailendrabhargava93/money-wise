@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
@@ -24,12 +24,17 @@ export class AppService {
   );
   public isSpinning$: Observable<boolean>;
 
+  public isBudgetAvailableSub: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  public isBudgetAvailable$: Observable<boolean>;
+
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
     const user = JSON.parse(token as string);
     this.currentUserSubject.next(user);
     this.currentUser = this.currentUserSubject.asObservable();
     this.isSpinning$ = this.isSpinningSub.asObservable();
+    this.isBudgetAvailable$ = this.isBudgetAvailableSub.asObservable();
   }
 
   getTransactions() {
@@ -48,8 +53,12 @@ export class AppService {
     return this.http.post(this.BASE_URL + 'budget/created', data);
   }
 
-  share(data: any) {
-    return this.http.post(this.BASE_URL + 'share', data);
+  share(id: string, userEmail: string) {
+    return this.http.put(this.BASE_URL + `budget/find/${id}/${userEmail}`, {});
+  }
+
+  findBudgetForUser(userEmail: string) {
+    return this.http.get(this.BASE_URL + `budget/find/${userEmail}`);
   }
 
   get isLoggedIn$(): Observable<boolean> {
