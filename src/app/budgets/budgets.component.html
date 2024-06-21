@@ -5,10 +5,14 @@
   >
     <div class="flex flex-col justify-start bg-indigo-500 h-20 p-4">
       <!-- <h1 class="text-white ml-4 border-2 py-2 px-4 rounded-full">1</h1> -->
-      <p class="ml-4 text-white text-lg text-bold">{{ budget.data.name }}</p>
-      <p class="ml-4 text-white text-sm">
-        ₹ 0 left of ₹ {{ budget.data.totalBudget }}
+      <p class="ml-4 text-white text-lg font-semibold">
+        {{ budget.data.name }}
       </p>
+      <p class="ml-4 text-white text-sm">
+        <span class="font-semibold">₹ 1500</span> left of
+        {{ budget.data.totalBudget }}
+      </p>
+      <span></span>
     </div>
     <p class="py-6 px-6 text-md tracking-wide flow-root">
       <span class="float-left">{{
@@ -25,12 +29,12 @@
       ></nz-progress>
     </p>
     <div class="flex justify-center px-5 mb-2 text-sm">
-      <button
+      <!-- <button
         type="button"
         class="border border-indigo-500 text-indigo-500 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:text-white hover:bg-indigo-600 focus:outline-none focus:shadow-outline"
       >
         Details
-      </button>
+      </button> -->
     </div>
   </div>
 </div>

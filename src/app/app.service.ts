@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 
@@ -54,7 +54,7 @@ export class AppService {
   }
 
   share(id: string, userEmail: string) {
-    return this.http.put(this.BASE_URL + `budget/find/${id}/${userEmail}`, {});
+    return this.http.put(this.BASE_URL + `budget/share/${id}/${userEmail}`, {});
   }
 
   findBudgetForUser(userEmail: string) {

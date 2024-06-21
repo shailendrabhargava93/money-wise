@@ -37,11 +37,12 @@ button.active{
 }
 
 
-button.active > [nz-icon]{
+button.active > svg{
   color: #4f46e5;
 }
 
 
-button.active > span.tabname{
+button.active > span{
   color: #4f46e5;
+  font-weight: 500;
 }

@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = () => {
   return true;
 };
 
-export const isBudgetCreated: CanActivateFn = () => {
+export const isBudgetAvailable: CanActivateFn = () => {
   const appService = inject(AppService);
   const notification = inject(NzNotificationService);
   let isThere;

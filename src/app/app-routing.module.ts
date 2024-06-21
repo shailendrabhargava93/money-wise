@@ -2,7 +2,7 @@ import { BudgetsComponent } from './budgets/budgets.component';
 import { MoreComponent } from './more/more.component';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { HomeComponent } from './home/home.component';
-import { authGuard, isBudgetCreated } from './auth.guard';
+import { authGuard, isBudgetAvailable } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { NgModule } from '@angular/core';
@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddTransactionComponent,
-    canActivate: [authGuard, isBudgetCreated],
+    canActivate: [authGuard, isBudgetAvailable],
   },
   {
     path: 'budgets',

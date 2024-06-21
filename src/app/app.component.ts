@@ -19,33 +19,6 @@ export class AppComponent {
     this.userPhoto$ = this.app.userPhoto;
   }
 
-  tabs = [
-    {
-      name: 'Home',
-      icon: 'home',
-      link: 'home',
-    },
-    {
-      name: 'Transactions',
-      icon: 'bars',
-      link: 'transactions',
-    },
-    {
-      icon: 'plus-circle',
-      link: 'add',
-    },
-    {
-      name: 'Budgets',
-      icon: 'pie-chart',
-      link: 'budgets',
-    },
-    {
-      name: 'More',
-      icon: 'ellipsis',
-      link: 'more',
-    },
-  ];
-
   logout() {
     localStorage.clear();
     this.app.currentUserSubject.next(null);

@@ -60,25 +60,138 @@
     </nz-content>
     <nz-footer>
       <div
-        class="fixed bottom-0 left-0 z-50 w-full h-14 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600"
+        class="fixed z-50 w-full h-16 -translate-x-1/2 bg-white border border-gray-200 bottom-0 left-1/2 dark:bg-gray-700 dark:border-gray-600"
       >
         <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
           <button
-            *ngFor="let tab of tabs"
-            [routerLink]="[tab.link]"
+            [routerLink]="['home']"
             [routerLinkActive]="['active']"
             type="button"
             class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
           >
-            <span
-              class="w-6 h-6 text-gray-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
-              nz-icon
-              [nzType]="tab.icon"
-            ></span>
-            <span
-              class="tabname text-xs text-gray-500 group-hover:text-indigo-600 "
+            <svg
+              class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
             >
-              {{ tab.name }}</span
+              <path
+                fill-rule="evenodd"
+                d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            <span class="text-xs text-gray-500 group-hover:text-indigo-600"
+              >Home</span
+            >
+          </button>
+
+          <button
+            [routerLink]="['transactions']"
+            [routerLinkActive]="['active']"
+            type="button"
+            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <svg
+              class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.2"
+                d="m16 10 3-3m0 0-3-3m3 3H5v3m3 4-3 3m0 0 3 3m-3-3h14v-3"
+              />
+            </svg>
+
+            <span class="text-xs text-gray-500 group-hover:text-indigo-600"
+              >Transactions</span
+            >
+          </button>
+
+          <div class="flex items-center justify-center">
+            <button
+              [routerLink]="['add']"
+              type="button"
+              class="inline-flex items-center justify-center w-10 h-10 font-medium bg-indigo-600 rounded-full hover:bg-indigo-700 group focus:ring-4 focus:ring-indigo-300 focus:outline-none dark:focus:ring-indigo-800"
+            >
+              <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 18 18"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 1v16M1 9h16"
+                />
+              </svg>
+              <span class="sr-only">New item</span>
+            </button>
+          </div>
+
+          <button
+            [routerLink]="['budgets']"
+            [routerLinkActive]="['active']"
+            type="button"
+            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <svg
+              class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M13.5 2c-.178 0-.356.013-.492.022l-.074.005a1 1 0 0 0-.934.998V11a1 1 0 0 0 1 1h7.975a1 1 0 0 0 .998-.934l.005-.074A7.04 7.04 0 0 0 22 10.5 8.5 8.5 0 0 0 13.5 2Z"
+              />
+              <path
+                d="M11 6.025a1 1 0 0 0-1.065-.998 8.5 8.5 0 1 0 9.038 9.039A1 1 0 0 0 17.975 13H11V6.025Z"
+              />
+            </svg>
+
+            <span class="text-xs text-gray-500 group-hover:text-indigo-600"
+              >Budgets</span
+            >
+          </button>
+
+          <button
+            [routerLink]="['more']"
+            [routerLinkActive]="['active']"
+            type="button"
+            class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group"
+          >
+            <svg
+              class="w-6 h-6 mb-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-500"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-width="2.2"
+                d="M6 12h.01m6 0h.01m5.99 0h.01"
+              />
+            </svg>
+
+            <span class="text-xs text-gray-500 group-hover:text-indigo-600"
+              >More</span
             >
           </button>
         </div>
