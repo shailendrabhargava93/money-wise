@@ -2,7 +2,7 @@
   nz-form
   [nzLayout]="'vertical'"
   [formGroup]="form"
-  class="p-1"
+  class="p-1 h-full justify-center"
 >
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category" nzRequired
@@ -23,11 +23,7 @@
           nzValue="{{ opt.name }}"
         >
           <span class="flex flex-row">
-            <img
-              src="{{opt.icon}}"
-              width="25px"
-              height="25px"
-            />
+            <img src="{{ opt.icon }}" width="25px" height="25px" />
             &nbsp;&nbsp;{{ opt.name }}
           </span>
         </nz-option>
@@ -41,7 +37,12 @@
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group nzAddOnBefore="₹">
-        <input nz-input type="number" formControlName="amount" />
+        <input
+          nz-input
+          type="number"
+          placeholder="Enter amount"
+          formControlName="amount"
+        />
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
@@ -51,7 +52,11 @@
       >Title</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <input nz-input formControlName="title" />
+      <input
+        placeholder="Enter expense title"
+        nz-input
+        formControlName="title"
+      />
     </nz-form-control>
   </nz-form-item>
 
@@ -63,15 +68,38 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24">Created By</nz-form-label>
-    <nz-form-control [nzSm]="14" [nzXs]="24">
-      <nz-tag [nzColor]="'#4f46e5'">{{ userEmail$ | async }}</nz-tag>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
+      >Include in Budget</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select Budget"
+        formControlName="budgetId"
+      >
+        <nz-option
+          nzCustomContent
+          *ngFor="let opt of budgets"
+          nzLabel="{{ opt.name }}"
+          nzValue="{{ opt.id }}"
+        >
+        {{ opt.name }}
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item nz-row class="register-area flex content-center">
-    <nz-form-control [nzSpan]="14">
-      <button nz-button class="bg-indigo-500" nzType="primary" (click)="submitForm()">Submit</button>
+    <nz-form-control>
+      <button
+        nz-button
+        class="bg-indigo-500 rounded-full w-full"
+        nzType="primary"
+        (click)="submitForm()"
+      >
+        Add Transaction
+      </button>
     </nz-form-control>
   </nz-form-item>
 </form>

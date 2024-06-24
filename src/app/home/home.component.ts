@@ -1,7 +1,6 @@
 import { AppService } from './../app.service';
 import { Component } from '@angular/core';
-import { take, catchError, switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -13,28 +12,25 @@ export class HomeComponent {
   constructor(private app: AppService) {
     this.username$ = this.app.userName;
 
-    this.app.userEmail
+    this.app.isBudgetAvailableObs$
       .pipe(
-        take(1),
-        switchMap((user) => {
-          if (user) {
-            return this.app.findBudgetForUser(user).pipe(
-              catchError((error) => {
-                console.error('Error finding budget for user:', error);
-                return of(null);
-              })
-            );
-          } else {
-            return of(null);
-          }
-        }),
-        catchError((error) => {
-          console.error('Error subscribing to user email:', error);
-          return of(null);
+        filter((isBudgetAvailable) => {
+          console.log("isBudgetAvailable : "+isBudgetAvailable)
+          return !isBudgetAvailable;
+        }) ,
+        switchMap(() => this.app.userEmail),
+        switchMap((user) => this.app.getBudgets(user as string)),
+        tap((budgets: any) => {
+          const isAvailable = budgets && budgets.length > 0;
+          localStorage.setItem('isBudgetAvailable', isAvailable);
+          const budgetsArray = budgets.map((el: any) => ({
+            id: el.id,
+            name: el.data.name,
+          }));
+          localStorage.setItem('budgets', JSON.stringify(budgetsArray));
+          this.app.isBudgetAvailableSub.next(isAvailable);
         })
       )
-      .subscribe((data) => {
-        this.app.isBudgetAvailableSub.next(data as boolean);
-      });
+      .subscribe();
   }
 }

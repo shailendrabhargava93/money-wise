@@ -26,39 +26,44 @@ export class AppService {
 
   public isBudgetAvailableSub: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(false);
-  public isBudgetAvailable$: Observable<boolean>;
+  public isBudgetAvailableObs$: Observable<boolean>;
+
+  public budgetValuesSub: BehaviorSubject<[]> = new BehaviorSubject<[]>([]);
+  public budgetValuesObs$: Observable<[]>;
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
-    const user = JSON.parse(token as string);
-    this.currentUserSubject.next(user);
-    this.currentUser = this.currentUserSubject.asObservable();
+    const isAvailable = localStorage.getItem('isBudgetAvailable');
+    const budgets = localStorage.getItem('budgets');
+
+    this.currentUserSubject.next(JSON.parse(token as string));
+    this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
+    this.budgetValuesSub.next(JSON.parse(budgets as any));
+
     this.isSpinning$ = this.isSpinningSub.asObservable();
-    this.isBudgetAvailable$ = this.isBudgetAvailableSub.asObservable();
+    this.currentUser = this.currentUserSubject.asObservable();
+    this.isBudgetAvailableObs$ = this.isBudgetAvailableSub.asObservable();
+    this.budgetValuesObs$ = this.budgetValuesSub.asObservable();
   }
 
-  getTransactions() {
-    return this.http.get(this.BASE_URL + 'txn/all');
+  getTransactions(email: string) {
+    return this.http.get(this.BASE_URL + `txn/all/${email}`);
   }
 
   createTransaction(data: any) {
-    return this.http.post(this.BASE_URL + 'txn/create', data);
+    return this.http.post(this.BASE_URL + `txn/create`, data);
   }
 
-  getBudgets() {
-    return this.http.get(this.BASE_URL + 'budget/all');
+  getBudgets(email: string) {
+    return this.http.get(this.BASE_URL + `budget/all/${email}`);
   }
 
   createBudget(data: any) {
-    return this.http.post(this.BASE_URL + 'budget/created', data);
+    return this.http.post(this.BASE_URL + `budget/create`, data);
   }
 
   share(id: string, userEmail: string) {
     return this.http.put(this.BASE_URL + `budget/share/${id}/${userEmail}`, {});
-  }
-
-  findBudgetForUser(userEmail: string) {
-    return this.http.get(this.BASE_URL + `budget/find/${userEmail}`);
   }
 
   get isLoggedIn$(): Observable<boolean> {
@@ -77,6 +82,14 @@ export class AppService {
 
   get userPhoto(): Observable<string | undefined> {
     return this.currentUser.pipe(map((user) => user?.photo));
+  }
+
+  get isBudgetAvailable(): Observable<boolean | undefined> {
+    return this.isBudgetAvailableObs$.pipe(map((value) => value));
+  }
+
+  get budgetValues(): Observable<any[] | undefined> {
+    return this.budgetValuesObs$.pipe(map((value) => value));
   }
 
   showSpinner() {

@@ -19,7 +19,7 @@ export const isBudgetAvailable: CanActivateFn = () => {
   const appService = inject(AppService);
   const notification = inject(NzNotificationService);
   let isThere;
-  appService.isBudgetAvailable$.subscribe((lg) => (isThere = lg));
+  appService.isBudgetAvailable.subscribe((lg) => (isThere = lg));
   if (!isThere) {
     notification.create(
       'info',

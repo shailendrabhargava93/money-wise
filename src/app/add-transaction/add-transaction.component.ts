@@ -14,6 +14,8 @@ export class AddTransactionComponent implements OnInit {
   form: FormGroup;
   categories: any[] = [];
   userEmail$ = this.app.userEmail;
+  budgets!: any[] | undefined;
+
   constructor(
     private fb: FormBuilder,
     private app: AppService,
@@ -26,6 +28,7 @@ export class AddTransactionComponent implements OnInit {
       category: [null, [Validators.required]],
       date: [null, [Validators.required]],
       user: [null],
+      budgetId: [null, [Validators.required]],
     });
   }
 
@@ -33,6 +36,13 @@ export class AddTransactionComponent implements OnInit {
     this.userEmail$.subscribe((user) =>
       this.form.controls['user'].setValue(user)
     );
+
+    this.app.budgetValues.subscribe((values) => {
+      this.budgets = values;
+      if (this.budgets?.length === 1) {
+        this.form.controls['budgetId'].setValue(this.budgets[0].id);
+      }
+    });
 
     for (var n in CAT_ICON) {
       const icon = CAT_ICON[n as keyof typeof CAT_ICON];
