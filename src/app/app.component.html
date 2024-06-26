@@ -38,16 +38,29 @@
           </svg>
         </span>
         <span class="float-right">
-          <nz-avatar nzIcon="user" nzSrc="{{ userPhoto$ | async }}"></nz-avatar>
-          <span
-            class="cursor-pointer font-bold ml-2 mr-2"
-            nz-icon
-            nzType="poweroff"
-            nz-button
-            nz-tooltip
-            nzTooltipTitle="Logout"
-            (click)="logout()"
-          ></span>
+          <span nz-icon class="icon-sz" nzType="bell"  nzTheme="outline"></span>
+          <nz-avatar
+            class="cursor-pointe m-4"
+            nz-dropdown
+            [nzDropdownMenu]="menu"
+            nzIcon="user"
+            nzSrc="{{ userPhoto$ | async }}"
+          ></nz-avatar>
+
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item nzDanger>
+                Logout &nbsp;
+                <span
+                  class="cursor-pointer"
+                  nz-icon
+                  nzType="poweroff"
+                  nz-button
+                  (click)="logout()"
+                ></span>
+              </li>
+            </ul>
+          </nz-dropdown-menu>
         </span>
       </div>
     </nz-header>

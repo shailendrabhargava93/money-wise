@@ -2,6 +2,6 @@ nz-date-picker {
   display: block;
 }
 
-nz-tag {
-  display: block;
+::ng-deep.ant-form-item {
+  margin: 0px 18px 18px 18px;
 }

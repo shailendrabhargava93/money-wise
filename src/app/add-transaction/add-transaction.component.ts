@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CAT_ICON } from './../category-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
@@ -20,7 +20,8 @@ export class AddTransactionComponent implements OnInit {
     private fb: FormBuilder,
     private app: AppService,
     private message: NzMessageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       title: [null, [Validators.required]],
@@ -53,6 +54,11 @@ export class AddTransactionComponent implements OnInit {
     );
     const date = new Date();
     this.form.controls['date'].setValue(date);
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.getTxn(id);
+    }
   }
 
   submitForm(): void {
@@ -66,5 +72,15 @@ export class AddTransactionComponent implements OnInit {
         }
       });
     }
+  }
+
+  getTxn(txnId: string) {
+    this.app.showSpinner();
+    this.app.getTxnById(txnId).subscribe((data) => {
+      if (data) {
+        this.app.hideSpinner();
+        this.form.patchValue(data);
+      }
+    });
   }
 }

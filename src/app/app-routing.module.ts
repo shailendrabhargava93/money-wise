@@ -1,3 +1,4 @@
+import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { BudgetsComponent } from './budgets/budgets.component';
 import { MoreComponent } from './more/more.component';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
@@ -9,7 +10,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'slider', pathMatch: 'full' },
+  { path: 'slider', component: MainCarouselComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   {
@@ -21,6 +23,11 @@ const routes: Routes = [
     path: 'add',
     component: AddTransactionComponent,
     canActivate: [authGuard, isBudgetAvailable],
+  },
+  {
+    path: 'edit/:id',
+    component: AddTransactionComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'budgets',

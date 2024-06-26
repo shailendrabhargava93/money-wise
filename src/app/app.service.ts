@@ -54,6 +54,10 @@ export class AppService {
     return this.http.post(this.BASE_URL + `txn/create`, data);
   }
 
+  getTxnById(id:string){
+    return this.http.get(this.BASE_URL + `txn/${id}`);
+  }
+
   getBudgets(email: string) {
     return this.http.get(this.BASE_URL + `budget/all/${email}`);
   }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { catchError, switchMap } from 'rxjs/operators';
 import { CAT_ICON } from './../category-icons';
 import { AppService } from './../app.service';
@@ -11,11 +12,11 @@ import { of } from 'rxjs';
 })
 export class TransactionsComponent implements OnInit {
   allTransactions!: any[];
-  constructor(private app: AppService) {}
+  isAscSorted = true;
+  constructor(private app: AppService, private router: Router) {}
 
   ngOnInit() {
     this.app.showSpinner();
-
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getTransactions(user as string)),
@@ -30,10 +31,7 @@ export class TransactionsComponent implements OnInit {
           this.app.hideSpinner();
           this.allTransactions = data as any[];
           if (this.allTransactions.length > 0) {
-            this.allTransactions.sort((a: any, b: any) => {
-              //asc sorting
-              return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
-            });
+            this.sort('asc');
           }
         }
       });
@@ -45,5 +43,27 @@ export class TransactionsComponent implements OnInit {
       return `/assets/icons/${icon}.png`;
     }
     return 'NA';
+  }
+
+  sort(direction: string) {
+    this.app.showSpinner();
+    if (direction === 'asc') {
+      this.isAscSorted = true;
+      this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
+        //asc sorting
+        return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
+      });
+    } else {
+      this.isAscSorted = false;
+      this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
+        //dsc sorting
+        return new Date(a.data.date) > new Date(b.data.date) ? 1 : -1;
+      });
+    }
+    this.app.hideSpinner();
+  }
+
+  onTxn(txnId: string) {
+    this.router.navigate(['edit', txnId])
   }
 }

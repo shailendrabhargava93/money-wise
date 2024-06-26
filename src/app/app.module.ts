@@ -23,6 +23,7 @@ import * as AllIcons from '@ant-design/icons-angular/icons';
 import { registerLocaleData } from '@angular/common';
 import { MoreComponent } from './more/more.component';
 import { BudgetsComponent } from './budgets/budgets.component';
+import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 
 registerLocaleData(en);
 
@@ -43,6 +44,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     AddTransactionComponent,
     MoreComponent,
     BudgetsComponent,
+    MainCarouselComponent,
   ],
   imports: [
     BrowserModule,

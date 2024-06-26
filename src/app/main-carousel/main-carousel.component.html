@@ -1,0 +1,11 @@
+
+<nz-carousel nzAutoPlay>
+  <div *ngFor="let el of array" nz-carousel-content>
+    <ul class="flex flex-col p-4">
+      <li class="flex flex-row mb-2">
+        <span class="justify-center">{{el.text}}</span>
+        <img [src]="el.image" class="w-lvw h-lvh" />
+      </li>
+    </ul>
+  </div>
+</nz-carousel>
