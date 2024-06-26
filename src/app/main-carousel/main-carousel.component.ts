@@ -8,20 +8,20 @@ import { Component } from '@angular/core';
 export class MainCarouselComponent {
   array = [
     {
-      text: 'text1',
-      image: 'assets/slider/Revenue-pana.svg',
+      heading: 'Manage your expenses wisely',
+      image: 'assets/slider/Wallet-pana.svg',
     },
     {
-      text: 'text1',
-      image: 'assets/slider/Manage-money-pana.svg',
-    },
-    {
-      text: 'text3',
+      heading: 'Setup budgets and share with family',
       image: 'assets/slider/Data-report-pana.svg',
     },
     {
-      text: 'text4',
+      heading: 'Analyse and understand your finances',
       image: 'assets/slider/Business-Plan-pana.svg',
+    },
+    {
+      heading: 'Get detailed charts and reports',
+      image: 'assets/slider/Spreadsheets-pana.svg',
     },
   ];
 }

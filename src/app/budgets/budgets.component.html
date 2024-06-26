@@ -17,7 +17,7 @@
         class="float-right text-white cursor-pointer mt-1"
         (click)="onshare(budget.id, budget.data.users)"
         nz-icon
-        style="font-size: 20px;"
+        style="font-size: 20px"
         nzType="usergroup-add"
         nzTheme="outline"
       ></span>
@@ -56,7 +56,7 @@
 
 <nz-modal
   [(nzVisible)]="isVisible"
-  nzTitle="Share Budget"
+  nzTitle="Invite Partner or Family members"
   (nzOnCancel)="oncancel()"
 >
   <ng-container *nzModalContent>
@@ -73,9 +73,16 @@
     ></ng-template>
     <br />
     <br />
-    <nz-list nzBordered nzHeader="Shared with">
+    <nz-list nzBordered>
       <nz-list-item *ngFor="let user of users">
-        <span nz-typography>{{user}}</span>
+        <span class="flex flex-row">
+          <nz-avatar
+            nzIcon="user"
+            style="background-color: rgb(86, 86, 241)"
+          ></nz-avatar>
+          &nbsp;
+          <span nz-typography>{{ user }}</span>
+        </span>
       </nz-list-item>
     </nz-list>
   </ng-container>
@@ -87,7 +94,7 @@
       (click)="handleShare()"
       [nzLoading]="isConfirmLoading"
     >
-      Share
+      Invite
     </button>
   </div>
 </nz-modal>
