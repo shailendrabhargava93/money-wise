@@ -19,7 +19,7 @@
 
 <div
   *ngIf="!isBudgetAvailable"
-  class="mx-auto flex flex-col justify-center items-center"
+  class="mx-auto flex flex-col justify-center items-center mt-4"
 >
   <img width="300px" height="300px" src="assets/manage_finances.svg" />
   <span class="text-center text-md text-gray-500 text-semibold"
@@ -27,7 +27,7 @@
   >
   <button
     nz-button
-    class="bg-indigo-500 rounded-full w-full"
+    class="bg-indigo-500 rounded-full w-full mt-2"
     nzType="primary"
     [routerLink]="['/add-budget']"
   >
