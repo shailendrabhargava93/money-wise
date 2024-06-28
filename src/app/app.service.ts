@@ -54,6 +54,10 @@ export class AppService {
     return this.http.post(this.BASE_URL + `txn/create`, data);
   }
 
+  updateTransaction(id:any, data: any) {
+    return this.http.put(this.BASE_URL + `txn/update/${id}`, data);
+  }
+
   getTxnById(id:string){
     return this.http.get(this.BASE_URL + `txn/${id}`);
   }

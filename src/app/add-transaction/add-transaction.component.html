@@ -92,12 +92,22 @@
 
   <nz-form-item nz-row class="register-area flex content-center">
     <button
+      *ngIf="!isUpdate"
       nz-button
-      class="bg-indigo-500 rounded-full w-full"
+      class="bg-indigo-500 hover:bg-indigo-400 rounded-full w-full"
       nzType="primary"
       (click)="submitForm()"
     >
       Add Transaction
+    </button>
+    <button
+      *ngIf="isUpdate"
+      nz-button
+      class="bg-indigo-500 hover:bg-indigo-400 rounded-full w-full"
+      nzType="primary"
+      (click)="updateTxn()"
+    >
+      Update Transaction
     </button>
     <nz-form-control> </nz-form-control>
   </nz-form-item>

@@ -9,8 +9,11 @@
           {{ budget.data.name }}
         </p>
         <p class="ml-4 text-white text-sm">
-          <span class="font-semibold">₹ 1500</span> left of
-          {{ budget.data.totalBudget }}
+          <span class="font-semibold"
+            >₹ {{ budget.data.spentAmount | number }}</span
+          >
+          left of
+          {{ budget.data.totalBudget | number }}
         </p>
       </span>
       <span
@@ -30,8 +33,8 @@
         budget.data.endDate | date : "dd MMM"
       }}</span>
       <nz-progress
-        [nzPercent]="55"
-        [nzShowInfo]="false"
+        [nzPercent]="(budget.data.spentAmount / budget.data.totalBudget) * 100"
+        [nzShowInfo]="true"
         [nzStrokeColor]="{ '0%': '#918bf5', '100%': '#4f46e5' }"
         nzStatus="active"
         [nzStrokeWidth]="10"
@@ -60,14 +63,17 @@
   (nzOnCancel)="oncancel()"
 >
   <ng-container *nzModalContent>
-    <nz-input-group [nzPrefix]="prefixTemplateUser">
-      <input
-        type="email"
-        nz-input
-        placeholder="Enter email"
-        [(ngModel)]="userEmail"
-      />
-    </nz-input-group>
+    <nz-form-control nzHasFeedback nzErrorTip="Email is not valid">
+      <nz-input-group [nzPrefix]="prefixTemplateUser">
+        <input
+          nz-input
+          placeholder="Enter email"
+          [(ngModel)]="userEmail"
+          name="email"
+          email
+        />
+      </nz-input-group>
+    </nz-form-control>
     <ng-template #prefixTemplateUser
       ><span nz-icon nzType="user"></span
     ></ng-template>
@@ -89,8 +95,7 @@
   <div *nzModalFooter>
     <button
       nz-button
-      [disabled]="!this.userEmail"
-      nzType="primary"
+      class="bg-indigo-500 hover:bg-indigo-400 text-white"
       (click)="handleShare()"
       [nzLoading]="isConfirmLoading"
     >

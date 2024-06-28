@@ -17,10 +17,20 @@
 </div>
 <!-- <app-stats></app-stats> -->
 
-<div class="mx-auto flex flex-col justify-center items-center">
+<div
+  *ngIf="!isBudgetAvailable"
+  class="mx-auto flex flex-col justify-center items-center"
+>
   <img width="300px" height="300px" src="assets/manage_finances.svg" />
   <span class="text-center text-md text-gray-500 text-semibold"
-    >Create a budget and manage your finances with your partner or family
-    members</span
+    >Create your first budget and start tracking all expenses wisely</span
   >
+  <button
+    nz-button
+    class="bg-indigo-500 rounded-full w-full"
+    nzType="primary"
+    [routerLink]="['add-budget']"
+  >
+    Create Budget
+  </button>
 </div>

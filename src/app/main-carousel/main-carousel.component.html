@@ -1,17 +1,23 @@
-<nz-carousel nzAutoPlay>
-  <div *ngFor="let el of array" nz-carousel-content>
-    <div class="flex flex-col h-screen justify-center items-center bg-blue-100">
-      <img class="h-auto max-w-lg rounded-lg" [src]="el.image" />
-      <h1 class="mt-2 text-lg text-center text-indigo-500">
-        {{ el.heading }}
-      </h1>
-    </div>
+<div class="flex flex-col h-screen justify-center items-center">
+  <div class="p-2 w-full flex justify-center">
+    <nz-carousel>
+      <div *ngFor="let el of array" nz-carousel-content>
+        <div class="flex flex-col h-[90vh] justify-center items-center">
+          <img class="h-auto max-w-lg rounded-lg" [src]="el.image" />
+          <h1 class="mt-2 text-lg text-center text-indigo-500">
+            {{ el.heading }}
+          </h1>
+        </div>
+      </div>
+    </nz-carousel>
   </div>
-</nz-carousel>
-<button
-  nz-button
-  class="bg-indigo-500 rounded-full w-full text-white"
-  [routerLink]="['/login']"
->
-  Skip
-</button>
+  <div class="p-2 w-full text-center">
+    <button
+      nz-button
+      class="bg-indigo-500 rounded-full w-full text-white"
+      [routerLink]="['/login']"
+    >
+      Skip to Login
+    </button>
+  </div>
+</div>

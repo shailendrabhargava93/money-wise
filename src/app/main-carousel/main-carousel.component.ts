@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 export class MainCarouselComponent {
   array = [
     {
-      heading: 'Manage your expenses wisely',
+      heading: 'Track your spending habits wisely',
       image: 'assets/slider/Wallet-pana.svg',
     },
     {
-      heading: 'Setup budgets and share with family',
+      heading: 'Share budgets and manage with family or partner',
       image: 'assets/slider/Data-report-pana.svg',
     },
     {
@@ -20,8 +20,12 @@ export class MainCarouselComponent {
       image: 'assets/slider/Business-Plan-pana.svg',
     },
     {
-      heading: 'Get detailed charts and reports',
+      heading: 'Improve your saving habits',
       image: 'assets/slider/Spreadsheets-pana.svg',
     },
   ];
+
+  constructor() {
+    localStorage.clear();
+  }
 }

@@ -1,0 +1,11 @@
+
+::ng-deep.ant-progress-text{
+  display: block;
+    text-align: center;
+    margin: 0 auto;
+}
+
+::ng-deep.ant-progress-outer{
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}

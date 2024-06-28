@@ -15,6 +15,8 @@ export class AddTransactionComponent implements OnInit {
   categories: any[] = [];
   userEmail$ = this.app.userEmail;
   budgets!: any[] | undefined;
+  txnId: string | null = null;
+  isUpdate = false;
 
   constructor(
     private fb: FormBuilder,
@@ -55,9 +57,9 @@ export class AddTransactionComponent implements OnInit {
     const date = new Date();
     this.form.controls['date'].setValue(date);
 
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.getTxn(id);
+    this.txnId = this.route.snapshot.paramMap.get('id');
+    if (this.txnId) {
+      this.getTxn(this.txnId);
     }
   }
 
@@ -71,6 +73,13 @@ export class AddTransactionComponent implements OnInit {
           this.router.navigate(['transactions']);
         }
       });
+    } else {
+      Object.values(this.form.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
     }
   }
 
@@ -80,7 +89,23 @@ export class AddTransactionComponent implements OnInit {
       if (data) {
         this.app.hideSpinner();
         this.form.patchValue(data);
+        this.isUpdate = true;
       }
     });
+  }
+
+  updateTxn() {
+    if (this.form.valid) {
+      this.app.showSpinner();
+      this.app
+        .updateTransaction(this.txnId, this.form.value)
+        .subscribe((res) => {
+          if (res) {
+            this.app.hideSpinner();
+            this.message.success(`Transaction updated !`);
+            this.router.navigate(['transactions']);
+          }
+        });
+    }
   }
 }

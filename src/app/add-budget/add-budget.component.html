@@ -1,0 +1,60 @@
+<form
+  nz-form
+  [nzLayout]="'vertical'"
+  [formGroup]="form"
+  class="p-1 h-full justify-center"
+>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Start Date</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-date-picker formControlName="startDate"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>End Date</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-date-picker formControlName="endDate"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
+      >Total Budget</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <nz-input-group nzAddOnBefore="₹">
+        <input
+          nz-input
+          type="number"
+          placeholder="Enter amount"
+          formControlName="totalBudget"
+        />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
+      >Name Budget</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
+      <input
+        placeholder="Enter expense title"
+        nz-input
+        formControlName="name"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item nz-row class="register-area flex content-center">
+    <button
+      *ngIf="!isUpdate"
+      nz-button
+      class="bg-indigo-500 hover:bg-indigo-400 rounded-full w-full"
+      nzType="primary"
+      (click)="createBudget()"
+    >
+      Add Budget
+    </button>
+  </nz-form-item>
+</form>

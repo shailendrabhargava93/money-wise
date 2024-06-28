@@ -70,6 +70,8 @@ export class BudgetsComponent implements OnInit {
           this.oncancel();
         }
       });
+    } else {
+      this.notification.error('Please enter valid gmail id');
     }
   }
 }
