@@ -1,3 +1,4 @@
+import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./more.component.css'],
 })
 export class MoreComponent implements OnInit {
-  constructor() {}
-
+  constructor(private app: AppService) {}
+  currencies: any[] = [];
   panels = [
     {
       name: 'Currency',
@@ -20,5 +21,11 @@ export class MoreComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.app.getCurrencyList().subscribe((data: any) => {
+    //   if (data) {
+    //     this.currencies = data.data;
+    //   }
+    // });
+  }
 }

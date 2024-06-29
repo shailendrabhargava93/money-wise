@@ -10,7 +10,10 @@
         </p>
         <p class="ml-4 text-white text-sm">
           <span class="font-semibold"
-            >₹ {{ budget.data.spentAmount | number }}</span
+            >₹
+            {{
+              budget.data.totalBudget - budget.data.spentAmount | number
+            }}</span
           >
           left of
           {{ budget.data.totalBudget | number }}
@@ -33,11 +36,11 @@
         budget.data.endDate | date : "dd MMM"
       }}</span>
       <nz-progress
-        [nzPercent]="(budget.data.spentAmount / budget.data.totalBudget) * 100"
+        [nzPercent]="getSpentPerc(budget)"
         [nzShowInfo]="true"
         [nzStrokeColor]="{ '0%': '#918bf5', '100%': '#4f46e5' }"
         nzStatus="active"
-        [nzStrokeWidth]="10"
+        [nzStrokeWidth]="8"
       ></nz-progress>
     </p>
 

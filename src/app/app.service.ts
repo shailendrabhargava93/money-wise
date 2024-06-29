@@ -107,4 +107,11 @@ export class AppService {
   hideSpinner() {
     this.isSpinningSub.next(false);
   }
+
+  getCurrencyList(){
+    const url = 'https://countriesnow.space/api/v0.1/countries/currency';
+    return this.http.get(url);
+  }
+
+
 }

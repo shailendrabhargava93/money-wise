@@ -74,4 +74,10 @@ export class BudgetsComponent implements OnInit {
       this.notification.error('Please enter valid gmail id');
     }
   }
+
+  getSpentPerc(budget: any) {
+    return Number(
+      (budget.data.spentAmount / budget.data.totalBudget) * 100
+    ).toFixed(2);
+  }
 }

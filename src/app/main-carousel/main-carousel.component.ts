@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 
 @Component({
@@ -25,7 +26,12 @@ export class MainCarouselComponent {
     },
   ];
 
-  constructor() {
-    localStorage.clear();
+  constructor(private router: Router) {
+    const token = localStorage.getItem('user');
+    if (token != null) {
+      this.router.navigate(['home']);
+    } else {
+      localStorage.clear();
+    }
   }
 }

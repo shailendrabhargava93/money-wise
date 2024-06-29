@@ -18,6 +18,21 @@
     <nz-card>
       <nz-card-meta [nzAvatar]="template2" nzTitle="Currency"></nz-card-meta>
       ₹ Indian Rupee
+      <!-- <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select Currency"
+        formControlName="category"
+      >
+        <nz-option
+          nzCustomContent
+          *ngFor="let opt of currencies"
+          nzLabel="{{ opt.name }}"
+          nzValue="{{ opt.currency }}"
+        >
+          {{ opt.currency | currencySymbol }} {{ opt.name }}
+        </nz-option>
+      </nz-select> -->
     </nz-card>
     <ng-template #template2>
       <span
