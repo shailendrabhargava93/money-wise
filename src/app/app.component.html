@@ -56,14 +56,9 @@
 
           <nz-dropdown-menu #menu="nzDropdownMenu">
             <ul nz-menu>
-              <li nz-menu-item nzDanger>
+              <li nz-menu-item nzDanger (click)="logout()">
                 Logout&nbsp;
-                <span
-                  nz-icon
-                  nzType="poweroff"
-                  nz-button
-                  (click)="logout()"
-                ></span>
+                <span nz-icon nzType="poweroff" nz-button></span>
               </li>
             </ul>
           </nz-dropdown-menu>

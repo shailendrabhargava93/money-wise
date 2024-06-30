@@ -23,15 +23,20 @@
   </div> -->
 
   <div class="flex flex-wrap gap-4 justify-center pt-8">
-    <canvas
-      baseChart
-      [type]="'pie'"
-      [datasets]="pieChartDatasets"
-      [labels]="pieChartLabels"
-      [options]="pieChartOptions"
-      [plugins]="pieChartPlugins"
-      [legend]="pieChartLegend"
+    <div
+      class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200"
     >
-    </canvas>
+      <span class="text-gray-500">Category Wise Expenditure</span>
+      <canvas
+        baseChart
+        [type]="'pie'"
+        [datasets]="pieChartDatasets"
+        [labels]="pieChartLabels"
+        [options]="pieChartOptions"
+        [plugins]="pieChartPlugins"
+        [legend]="pieChartLegend"
+      >
+      </canvas>
+    </div>
   </div>
 </div>

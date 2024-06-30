@@ -9,7 +9,7 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 })
 export class HomeComponent {
   username$: any;
-  isBudgetAvailable!: boolean;
+  isBudgetAvailable: boolean = false;
   constructor(private app: AppService) {
     this.username$ = this.app.userName;
 
