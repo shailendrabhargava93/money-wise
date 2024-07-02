@@ -1,3 +1,13 @@
+<!-- header -->
+<div class="mx-auto flex flow-root p-2 w-full">
+  <div class="relative inline-block">
+    <span class="text-xl md:text-3xl font-semibold"> Budgets </span>
+    <span
+      class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-indio-400 to-teal-300 rounded-full"
+    ></span>
+  </div>
+</div>
+
 <div class="p-1">
   <div
     *ngFor="let budget of budgets"
@@ -43,7 +53,6 @@
         [nzStrokeWidth]="8"
       ></nz-progress>
     </p>
-
     <div class="flex justify-center px-5 mb-2 text-sm">
       <!-- <button
         type="button"

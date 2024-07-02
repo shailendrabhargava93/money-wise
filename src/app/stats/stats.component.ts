@@ -40,7 +40,7 @@ export class StatsComponent implements OnInit {
   // Pie
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
-    plugins: { legend: { position: 'right' } },
+    plugins: { legend: { position: 'bottom' } },
   };
   public pieChartLabels: any[] = [];
   public pieChartDatasets: any[] = [
@@ -50,4 +50,10 @@ export class StatsComponent implements OnInit {
   ];
   public pieChartLegend = true;
   public pieChartPlugins = [];
+  public chartColors: any[] = [
+    {
+      backgroundColor:["#FF7360", "#6FC8CE", "#FAFFF2", "#FFFCC4", "#B9E8E0"]
+    }
+  ];
+
 }

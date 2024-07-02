@@ -1,28 +1,35 @@
 <!-- header -->
+<div class="mx-auto flex flow-root p-2 w-full">
+  <div class="relative inline-block">
+    <span class="text-xl md:text-3xl font-semibold"> Transactions </span>
+    <span
+      class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-indio-400 to-teal-300 rounded-full"
+    ></span>
+  </div>
+  <button
+    *ngIf="showDot"
+    type="button"
+    (click)="clear()"
+    class="float-right bg-white inline-flex text-primary py-0.5 px-3 ml-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+  >
+    <span class="capitalize lg:inline leading-5">Clear</span>
+    &nbsp;
+    <span nz-icon nzType="close-circle" nzTheme="fill"></span>
+  </button>
+  <button
+    type="button"
+    (click)="open()"
+    class="float-right bg-white inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+  >
+    <nz-badge [nzDot]="showDot">
+      <span class="capitalize lg:inline leading-5">Filters</span>
+    </nz-badge>
+    &nbsp;
+    <span nz-icon nzType="filter" nzTheme="fill"></span>
+  </button>
+</div>
 <!-- component -->
 <div class="mx-auto flex flex-col justify-center items-center p-2 w-full">
-  <nz-button-group class="text-right">
-    <button class="mr-2 pointer-events-none" nz-button nzType="dashed">Sorting</button>
-    <button
-      class="ml-2"
-      [class.active]="isAscSorted"
-      (click)="sort('asc')"
-      nz-button
-      nzType="dashed"
-    >
-      <span nz-icon nzType="sort-ascending" nzTheme="outline"></span>
-    </button>
-    &nbsp;&nbsp;
-    <button
-      class="ml-2"
-      [class.active]="!isAscSorted"
-      (click)="sort('dsc')"
-      nz-button
-      nzType="dashed"
-    >
-      <span nz-icon nzType="sort-descending" nzTheme="outline"></span>
-    </button>
-  </nz-button-group>
   <ul class="flex flex-col p-4">
     <li class="flex flex-row mb-2" *ngFor="let txn of allTransactions">
       <div
@@ -32,7 +39,10 @@
         <div
           class="flex flex-col rounded-md w-10 h-10 bg-indigo-100 justify-center items-center mr-4"
         >
-          <img [src]="getIcon(txn.data.category)" width="30px" height="30px" />
+          <img
+            [src]="getIcon(txn.data.category)"
+            class="object-cover w-8 h-8"
+          />
         </div>
         <div class="flex-1 pl-1 mr-16">
           <div class="font-medium">{{ txn.data.title }}</div>
@@ -50,3 +60,41 @@
   *ngIf="allTransactions && allTransactions.length === 0"
   [nzNotFoundContent]="'No Transactions Found'"
 ></nz-empty>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzVisible]="visible"
+  [nzPlacement]="'bottom'"
+  nzTitle="Filters"
+  [nzExtra]="extra"
+  (nzOnClose)="close()"
+>
+  <ng-container *nzDrawerContent>
+    <p class="ml-2 text-bold">Category</p>
+    <div class="flex flex-wrap items-center ml-2 mt-2">
+      <button
+        type="button"
+        *ngFor="let cat of categories"
+        (click)="onSelect(cat.name)"
+      >
+        <span
+          [class.active]="selectedCat === cat.name"
+          class="bg-white inline-flex text-primary py-0.5 px-3 items-center justify-between text-xs capitalize border border-gray-400 rounded-full hover:bg-gray-gray1 mb-2 mr-2"
+        >
+          <img
+            [src]="cat.icon"
+            class="object-cover w-4 h-4 mr-1"
+            loading="lazy"
+            style="color: transparent"
+            width="16"
+            height="16"
+          />
+          <span class="capitalize lg:inline leading-5">{{ cat.name }}</span>
+        </span>
+      </button>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #extra>
+  <button nz-button  class="bg-indigo-500 text-white hover:bg-indigo-400 hover:text-white rounded-full w-full" (click)="apply()">Apply</button>
+</ng-template>

@@ -12,10 +12,17 @@ import { of } from 'rxjs';
 })
 export class TransactionsComponent implements OnInit {
   allTransactions!: any[];
-  isAscSorted = true;
+  categories: any[] = [];
+  sortDirection = 'asc';
+  visible = false;
+
   constructor(private app: AppService, private router: Router) {}
 
   ngOnInit() {
+    this.getTransactions();
+  }
+
+  private getTransactions() {
     this.app.showSpinner();
     this.app.userEmail
       .pipe(
@@ -31,7 +38,7 @@ export class TransactionsComponent implements OnInit {
           this.app.hideSpinner();
           this.allTransactions = data as any[];
           if (this.allTransactions.length > 0) {
-            this.sort('asc');
+            this.sort();
           }
         }
       });
@@ -45,25 +52,64 @@ export class TransactionsComponent implements OnInit {
     return 'NA';
   }
 
-  sort(direction: string) {
+  sort() {
     this.app.showSpinner();
-    if (direction === 'asc') {
-      this.isAscSorted = true;
+    if (this.sortDirection === 'asc') {
       this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
         //asc sorting
         return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
       });
+      this.sortDirection = 'desc';
     } else {
-      this.isAscSorted = false;
       this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
-        //dsc sorting
+        //desc sorting
         return new Date(a.data.date) > new Date(b.data.date) ? 1 : -1;
       });
+      this.sortDirection = 'asc';
     }
     this.app.hideSpinner();
+    this.close();
   }
 
   onTxn(txnId: string) {
-    this.router.navigate(['edit', txnId])
+    this.router.navigate(['edit', txnId]);
+  }
+
+  open(): void {
+    this.visible = true;
+    for (var n in CAT_ICON) {
+      const icon = CAT_ICON[n as keyof typeof CAT_ICON];
+      this.categories.push({ name: n, icon: `/assets/icons/${icon}.png` });
+    }
+    this.categories.sort((a, b) =>
+      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+    );
+  }
+
+  close(): void {
+    this.categories = [];
+    this.visible = false;
+  }
+
+  selectedCat: string = '';
+  onSelect(catName: string) {
+    this.selectedCat = catName;
+  }
+
+  showDot = false;
+  apply() {
+    this.close();
+    if (this.selectedCat) {
+      this.allTransactions = this.allTransactions.filter(
+        (transaction: any) => transaction.data.category === this.selectedCat
+      );
+      this.showDot = true;
+    }
+  }
+
+  clear() {
+    this.selectedCat = '';
+    this.showDot = false;
+    this.getTransactions();
   }
 }
