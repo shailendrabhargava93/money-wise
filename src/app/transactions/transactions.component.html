@@ -1,5 +1,5 @@
 <!-- header -->
-<div class="mx-auto flex flow-root p-2 w-full">
+<div class="mx-auto flex flow-root p-1 w-full">
   <div class="relative inline-block">
     <span class="text-xl md:text-3xl font-semibold"> Transactions </span>
     <span
@@ -10,26 +10,30 @@
     *ngIf="showDot"
     type="button"
     (click)="clear()"
-    class="float-right bg-white inline-flex text-primary py-0.5 px-3 ml-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-3 ml-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <span class="capitalize lg:inline leading-5">Clear</span>
     &nbsp;
-    <span nz-icon nzType="close-circle" nzTheme="fill"></span>
+    <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    </svg>
   </button>
   <button
     type="button"
     (click)="open()"
-    class="float-right bg-white inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <nz-badge [nzDot]="showDot">
       <span class="capitalize lg:inline leading-5">Filters</span>
     </nz-badge>
     &nbsp;
-    <span nz-icon nzType="filter" nzTheme="fill"></span>
+    <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
+    </svg>
   </button>
 </div>
 <!-- component -->
-<div class="mx-auto flex flex-col justify-center items-center p-2 w-full">
+<div class="mx-auto flex flex-col justify-center items-center p-1 w-full">
   <ul class="flex flex-col p-4">
     <li class="flex flex-row mb-2" *ngFor="let txn of allTransactions">
       <div
@@ -58,11 +62,12 @@
 
 <nz-empty
   *ngIf="allTransactions && allTransactions.length === 0"
-  [nzNotFoundContent]="'You have No Transactions'"
+  [nzNotFoundContent]="'You have no Transactions'"
 ></nz-empty>
 
 <nz-drawer
   [nzClosable]="true"
+  [nzCloseIcon]="'close-circle'"
   [nzVisible]="visible"
   [nzPlacement]="'bottom'"
   nzTitle="Filters"
@@ -96,5 +101,12 @@
   </ng-container>
 </nz-drawer>
 <ng-template #extra>
-  <button nz-button  class="bg-indigo-500 text-white hover:bg-indigo-400 hover:text-white rounded-full w-full" (click)="apply()">Apply</button>
+  <button
+    nz-button
+    nzType="primary"
+    class="bg-indigo-500 hover:bg-indigo-600 rounded-full w-full"
+    (click)="apply()"
+  >
+    Apply
+  </button>
 </ng-template>

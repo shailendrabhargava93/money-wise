@@ -4,7 +4,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 @Component({
   selector: 'app-add-transaction',
   templateUrl: './add-transaction.component.html',
@@ -17,7 +16,6 @@ export class AddTransactionComponent implements OnInit {
   budgets!: any[] | undefined;
   txnId: string | null = null;
   isUpdate = false;
-
   constructor(
     private fb: FormBuilder,
     private app: AppService,

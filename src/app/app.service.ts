@@ -31,6 +31,11 @@ export class AppService {
   public budgetValuesSub: BehaviorSubject<[]> = new BehaviorSubject<[]>([]);
   public budgetValuesObs$: Observable<[]>;
 
+  public showPopupSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+  public showPopup$: Observable<boolean>;
+
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
     const isAvailable = localStorage.getItem('isBudgetAvailable');
@@ -44,6 +49,7 @@ export class AppService {
     this.currentUser = this.currentUserSubject.asObservable();
     this.isBudgetAvailableObs$ = this.isBudgetAvailableSub.asObservable();
     this.budgetValuesObs$ = this.budgetValuesSub.asObservable();
+    this.showPopup$ = this.showPopupSub.asObservable();
   }
 
   getTransactions(email: string) {
@@ -54,11 +60,11 @@ export class AppService {
     return this.http.post(this.BASE_URL + `txn/create`, data);
   }
 
-  updateTransaction(id:any, data: any) {
+  updateTransaction(id: any, data: any) {
     return this.http.put(this.BASE_URL + `txn/update/${id}`, data);
   }
 
-  getTxnById(id:string){
+  getTxnById(id: string) {
     return this.http.get(this.BASE_URL + `txn/${id}`);
   }
 
@@ -112,10 +118,8 @@ export class AppService {
     this.isSpinningSub.next(false);
   }
 
-  getCurrencyList(){
+  getCurrencyList() {
     const url = 'https://countriesnow.space/api/v0.1/countries/currency';
     return this.http.get(url);
   }
-
-
 }

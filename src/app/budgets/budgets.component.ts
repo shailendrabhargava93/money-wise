@@ -1,3 +1,4 @@
+import { STATUS } from './../status.enum';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
@@ -83,8 +84,7 @@ export class BudgetsComponent implements OnInit {
 
   markCompleted() {
     this.budgetId = this.budgetId as string;
-    const status = 'completed';
-    this.app.update(this.budgetId, status).subscribe((data) => {
+    this.app.update(this.budgetId, STATUS.COMPLETED).subscribe((data) => {
       if (data) {
         this.notification.success('updated successully !');
       }
@@ -93,8 +93,7 @@ export class BudgetsComponent implements OnInit {
 
   markDeleted() {
     this.budgetId = this.budgetId as string;
-    const status = 'deleted';
-    this.app.update(this.budgetId, status).subscribe((data) => {
+    this.app.update(this.budgetId, STATUS.DELETED).subscribe((data) => {
       if (data) {
         this.notification.success('updated successully !');
       }

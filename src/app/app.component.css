@@ -16,10 +16,17 @@ nz-header {
 }
 
 .inner-content {
-  padding: 5px;
+  padding: 4px;
   background: #fff;
   height: 82vh;
   width: 100%;
+}
+
+/* This will apply if the screen width is 600px or less */
+@media screen and (max-width: 600px) {
+  .inner-content {
+      height: 88vh;
+  }
 }
 
 nz-footer {

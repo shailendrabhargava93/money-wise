@@ -6,6 +6,7 @@ import {
   Component,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { tap } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,6 +16,7 @@ export class AppComponent implements AfterContentChecked {
   isSpinning$ = this.app.isSpinning$;
   isLoggedin$ = this.app.isLoggedIn$;
   userPhoto$: any;
+  visible = false;
   constructor(
     private app: AppService,
     private router: Router,
@@ -22,6 +24,9 @@ export class AppComponent implements AfterContentChecked {
     private cdref: ChangeDetectorRef
   ) {
     this.userPhoto$ = this.app.userPhoto;
+    this.app.showPopup$
+      .pipe(tap((value) => (this.visible = value)))
+      .subscribe();
   }
 
   ngAfterContentChecked() {
@@ -35,5 +40,9 @@ export class AppComponent implements AfterContentChecked {
     this.app.budgetValuesSub.next([]);
     this.router.navigate(['login']);
     this.message.success(`Logged Out successfully !`);
+  }
+
+  close(): void {
+    this.visible = false;
   }
 }

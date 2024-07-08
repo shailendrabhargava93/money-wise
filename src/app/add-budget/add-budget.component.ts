@@ -1,3 +1,4 @@
+import { STATUS } from './../status.enum';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
@@ -26,6 +27,7 @@ export class AddBudgetComponent {
       name: [null, [Validators.required]],
       totalBudget: [null, [Validators.required]],
       createdBy: [null],
+      status: [STATUS.ACTIVE],
     });
   }
 
@@ -33,6 +35,11 @@ export class AddBudgetComponent {
     this.userEmail$.subscribe((user) =>
       this.form.controls['createdBy'].setValue(user)
     );
+    let date = new Date();
+    let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    this.form.get('startDate')?.setValue(firstDay);
+    this.form.get('endDate')?.setValue(lastDay);
   }
   createBudget(): void {
     if (this.form.valid) {
@@ -40,7 +47,7 @@ export class AddBudgetComponent {
       this.app.createBudget(this.form.value).subscribe((res) => {
         if (res) {
           this.app.hideSpinner();
-          this.message.success(`Budget added !`);
+          this.message.success(`Budget created !`);
           this.router.navigate(['budgets']);
         }
       });

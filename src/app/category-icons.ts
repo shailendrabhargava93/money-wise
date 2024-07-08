@@ -12,4 +12,5 @@ export enum CAT_ICON {
   'Subscriptions' = 'stream',
   'Transportation' = 'taxi',
   'Fitness' = 'gym',
+  'Other' = 'list',
 }
