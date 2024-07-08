@@ -9,7 +9,8 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 })
 export class HomeComponent {
   username$: any;
-  isBudgetAvailable: boolean = false;
+  isBudgetAvailable = this.app.isBudgetAvailableObs$;
+
   constructor(private app: AppService) {
     this.username$ = this.app.userName;
 
@@ -18,22 +19,16 @@ export class HomeComponent {
         switchMap((user) => this.app.getBudgets(user as string)),
         tap((budgets: any) => {
           const isAvailable = budgets && budgets.length > 0;
-          localStorage.setItem('isBudgetAvailable', isAvailable);
-          const budgetsArray = budgets.map((el: any) => ({
-            id: el.id,
-            name: el.data.name,
-          }));
-          localStorage.setItem('budgets', JSON.stringify(budgetsArray));
           if (isAvailable) {
+            const budgetsArray = budgets.map((el: any) => ({
+              id: el.id,
+              name: el.data.name,
+            }));
+            localStorage.setItem('isBudgetAvailable', isAvailable);
+            localStorage.setItem('budgets', JSON.stringify(budgetsArray));
             this.app.isBudgetAvailableSub.next(isAvailable);
             this.app.budgetValuesSub.next(budgetsArray);
           }
-        }),
-        filter((budgets) => budgets && budgets.length > 0),
-        switchMap(() => this.app.isBudgetAvailableObs$),
-        tap((isBudgetAvailable) => {
-          this.isBudgetAvailable = isBudgetAvailable;
-          console.log('isBudgetAvailable : ' + isBudgetAvailable);
         })
       )
       .subscribe();

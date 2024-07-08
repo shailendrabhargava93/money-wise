@@ -9,3 +9,7 @@
   margin-right: 0 !important;
   padding-right: 0 !important;
 }
+
+::ng-deep.ant-empty-image{
+  display: inline-block;
+}

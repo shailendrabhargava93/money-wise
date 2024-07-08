@@ -83,18 +83,22 @@ export class BudgetsComponent implements OnInit {
   }
 
   markCompleted() {
+    this.app.showSpinner();
     this.budgetId = this.budgetId as string;
     this.app.update(this.budgetId, STATUS.COMPLETED).subscribe((data) => {
       if (data) {
+        this.app.hideSpinner();
         this.notification.success('updated successully !');
       }
     });
   }
 
   markDeleted() {
+    this.app.showSpinner();
     this.budgetId = this.budgetId as string;
     this.app.update(this.budgetId, STATUS.DELETED).subscribe((data) => {
       if (data) {
+        this.app.hideSpinner();
         this.notification.success('updated successully !');
       }
     });

@@ -19,7 +19,7 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
-      >Total Budget</nz-form-label
+      >Budgeted Amount</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group nzAddOnBefore="₹">
@@ -50,7 +50,7 @@
     <button
       *ngIf="!isUpdate"
       nz-button
-      class="bg-indigo-500 hover:bg-indigo-400 rounded-full w-full"
+      class="bg-indigo-500 hover:bg-indigo-600 rounded-full w-full"
       nzType="primary"
       (click)="createBudget()"
     >

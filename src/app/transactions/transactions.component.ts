@@ -11,6 +11,7 @@ import { of } from 'rxjs';
   styleUrls: ['./transactions.component.css'],
 })
 export class TransactionsComponent implements OnInit {
+  globalList: any[] = [];
   allTransactions!: any[];
   categories: any[] = [];
   sortDirection = 'asc';
@@ -60,12 +61,14 @@ export class TransactionsComponent implements OnInit {
         return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
       });
       this.sortDirection = 'desc';
+      this.globalList = this.allTransactions;
     } else {
       this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
         //desc sorting
         return new Date(a.data.date) > new Date(b.data.date) ? 1 : -1;
       });
       this.sortDirection = 'asc';
+      this.globalList = this.allTransactions;
     }
     this.app.hideSpinner();
     this.close();
@@ -110,6 +113,6 @@ export class TransactionsComponent implements OnInit {
   clear() {
     this.selectedCat = '';
     this.showDot = false;
-    this.getTransactions();
+    this.allTransactions = this.globalList;
   }
 }

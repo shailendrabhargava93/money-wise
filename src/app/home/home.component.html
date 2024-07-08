@@ -26,10 +26,10 @@
   </div>
 </div>
 
-<app-stats *ngIf="isBudgetAvailable"></app-stats>
+<app-stats *ngIf="isBudgetAvailable | async"></app-stats>
 
 <div
-  *ngIf="!isBudgetAvailable"
+  *ngIf="!(isBudgetAvailable | async)"
   class="mx-auto flex flex-col justify-center items-center mt-2"
 >
   <img width="280px" height="280px" src="assets/manage_finances.svg" />
