@@ -25,7 +25,7 @@ export class HomeComponent {
         tap((budgets: any) => {
           const isAvailable = budgets && budgets.length > 0;
           localStorage.setItem('isBudgetAvailable', isAvailable);
-          this.app.budgetValuesSub.next(isAvailable);
+          this.app.isBudgetAvailableSub.next(isAvailable);
           const budgetsArray = budgets.map((el: any) => ({
             id: el.id,
             name: el.data.name,

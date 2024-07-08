@@ -74,6 +74,10 @@ export class AppService {
     return this.http.put(this.BASE_URL + `budget/share/${id}/${userEmail}`, {});
   }
 
+  update(id: string, status: string) {
+    return this.http.put(this.BASE_URL + `budget/update/${id}/${status}`, {});
+  }
+
   get isLoggedIn$(): Observable<boolean> {
     return this.currentUser.pipe(
       map((user) => user != null && user.name != null && user.email != null)

@@ -9,34 +9,6 @@ import { ChartOptions } from 'chart.js';
   styleUrls: ['./stats.component.css'],
 })
 export class StatsComponent implements OnInit {
-  constructor(private app: AppService) {}
-  ngOnInit(): void {
-    this.app.userEmail
-      .pipe(
-        switchMap((user) => this.app.getTransactions(user as string)),
-        catchError((error) => {
-          console.error('Error occurred getTransactions:', error);
-          return of([]);
-        })
-      )
-      .subscribe((data) => {
-        if (data) {
-          const output = data as any[];
-          if (output.length > 0) {
-            const txns: any[] = [];
-            output.forEach((el: any) => {
-              txns.push({ category: el.data.category, amount: el.data.amount });
-              this.pieChartLabels.push(el.data.category);
-            });
-            this.pieChartDatasets = [
-              {
-                data: txns.map((el) => el.amount),
-              },
-            ];
-          }
-        }
-      });
-  }
   // Pie
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: false,
@@ -52,8 +24,70 @@ export class StatsComponent implements OnInit {
   public pieChartPlugins = [];
   public chartColors: any[] = [
     {
-      backgroundColor:["#FF7360", "#6FC8CE", "#FAFFF2", "#FFFCC4", "#B9E8E0"]
-    }
+      backgroundColor: ['#FF7360', '#6FC8CE', '#FAFFF2', '#FFFCC4', '#B9E8E0'],
+    },
   ];
 
+  constructor(private app: AppService) {}
+  ngOnInit(): void {
+    this.app.userEmail
+      .pipe(
+        switchMap((user) => this.app.getTransactions(user as string)),
+        catchError((error) => {
+          console.error('Error occurred getTransactions:', error);
+          return of([]);
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          const output = data as any[];
+          if (output.length > 0) {
+            const { categories, amounts } =
+              this.getCategoriesAndAmounts(output);
+            console.log('Categories:', categories);
+            console.log('Amounts:', amounts);
+          }
+        }
+      });
+  }
+
+  sumAmountByCategory(transactions: any[]): Record<string, number> {
+    const categorySum: Record<string, number> = {};
+
+    for (const transaction of transactions) {
+      const category = transaction.data.category;
+      const amount = transaction.data.amount;
+
+      if (category in categorySum) {
+        categorySum[category] += amount;
+      } else {
+        categorySum[category] = amount;
+      }
+    }
+
+    return categorySum;
+  }
+
+  getCategoriesAndAmounts(transactions: any[]): {
+    categories: string[];
+    amounts: number[];
+  } {
+    const categorySum = this.sumAmountByCategory(transactions);
+    const categories: string[] = [];
+    const amounts: number[] = [];
+
+    for (const category in categorySum) {
+      if (categorySum.hasOwnProperty(category)) {
+        categories.push(category);
+        amounts.push(categorySum[category]);
+      }
+    }
+    this.pieChartLabels = categories;
+    this.pieChartDatasets = [
+      {
+        data: amounts.map((el) => el),
+      },
+    ];
+    return { categories, amounts };
+  }
 }

@@ -76,8 +76,39 @@ export class BudgetsComponent implements OnInit {
   }
 
   getSpentPerc(budget: any) {
-    return Number(
+    return Math.round(
       (budget.data.spentAmount / budget.data.totalBudget) * 100
-    ).toFixed(2);
+    );
+  }
+
+  markCompleted() {
+    this.budgetId = this.budgetId as string;
+    const status = 'completed';
+    this.app.update(this.budgetId, status).subscribe((data) => {
+      if (data) {
+        this.notification.success('updated successully !');
+      }
+    });
+  }
+
+  markDeleted() {
+    this.budgetId = this.budgetId as string;
+    const status = 'deleted';
+    this.app.update(this.budgetId, status).subscribe((data) => {
+      if (data) {
+        this.notification.success('updated successully !');
+      }
+    });
+  }
+
+  confirm(budgetId: string, type: string): void {
+    this.budgetId = budgetId;
+    if (type === 'delete') {
+      this.markDeleted();
+    }
+
+    if (type === 'complete') {
+      this.markCompleted();
+    }
   }
 }
