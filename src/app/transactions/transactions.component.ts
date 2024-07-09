@@ -14,8 +14,10 @@ export class TransactionsComponent implements OnInit {
   globalList: any[] = [];
   allTransactions!: any[];
   categories: any[] = [];
-  sortDirection = 'asc';
-  visible = false;
+  sortingType = 'date-asc';
+  visibleFilters = false;
+  visibleSorting = false;
+  showDot = false;
 
   constructor(private app: AppService, private router: Router) {}
 
@@ -40,6 +42,7 @@ export class TransactionsComponent implements OnInit {
           this.allTransactions = data as any[];
           if (this.allTransactions.length > 0) {
             this.sort();
+            this.globalList = this.allTransactions;
           }
         }
       });
@@ -53,33 +56,12 @@ export class TransactionsComponent implements OnInit {
     return 'NA';
   }
 
-  sort() {
-    this.app.showSpinner();
-    if (this.sortDirection === 'asc') {
-      this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
-        //asc sorting
-        return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
-      });
-      this.sortDirection = 'desc';
-      this.globalList = this.allTransactions;
-    } else {
-      this.allTransactions = this.allTransactions.sort((a: any, b: any) => {
-        //desc sorting
-        return new Date(a.data.date) > new Date(b.data.date) ? 1 : -1;
-      });
-      this.sortDirection = 'asc';
-      this.globalList = this.allTransactions;
-    }
-    this.app.hideSpinner();
-    this.close();
-  }
-
   onTxn(txnId: string) {
     this.router.navigate(['edit', txnId]);
   }
 
-  open(): void {
-    this.visible = true;
+  openFilters(): void {
+    this.visibleFilters = true;
     for (var n in CAT_ICON) {
       const icon = CAT_ICON[n as keyof typeof CAT_ICON];
       this.categories.push({ name: n, icon: `/assets/icons/${icon}.png` });
@@ -89,9 +71,9 @@ export class TransactionsComponent implements OnInit {
     );
   }
 
-  close(): void {
+  closeFilters(): void {
     this.categories = [];
-    this.visible = false;
+    this.visibleFilters = false;
   }
 
   selectedCat: string = '';
@@ -99,9 +81,8 @@ export class TransactionsComponent implements OnInit {
     this.selectedCat = catName;
   }
 
-  showDot = false;
   apply() {
-    this.close();
+    this.closeFilters();
     if (this.selectedCat) {
       this.allTransactions = this.allTransactions.filter(
         (transaction: any) => transaction.data.category === this.selectedCat
@@ -114,5 +95,56 @@ export class TransactionsComponent implements OnInit {
     this.selectedCat = '';
     this.showDot = false;
     this.allTransactions = this.globalList;
+  }
+
+  openSort() {
+    this.visibleSorting = true;
+  }
+
+  closeSort() {
+    this.visibleSorting = false;
+  }
+
+  sort() {
+    let sortedlist = [];
+    switch (this.sortingType) {
+      case 'date-asc':
+        sortedlist = this.allTransactions.sort((a: any, b: any) => {
+          return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
+        });
+        break;
+
+      case 'date-desc':
+        sortedlist = this.allTransactions.sort((a: any, b: any) => {
+          return new Date(a.data.date) > new Date(b.data.date) ? 1 : -1;
+        });
+        break;
+
+      case 'name-asc':
+        sortedlist = this.allTransactions.sort((a: any, b: any) => {
+          return a.data.title > b.data.title ? 1 : -1;
+        });
+        break;
+
+      case 'name-desc':
+        sortedlist = this.allTransactions.sort((a: any, b: any) => {
+          return a.data.title > b.data.title ? -1 : 1;
+        });
+        break;
+
+      case 'amount-asc':
+        sortedlist = this.allTransactions.sort((a: any, b: any) => {
+          return a.data.amount > b.data.amount ? -1 : 1;
+        });
+        break;
+
+      case 'amount-desc':
+        sortedlist = this.allTransactions.sort((a: any, b: any) => {
+          return a.data.amount > b.data.amount ? 1 : -1;
+        });
+        break;
+    }
+    this.allTransactions = sortedlist;
+    this.closeSort();
   }
 }

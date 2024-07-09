@@ -14,26 +14,77 @@
   >
     <span class="capitalize lg:inline leading-5">Clear</span>
     &nbsp;
-    <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    <svg
+      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
     </svg>
   </button>
   <button
     type="button"
-    (click)="open()"
+    (click)="openFilters()"
     class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <nz-badge [nzDot]="showDot">
       <span class="capitalize lg:inline leading-5">Filters</span>
     </nz-badge>
     &nbsp;
-    <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-      <path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"/>
+    <svg
+      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-width="1.5"
+        d="M20 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6h-2m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4m16 6H10m0 0a2 2 0 1 0-4 0m4 0a2 2 0 1 1-4 0m0 0H4"
+      />
+    </svg>
+  </button>
+
+  <button
+    type="button"
+    (click)="openSort()"
+    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+  >
+    <span class="capitalize lg:inline leading-5">Sort</span>
+    &nbsp;
+    <svg
+      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        d="M8 20V10m0 10-3-3m3 3 3-3m5-13v10m0-10 3 3m-3-3-3 3"
+      />
     </svg>
   </button>
 </div>
-
-
 
 <!-- component -->
 <div class="mx-auto flex flex-col justify-center items-center p-1 w-full">
@@ -44,7 +95,7 @@
         (click)="onTxn(txn.id)"
       >
         <div
-          class="flex flex-col rounded-md w-10 h-10 bg-indigo-100 justify-center items-center mr-4"
+          class="flex flex-col rounded-md w-10 h-10 bg-gray-100 justify-center items-center mr-4"
         >
           <img
             [src]="getIcon(txn.data.category)"
@@ -53,9 +104,11 @@
         </div>
         <div class="flex-1 pl-1 mr-16">
           <div class="font-medium">{{ txn.data.title }}</div>
-          <div class="text-gray-500 text-xs">{{ txn.data.date | date }}</div>
+          <div class="text-gray-500 text-xs mt-1">
+            {{ txn.data.date | date }}
+          </div>
         </div>
-        <div class="text-sm text-indigo-600 font-semibold">
+        <div class="text-lg text-indigo-600 font-semibold">
           ₹ {{ txn.data.amount | number }}
         </div>
       </div>
@@ -72,11 +125,11 @@
 <nz-drawer
   [nzClosable]="true"
   [nzCloseIcon]="'close-circle'"
-  [nzVisible]="visible"
+  [nzVisible]="visibleFilters"
   [nzPlacement]="'bottom'"
   nzTitle="Filters"
   [nzExtra]="extra"
-  (nzOnClose)="close()"
+  (nzOnClose)="closeFilters()"
 >
   <ng-container *nzDrawerContent>
     <p class="ml-2 text-bold">Category</p>
@@ -108,9 +161,32 @@
   <button
     nz-button
     nzType="primary"
-    class="bg-indigo-500 hover:bg-indigo-600 rounded-full w-full"
+    class="bg-indigo-500 hover:bg-indigo-600 rounded-lg w-full"
     (click)="apply()"
   >
     Apply
   </button>
 </ng-template>
+
+<nz-drawer
+  [nzClosable]="true"
+  [nzCloseIcon]="'close-circle'"
+  [nzVisible]="visibleSorting"
+  [nzPlacement]="'bottom'"
+  nzTitle="Sort"
+  [nzExtra]="extra"
+  (nzOnClose)="closeSort()"
+>
+  <ng-container *nzDrawerContent>
+    <div class="flex flex-wrap items-center ml-2 mt-2">
+      <nz-radio-group [(ngModel)]="sortingType" (ngModelChange)="sort()">
+        <label nz-radio nzValue="date-asc">Date (Newest)</label>
+        <label nz-radio nzValue="date-desc">Date (Oldest)</label>
+        <label nz-radio nzValue="amount-asc">Amount (Highest)</label>
+        <label nz-radio nzValue="amount-desc">Amount (Lowest)</label>
+        <label nz-radio nzValue="name-asc">Expense Name (a-z)</label>
+        <label nz-radio nzValue="name-desc">Expense Name (z-a)</label>
+      </nz-radio-group>
+    </div>
+  </ng-container>
+</nz-drawer>

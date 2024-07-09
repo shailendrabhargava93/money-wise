@@ -1,4 +1,4 @@
-<div class="h-full w-full">
+<div class="w-full">
   <!-- <div class="flex flex-wrap gap-4 justify-center pt-8">
     <div
       class="flex flex-col gap-2 h-40 rounded-xl shadow-md p-6 max-w-[240px] border border-indigo-600"
@@ -22,12 +22,12 @@
     </div>
   </div> -->
 
-  <div class="flex flex-wrap gap-4 justify-center pt-8">
+  <div class="flex flex-wrap gap-4 justify-center pt-6">
     <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
-        Category Wise Spend
+        Expenditure by Category
       </h2>
-      <div class="bg-gradient-to-r from-cyan-200 to-indigo-500 h-px mb-6"></div>
+      <div class="bg-gradient-to-r from-indigo-200 to-indigo-500 h-px mb-6"></div>
       <canvas
         baseChart
         [type]="'pie'"
@@ -38,6 +38,23 @@
         [legend]="pieChartLegend"
       >
       </canvas>
+    </div>
+  </div>
+
+  <!-- bar -->
+  <div class="flex flex-wrap gap-4 justify-center pt-6">
+    <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200">
+      <h2 class="text-gray-500 text-md font-semibold pb-1">
+        Day-by-Day Expenditure
+      </h2>
+      <div class="bg-gradient-to-r from-indigo-200 to-indigo-500 h-px mb-6"></div>
+      <div style="display: block;" class="chart">
+        <canvas baseChart
+          [datasets]="chartData"
+          [labels]="chartLabels"
+          chartType="bar"
+        ></canvas>
+      </div>
     </div>
   </div>
 </div>

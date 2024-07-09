@@ -7,3 +7,10 @@
 ::ng-deep.ant-empty-image{
   display: inline-block;
 }
+
+
+[nz-radio] {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+}

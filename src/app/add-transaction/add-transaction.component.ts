@@ -64,13 +64,20 @@ export class AddTransactionComponent implements OnInit {
   submitForm(): void {
     if (this.form.valid) {
       this.app.showSpinner();
-      this.app.createTransaction(this.form.value).subscribe((res) => {
-        if (res) {
+      this.app.createTransaction(this.form.value).subscribe(
+        (res) => {
+          if (res) {
+            this.app.hideSpinner();
+            this.message.success(`Transaction added !`);
+            this.router.navigate(['transactions']);
+          }
+        },
+        (err) => {
           this.app.hideSpinner();
-          this.message.success(`Transaction added !`);
-          this.router.navigate(['transactions']);
+          console.error(err);
+          this.message.error(`An error occurred: ${err.message}`);
         }
-      });
+      );
     } else {
       Object.values(this.form.controls).forEach((control) => {
         if (control.invalid) {
@@ -95,15 +102,20 @@ export class AddTransactionComponent implements OnInit {
   updateTxn() {
     if (this.form.valid) {
       this.app.showSpinner();
-      this.app
-        .updateTransaction(this.txnId, this.form.value)
-        .subscribe((res) => {
+      this.app.updateTransaction(this.txnId, this.form.value).subscribe(
+        (res) => {
           if (res) {
             this.app.hideSpinner();
             this.message.success(`Transaction updated !`);
             this.router.navigate(['transactions']);
           }
-        });
+        },
+        (err) => {
+          this.app.hideSpinner();
+          console.error(err);
+          this.message.error(`An error occurred: ${err.message}`);
+        }
+      );
     }
   }
 }

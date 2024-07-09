@@ -19,7 +19,6 @@ export class AddBudgetComponent {
     private app: AppService,
     private message: NzMessageService,
     private router: Router,
-    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       startDate: [null, [Validators.required]],
@@ -44,13 +43,20 @@ export class AddBudgetComponent {
   createBudget(): void {
     if (this.form.valid) {
       this.app.showSpinner();
-      this.app.createBudget(this.form.value).subscribe((res) => {
-        if (res) {
+      this.app.createBudget(this.form.value).subscribe(
+        (res) => {
+          if (res) {
+            this.app.hideSpinner();
+            this.message.success(`Budget created !`);
+            this.router.navigate(['budgets']);
+          }
+        },
+        (err) => {
+          console.error(err);
           this.app.hideSpinner();
-          this.message.success(`Budget created !`);
-          this.router.navigate(['budgets']);
+          this.message.error(`An error occurred: ${err.message}`);
         }
-      });
+      );
     } else {
       Object.values(this.form.controls).forEach((control) => {
         if (control.invalid) {

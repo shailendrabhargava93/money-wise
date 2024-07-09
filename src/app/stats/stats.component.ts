@@ -23,6 +23,15 @@ export class StatsComponent implements OnInit {
   public pieChartLegend = true;
   public pieChartPlugins = [];
 
+  //bar
+  public chartType: string = 'line';
+  public chartLabels: string[] = [];
+  public chartData: any[] = [
+    {
+      data: [],
+    },
+  ];
+
   constructor(private app: AppService) {}
   ngOnInit(): void {
     this.app.userEmail
@@ -37,10 +46,7 @@ export class StatsComponent implements OnInit {
         if (data) {
           const output = data as any[];
           if (output.length > 0) {
-            const { categories, amounts } =
-              this.getCategoriesAndAmounts(output);
-            console.log('Categories:', categories);
-            console.log('Amounts:', amounts);
+            this.getCategoriesAndAmounts(output);
           }
         }
       });
@@ -63,13 +69,39 @@ export class StatsComponent implements OnInit {
     return categorySum;
   }
 
-  getCategoriesAndAmounts(transactions: any[]): {
-    categories: string[];
-    amounts: number[];
-  } {
+  sumAmountByDate(transactions: any[]): Record<string, number> {
+    const dateSum: Record<string, number> = {};
+
+    for (const transaction of transactions) {
+      const moddate = new Date(transaction.data.date);
+
+      const formattedDate = moddate.toLocaleDateString('en-US', {
+        day: '2-digit',
+        month: 'short',
+      });
+
+      console.log(formattedDate);
+      const amount = transaction.data.amount;
+
+      if (formattedDate in dateSum) {
+        dateSum[formattedDate] += amount;
+      } else {
+        dateSum[formattedDate] = amount;
+      }
+    }
+
+    return dateSum;
+  }
+
+  getCategoriesAndAmounts(transactions: any[]) {
     const categorySum = this.sumAmountByCategory(transactions);
+    const dateSum = this.sumAmountByDate(transactions);
+
     const categories: string[] = [];
     const amounts: number[] = [];
+
+    const dates: string[] = [];
+    const dateAmounts: number[] = [];
 
     for (const category in categorySum) {
       if (categorySum.hasOwnProperty(category)) {
@@ -83,6 +115,20 @@ export class StatsComponent implements OnInit {
         data: amounts.map((el) => el),
       },
     ];
-    return { categories, amounts };
+
+    for (const date in dateSum) {
+      if (dateSum.hasOwnProperty(date)) {
+        dates.push(date);
+        dateAmounts.push(dateSum[date]);
+      }
+    }
+
+    this.chartLabels = dates.sort();
+    this.chartData = [
+      {
+        data: dateAmounts.map((el) => el),
+        label: 'Amount',
+      },
+    ];
   }
 }
