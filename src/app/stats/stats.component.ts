@@ -10,9 +10,9 @@ import { ChartOptions } from 'chart.js';
 })
 export class StatsComponent implements OnInit {
   // Pie
-  public pieChartOptions: ChartOptions<'pie'> = {
+  public pieChartOptions: ChartOptions<'doughnut'> = {
     responsive: false,
-    plugins: { legend: { position: 'bottom' } },
+    plugins: { legend: { position: 'right' } },
   };
   public pieChartLabels: any[] = [];
   public pieChartDatasets: any[] = [

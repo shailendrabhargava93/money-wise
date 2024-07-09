@@ -10,9 +10,9 @@
     *ngIf="showDot"
     type="button"
     (click)="clear()"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-3 ml-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-2 ml-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
-    <span class="capitalize lg:inline leading-5">Clear</span>
+    <span class="capitalize lg:inline">Clear</span>
     &nbsp;
     <svg
       class="w-[18px] h-[18px] text-gray-800 dark:text-white"
@@ -35,10 +35,10 @@
   <button
     type="button"
     (click)="openFilters()"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <nz-badge [nzDot]="showDot">
-      <span class="capitalize lg:inline leading-5">Filters</span>
+      <span class="capitalize lg:inline">Filters</span>
     </nz-badge>
     &nbsp;
     <svg
@@ -62,9 +62,9 @@
   <button
     type="button"
     (click)="openSort()"
-    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
-    <span class="capitalize lg:inline leading-5">Sort</span>
+    <span class="capitalize lg:inline">Sort</span>
     &nbsp;
     <svg
       class="w-[18px] h-[18px] text-gray-800 dark:text-white"
@@ -174,18 +174,47 @@
   [nzVisible]="visibleSorting"
   [nzPlacement]="'bottom'"
   nzTitle="Sort"
-  [nzExtra]="extra"
   (nzOnClose)="closeSort()"
 >
   <ng-container *nzDrawerContent>
     <div class="flex flex-wrap items-center ml-2 mt-2">
       <nz-radio-group [(ngModel)]="sortingType" (ngModelChange)="sort()">
-        <label nz-radio nzValue="date-asc">Date (Newest)</label>
-        <label nz-radio nzValue="date-desc">Date (Oldest)</label>
-        <label nz-radio nzValue="amount-asc">Amount (Highest)</label>
-        <label nz-radio nzValue="amount-desc">Amount (Lowest)</label>
-        <label nz-radio nzValue="name-asc">Expense Name (a-z)</label>
-        <label nz-radio nzValue="name-desc">Expense Name (z-a)</label>
+        <label
+          class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+          nz-radio
+          nzValue="date-asc"
+          >Date (Newest)</label
+        >
+        <label
+          class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+          nz-radio
+          nzValue="date-desc"
+          >Date (Oldest)</label
+        >
+        <label
+          class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+          nz-radio
+          nzValue="amount-asc"
+          >Amount (Highest)</label
+        >
+        <label
+          class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+          nz-radio
+          nzValue="amount-desc"
+          >Amount (Lowest)</label
+        >
+        <label
+          class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+          nz-radio
+          nzValue="name-asc"
+          >Expense Name (a-z)</label
+        >
+        <label
+          class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+          nz-radio
+          nzValue="name-desc"
+          >Expense Name (z-a)</label
+        >
       </nz-radio-group>
     </div>
   </ng-container>
