@@ -108,12 +108,17 @@
   [nzNotFoundContent]="'You have no budgets'"
 ></nz-empty>
 
-<nz-modal
-  [(nzVisible)]="isVisible"
+<!-- modal invite -->
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="isVisible"
+  [nzPlacement]="'bottom'"
   nzTitle="Invite Partner or Family members"
-  (nzOnCancel)="oncancel()"
+  [nzExtra]="extra"
+  (nzOnClose)="oncancel()"
 >
-  <ng-container *nzModalContent>
+  <ng-container *nzDrawerContent>
     <nz-form-control nzHasFeedback nzErrorTip="Email is not valid">
       <nz-input-group [nzPrefix]="prefixTemplateUser">
         <input
@@ -153,15 +158,23 @@
         </div>
       </nz-list-item>
     </nz-list>
-  </ng-container>
-  <div *nzModalFooter>
+    <br />
     <button
       nz-button
-      class="bg-indigo-500 text-white hover:bg-indigo-600 hover:text-white"
+      class="bg-indigo-500 text-white float-right"
       (click)="handleShare()"
       [nzLoading]="isConfirmLoading"
     >
       Send Invite
     </button>
-  </div>
-</nz-modal>
+  </ng-container>
+</nz-drawer>
+<ng-template #extra>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="oncancel()"
+  ></span>
+</ng-template>
