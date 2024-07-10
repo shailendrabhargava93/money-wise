@@ -6,6 +6,7 @@
 
 ::ng-deep.ant-empty-image{
   display: inline-block;
+  margin-top: 10%;
 }
 
 
@@ -13,4 +14,8 @@
   display: flex;
   align-items: flex-start;
   margin-top: 3px;
+}
+
+[nz-icon]{
+  font-size: 18px;
 }

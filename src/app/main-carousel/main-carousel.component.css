@@ -1,0 +1,17 @@
+
+::ng-deep.ant-carousel .slick-dots li {
+  background: #adacac;
+}
+
+::ng-deep.ant-carousel .slick-dots li.slick-active {
+  width: 24px;
+  background: #4f46e5 ;
+}
+
+::ng-deep.ant-carousel .slick-dots li.slick-active button{
+  opacity: 0 !important;
+}
+
+::ng-deep.ant-carousel .slick-dots-bottom {
+  bottom: 0px;
+}

@@ -10,7 +10,7 @@
     *ngIf="showDot"
     type="button"
     (click)="clear()"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-2 ml-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 ml-1 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <span class="capitalize lg:inline">Clear</span>
     &nbsp;
@@ -35,7 +35,7 @@
   <button
     type="button"
     (click)="openFilters()"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <nz-badge [nzDot]="showDot">
       <span class="capitalize lg:inline">Filters</span>
@@ -62,7 +62,7 @@
   <button
     type="button"
     (click)="openSort()"
-    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-2 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <span class="capitalize lg:inline">Sort</span>
     &nbsp;
@@ -123,8 +123,7 @@
 ></nz-empty>
 
 <nz-drawer
-  [nzClosable]="true"
-  [nzCloseIcon]="'close-circle'"
+  [nzClosable]="false"
   [nzVisible]="visibleFilters"
   [nzPlacement]="'bottom'"
   nzTitle="Filters"
@@ -158,22 +157,29 @@
   </ng-container>
 </nz-drawer>
 <ng-template #extra>
-  <button
-    nz-button
-    nzType="primary"
-    class="bg-indigo-500 hover:bg-indigo-600 rounded-lg w-full"
+  <span
+    class="cursor-pointer mr-4"
+    nz-icon
+    nzType="check-circle"
+    nzTheme="outline"
     (click)="apply()"
-  >
-    Apply
-  </button>
+  ></span>
+
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="closeFilters()"
+  ></span>
 </ng-template>
 
 <nz-drawer
-  [nzClosable]="true"
-  [nzCloseIcon]="'close-circle'"
+  [nzClosable]="false"
   [nzVisible]="visibleSorting"
   [nzPlacement]="'bottom'"
   nzTitle="Sort"
+  [nzExtra]="extrasort"
   (nzOnClose)="closeSort()"
 >
   <ng-container *nzDrawerContent>
@@ -219,3 +225,12 @@
     </div>
   </ng-container>
 </nz-drawer>
+<ng-template #extrasort>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="closeSort()"
+  ></span>
+</ng-template>

@@ -10,12 +10,12 @@ import { catchError, of, switchMap } from 'rxjs';
   styleUrls: ['./budgets.component.css'],
 })
 export class BudgetsComponent implements OnInit {
-  budgets!: any[];
+  budgets: any[] = [];
   isVisible = false;
   isConfirmLoading = false;
   userEmail: string | null = null;
   budgetId: string | null = null;
-  users!: string[];
+  users!: any[];
 
   constructor(
     private app: AppService,
@@ -42,10 +42,20 @@ export class BudgetsComponent implements OnInit {
       });
   }
 
-  onshare(budgetId: string, users: string[]) {
+  onshare(budgetId: string, users: string[], createdBy: string) {
     this.isVisible = true;
     this.budgetId = budgetId;
-    this.users = users;
+    this.users = this.modifyrUsers(users, createdBy);
+  }
+
+  modifyrUsers(users: string[], createdBy: string) {
+    return users.map((user) => {
+      if (user !== createdBy) {
+        return { email: user, delete: true };
+      } else {
+        return { email: user, delete: false };
+      }
+    });
   }
 
   oncancel() {
@@ -63,14 +73,23 @@ export class BudgetsComponent implements OnInit {
         this.notification.error('Please enter valid gmail id');
         return;
       }
+      this.app.showSpinner();
       this.isConfirmLoading = true;
-      this.app.share(this.budgetId, this.userEmail).subscribe((data) => {
-        if (data) {
-          this.isConfirmLoading = false;
-          this.notification.success('Invitation sent !');
-          this.oncancel();
+      this.app.share(this.budgetId, this.userEmail).subscribe(
+        (data) => {
+          if (data) {
+            this.app.hideSpinner();
+            this.isConfirmLoading = false;
+            this.notification.success('Invitation sent !');
+            this.oncancel();
+          }
+        },
+        (error) => {
+          this.app.hideSpinner();
+          console.error('An error occurred:', error);
+          this.notification.error('An error occurred while Sending invite.');
         }
-      });
+      );
     } else {
       this.notification.error('Please enter valid gmail id');
     }
@@ -85,23 +104,37 @@ export class BudgetsComponent implements OnInit {
   markCompleted() {
     this.app.showSpinner();
     this.budgetId = this.budgetId as string;
-    this.app.update(this.budgetId, STATUS.COMPLETED).subscribe((data) => {
-      if (data) {
+    this.app.update(this.budgetId, STATUS.COMPLETED).subscribe(
+      (data) => {
+        if (data) {
+          this.app.hideSpinner();
+          this.notification.success('updated successfully !');
+        }
+      },
+      (error) => {
         this.app.hideSpinner();
-        this.notification.success('updated successully !');
+        console.error('An error occurred:', error);
+        this.notification.error('An error occurred while updating.');
       }
-    });
+    );
   }
 
   markDeleted() {
     this.app.showSpinner();
     this.budgetId = this.budgetId as string;
-    this.app.update(this.budgetId, STATUS.DELETED).subscribe((data) => {
-      if (data) {
+    this.app.update(this.budgetId, STATUS.DELETED).subscribe(
+      (data) => {
+        if (data) {
+          this.app.hideSpinner();
+          this.notification.success('updated successully !');
+        }
+      },
+      (error) => {
         this.app.hideSpinner();
-        this.notification.success('updated successully !');
+        console.error('An error occurred:', error);
+        this.notification.error('An error occurred while updating.');
       }
-    });
+    );
   }
 
   confirm(budgetId: string, type: string): void {

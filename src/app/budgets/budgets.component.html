@@ -9,16 +9,30 @@
   <button
     type="button"
     [routerLink]="['/add-budget']"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-3 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
-    <span class="capitalize lg:inline leading-5">New budget</span> &nbsp;
-    <svg class="w-[18px] h-[18px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+    <span class="capitalize lg:inline leading-5">New</span> &nbsp;
+    <svg
+      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.2"
+        d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
     </svg>
   </button>
 </div>
 
-<div class="p-1">
+<div class="p-1 mt-2">
   <div
     *ngFor="let budget of budgets"
     class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4 hover:shadow-2xl transition duration-500 transform hover:scale-105"
@@ -43,7 +57,7 @@
       </span>
       <span
         class="float-right text-white cursor-pointer mt-1"
-        (click)="onshare(budget.id, budget.data.users)"
+        (click)="onshare(budget.id, budget.data.users, budget.data.createdBy)"
         nz-icon
         style="font-size: 20px"
         nzType="usergroup-add"
@@ -62,7 +76,7 @@
         [nzShowInfo]="true"
         [nzStrokeColor]="{ '0%': '#918bf5', '100%': '#4f46e5' }"
         nzStatus="active"
-        [nzStrokeWidth]="8"
+        [nzStrokeWidth]="10"
       ></nz-progress>
     </p>
     <div class="flex justify-center px-5 mb-2 text-sm">
@@ -118,25 +132,36 @@
     <br />
     <nz-list nzBordered>
       <nz-list-item *ngFor="let user of users">
-        <span class="flex flex-row">
-          <nz-avatar
-            nzIcon="user"
-            style="background-color: rgb(86, 86, 241)"
-          ></nz-avatar>
-          &nbsp;
-          <span nz-typography>{{ user }}</span>
-        </span>
+        <div class="contents">
+          <span class="float-left">
+            <nz-avatar
+              nzIcon="user"
+              style="background-color: rgb(86, 86, 241)"
+            ></nz-avatar>
+            &nbsp;
+            <span nz-typography>{{ user.email }}</span>
+          </span>
+          <!-- need method to remove user -->
+          <!-- <span
+            *ngIf="user.delete"
+            class="cursor-pointer float-right"
+            nz-icon
+            nzType="close-circle"
+            nzTheme="outline"
+            (click)="updateUser(user.email)"
+          ></span> -->
+        </div>
       </nz-list-item>
     </nz-list>
   </ng-container>
   <div *nzModalFooter>
     <button
       nz-button
-      class="bg-indigo-500 hover:bg-indigo-400 text-white"
+      class="bg-indigo-500 text-white hover:bg-indigo-600 hover:text-white"
       (click)="handleShare()"
       [nzLoading]="isConfirmLoading"
     >
-      Invite
+      Send Invite
     </button>
   </div>
 </nz-modal>
