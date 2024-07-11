@@ -51,3 +51,8 @@ button.active > span{
 ::ng-deep.ant-spin-dot-item {
   background-color: #4f46e5 !important;
 }
+
+
+::ng-deep.ant-spin-nested-loading>div>.ant-spin .ant-spin-text{
+  color: #4f46e5;
+}

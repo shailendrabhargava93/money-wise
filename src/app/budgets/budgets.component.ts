@@ -10,7 +10,7 @@ import { catchError, of, switchMap } from 'rxjs';
   styleUrls: ['./budgets.component.css'],
 })
 export class BudgetsComponent implements OnInit {
-  budgets: any[] = [];
+  budgets!: any[];
   isVisible = false;
   isConfirmLoading = false;
   userEmail: string | null = null;

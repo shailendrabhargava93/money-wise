@@ -74,14 +74,12 @@ export class StatsComponent implements OnInit {
 
     for (const transaction of transactions) {
       const moddate = new Date(transaction.data.date);
+      const amount = transaction.data.amount;
 
       const formattedDate = moddate.toLocaleDateString('en-US', {
         day: '2-digit',
         month: 'short',
       });
-
-      console.log(formattedDate);
-      const amount = transaction.data.amount;
 
       if (formattedDate in dateSum) {
         dateSum[formattedDate] += amount;
@@ -97,11 +95,13 @@ export class StatsComponent implements OnInit {
     const categorySum = this.sumAmountByCategory(transactions);
     const dateSum = this.sumAmountByDate(transactions);
 
+    console.log(categorySum, dateSum);
+
     const categories: string[] = [];
     const amounts: number[] = [];
 
     const dates: string[] = [];
-    const dateAmounts: number[] = [];
+    let dateAmounts: number[] = [];
 
     for (const category in categorySum) {
       if (categorySum.hasOwnProperty(category)) {
