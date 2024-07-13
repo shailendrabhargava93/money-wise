@@ -50,8 +50,9 @@
             {{
               budget.data.totalBudget - budget.data.spentAmount | number
             }}</span
-          >
-          left of
+          >&nbsp;
+          <span *ngIf="isOverspent(budget)">overspent of</span>
+          <span *ngIf="!isOverspent(budget)">left of</span>
           {{ budget.data.totalBudget | number }}
         </p>
       </span>
@@ -73,9 +74,8 @@
       }}</span>
       <nz-progress
         [nzPercent]="getSpentPerc(budget)"
-        [nzShowInfo]="true"
-        [nzStrokeColor]="{ '0%': '#918bf5', '100%': '#4f46e5' }"
-        nzStatus="active"
+        [nzShowInfo]="isOverspent(budget) ? false : true"
+        [nzStatus]="isOverspent(budget) ? 'exception' : 'active'"
         [nzStrokeWidth]="10"
       ></nz-progress>
     </p>

@@ -147,4 +147,8 @@ export class BudgetsComponent implements OnInit {
       this.markCompleted();
     }
   }
+
+  isOverspent(budget: any) {
+    return budget.data.totalBudget - budget.data.spentAmount < 0 ? true : false;
+  }
 }
