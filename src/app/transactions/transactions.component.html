@@ -6,7 +6,7 @@
       class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-500 rounded-full"
     ></span>
   </div>
-  <button
+  <!-- <button
     *ngIf="showDot"
     type="button"
     (click)="clear()"
@@ -31,7 +31,7 @@
         d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
       />
     </svg>
-  </button>
+  </button> -->
   <button
     type="button"
     (click)="openFilters()"
@@ -128,11 +128,12 @@
   [nzPlacement]="'bottom'"
   nzTitle="Filters"
   [nzExtra]="extra"
+  [nzFooter]="filterFooter"
   (nzOnClose)="closeFilters()"
 >
   <ng-container *nzDrawerContent>
-    <p class="ml-2 text-bold">Category</p>
-    <div class="flex flex-wrap items-center ml-2 mt-2">
+    <p class="text-bold">Category</p>
+    <div class="flex flex-wrap items-center mt-2">
       <button
         type="button"
         *ngFor="let cat of categories"
@@ -156,15 +157,29 @@
     </div>
   </ng-container>
 </nz-drawer>
-<ng-template #extra>
-  <span
-    class="cursor-pointer mr-4"
-    nz-icon
-    nzType="check-circle"
-    nzTheme="outline"
-    (click)="apply()"
-  ></span>
 
+<ng-template #filterFooter>
+  <div nz-row class="flex content-evenly">
+    <button
+      nz-button
+      class="bg-white text-indigo-500 hover:bg-indigo-600 hover:text-white rounded-full w-2/5"
+      nzType="primary"
+      (click)="clear()"
+    >
+      Clear
+    </button>
+    &nbsp;
+    <button
+      nz-button
+      class="bg-indigo-500 hover:bg-indigo-600 hover:text-white rounded-full w-2/5"
+      nzType="primary"
+      (click)="apply()"
+    >
+      Apply
+    </button>
+  </div>
+</ng-template>
+<ng-template #extra>
   <span
     class="cursor-pointer"
     nz-icon

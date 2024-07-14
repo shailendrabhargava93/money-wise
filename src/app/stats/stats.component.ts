@@ -12,7 +12,7 @@ export class StatsComponent implements OnInit {
   // Pie
   public pieChartOptions: ChartOptions<'doughnut'> = {
     responsive: false,
-    plugins: { legend: { position: 'right' } },
+    plugins: { legend: { display: false } },
   };
   public pieChartLabels: any[] = [];
   public pieChartDatasets: any[] = [
@@ -20,8 +20,6 @@ export class StatsComponent implements OnInit {
       data: [],
     },
   ];
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
 
   //bar
   public chartType: string = 'line';
@@ -73,22 +71,23 @@ export class StatsComponent implements OnInit {
     const dateSum: Record<string, number> = {};
 
     for (const transaction of transactions) {
-      const moddate = new Date(transaction.data.date);
+      const moddate = transaction.data.date;
       const amount = transaction.data.amount;
 
-      const formattedDate = moddate.toLocaleDateString('en-US', {
-        day: '2-digit',
-        month: 'short',
-      });
-
-      if (formattedDate in dateSum) {
-        dateSum[formattedDate] += amount;
+      if (moddate in dateSum) {
+        dateSum[moddate] += amount;
       } else {
-        dateSum[formattedDate] = amount;
+        dateSum[moddate] = amount;
       }
     }
 
-    return dateSum;
+    const sortedKeys = Object.keys(dateSum).sort();
+    let sortedData: { [key: string]: number } = {};
+    for (let key of sortedKeys) {
+      sortedData[key] = dateSum[key];
+    }
+
+    return sortedData;
   }
 
   getCategoriesAndAmounts(transactions: any[]) {
@@ -113,17 +112,26 @@ export class StatsComponent implements OnInit {
     this.pieChartDatasets = [
       {
         data: amounts.map((el) => el),
+        backgroundColor: this.colorScheme.slice(0, amounts.length),
+        borderColor: this.colorScheme.slice(0, amounts.length),
+        hoverBackgroundColor: this.colorScheme.slice(0, amounts.length),
+        hoverBorderColor: this.colorScheme.slice(0, amounts.length),
+        hoverOffset: 15,
       },
     ];
 
     for (const date in dateSum) {
       if (dateSum.hasOwnProperty(date)) {
-        dates.push(date);
+        const formattedDate = new Date(date).toLocaleDateString('en-US', {
+          day: '2-digit',
+          month: 'short',
+        });
+        dates.push(formattedDate);
         dateAmounts.push(dateSum[date]);
       }
     }
 
-    this.chartLabels = dates.sort();
+    this.chartLabels = dates;
     this.chartData = [
       {
         data: dateAmounts.map((el) => el),
@@ -131,4 +139,21 @@ export class StatsComponent implements OnInit {
       },
     ];
   }
+
+  colorScheme = [
+    '#FEA47F',
+    '#25CCF7',
+    '#EAB543',
+    '#FC427B',
+    '#20bf6b',
+    '#3B3B98',
+    '#82589F',
+    '#55E6C1',
+    '#B33771',
+    '#D6A2E8',
+    '#BDC581',
+    '#0fb9b1',
+    '#ea8685',
+    '#9AECDB',
+  ];
 }

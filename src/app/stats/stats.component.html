@@ -22,8 +22,8 @@
     </div>
   </div> -->
 
-  <div class="flex flex-wrap gap-4 justify-center pt-6">
-    <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200">
+  <div class="flex flex-wrap gap-4 justify-center pt-4">
+    <div class="flex flex-col rounded-xl shadow-md p-4 border border-gray-200 w-96">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
         Expenditure by Category
       </h2>
@@ -34,8 +34,6 @@
         [datasets]="pieChartDatasets"
         [labels]="pieChartLabels"
         [options]="pieChartOptions"
-        [plugins]="pieChartPlugins"
-        [legend]="pieChartLegend"
       >
       </canvas>
     </div>
@@ -43,7 +41,7 @@
 
   <!-- bar -->
   <div class="flex flex-wrap gap-4 justify-center pt-3 mb-6">
-    <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200">
+    <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200 w-96">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
         Day-by-Day Expenditure
       </h2>

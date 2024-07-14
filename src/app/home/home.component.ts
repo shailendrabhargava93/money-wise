@@ -1,6 +1,6 @@
 import { AppService } from './../app.service';
 import { Component } from '@angular/core';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
