@@ -104,7 +104,7 @@
 
 <nz-empty
   *ngIf="budgets && budgets.length === 0"
-  nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+  nzNotFoundImage="assets/No-data-pana.svg"
   [nzNotFoundContent]="'You have no budgets'"
 ></nz-empty>
 
@@ -119,22 +119,42 @@
   (nzOnClose)="oncancel()"
 >
   <ng-container *nzDrawerContent>
-    <nz-form-control nzHasFeedback nzErrorTip="Email is not valid">
-      <nz-input-group [nzPrefix]="prefixTemplateUser">
-        <input
-          nz-input
-          placeholder="Enter email"
-          [(ngModel)]="userEmail"
-          name="email"
-          email
-        />
-      </nz-input-group>
-    </nz-form-control>
-    <ng-template #prefixTemplateUser
-      ><span nz-icon nzType="user"></span
-    ></ng-template>
-    <br />
-    <br />
+    <form nz-form class="flex flex-row" [formGroup]="form">
+      <nz-form-item class="w-4/5">
+        <nz-form-control [nzErrorTip]="emailErrorTpl">
+          <nz-input-group>
+            <input
+              nz-input
+              placeholder="Enter email"
+              formControlName="email"
+              name="email"
+              email
+            />
+
+            <ng-template #emailErrorTpl let-control>
+              <span *ngIf="control.errors?.['pattern']">
+                Please enter valid google email id
+              </span>
+              <span *ngIf="control.errors?.['required']">
+                This is required
+              </span>
+            </ng-template>
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+      &nbsp;&nbsp;&nbsp;
+      <nz-form-item class="w-1/5">
+        <button
+          nz-button
+          class="primary float-right"
+          (click)="handleShare()"
+          [nzLoading]="isConfirmLoading"
+        >
+          Send Invite
+        </button>
+      </nz-form-item>
+    </form>
+    <br /><br />
     <nz-list nzBordered>
       <nz-list-item *ngFor="let user of users">
         <div class="contents">
@@ -158,15 +178,6 @@
         </div>
       </nz-list-item>
     </nz-list>
-    <br />
-    <button
-      nz-button
-      class="bg-indigo-500 text-white float-right"
-      (click)="handleShare()"
-      [nzLoading]="isConfirmLoading"
-    >
-      Send Invite
-    </button>
   </ng-container>
 </nz-drawer>
 <ng-template #extra>

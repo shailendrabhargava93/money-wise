@@ -56,3 +56,29 @@ button.active > span{
 ::ng-deep.ant-spin-nested-loading>div>.ant-spin .ant-spin-text{
   color: #4f46e5;
 }
+
+::ng-deep.primary{
+  background: #5e56ec !important;
+  color: white !important;
+}
+
+::ng-deep.primary:hover{
+  background:#4f46e5  !important;
+  color: white !important;
+}
+
+::ng-deep.secondary{
+  background: white !important;
+  color: #5e56ec !important;
+  border-color: #5e56ec !important;
+}
+
+::ng-deep.secondary:hover{
+  background:#4f46e5  !important;
+  color: white !important;
+}
+
+::ng-deep.ant-empty-image{
+  display: inline-block;
+  margin-top: 10%;
+}

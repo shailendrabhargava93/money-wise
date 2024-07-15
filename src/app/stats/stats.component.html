@@ -1,39 +1,17 @@
 <div class="w-full">
-  <!-- <div class="flex flex-wrap gap-4 justify-center pt-8">
-    <div
-      class="flex flex-col gap-2 h-40 rounded-xl shadow-md p-6 max-w-[240px] border border-indigo-600"
-    >
-      <div class="font-semibold text-lg text-center">Expense</div>
-      <div class="font-semibold text-5xl text-red-500">₹ 4200</div>
-    </div>
-
-    <div
-      class="flex flex-col gap-2 h-40 rounded-xl shadow-md p-6 max-w-[240px] border border-indigo-600"
-    >
-      <div class="font-semibold text-lg text-center">Upcoming</div>
-      <div class="font-semibold text-5xl text-cyan-500">₹ 1500</div>
-    </div>
-
-    <div
-      class="flex flex-col gap-2 h-40 rounded-xl shadow-md p-6 max-w-[240px] border border-indigo-600"
-    >
-      <div class="font-semibold text-lg text-center">Overdue</div>
-      <div class="font-semibold text-5xl text-yellow-500">₹ 1800</div>
-    </div>
-  </div> -->
-
+  <!-- doughnut  -->
   <div class="flex flex-wrap gap-4 justify-center pt-4">
-    <div class="flex flex-col rounded-xl shadow-md p-4 border border-gray-200 w-96">
+    <div class="flex flex-col rounded-xl shadow-md p-4 border border-gray-200 w-80">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
         Expenditure by Category
       </h2>
-      <div class="bg-gradient-to-r from-indigo-200 to-indigo-500 h-px mb-6"></div>
+      <div class="bg-gradient-to-r from-indigo-200 to-indigo-500 h-px mb-4"></div>
       <canvas
         baseChart
         [type]="'doughnut'"
-        [datasets]="pieChartDatasets"
-        [labels]="pieChartLabels"
-        [options]="pieChartOptions"
+        [datasets]="doughnutChartDatasets"
+        [labels]="doughnutChartLabels"
+        [options]="doughnutChartOptions"
       >
       </canvas>
     </div>
@@ -41,15 +19,16 @@
 
   <!-- bar -->
   <div class="flex flex-wrap gap-4 justify-center pt-3 mb-6">
-    <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200 w-96">
+    <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200 w-80">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
         Day-by-Day Expenditure
       </h2>
-      <div class="bg-gradient-to-r from-indigo-200 to-indigo-500 h-px mb-6"></div>
+      <div class="bg-gradient-to-r from-indigo-200 to-indigo-500 h-px mb-4"></div>
       <div style="display: block;" class="chart">
         <canvas baseChart
-          [datasets]="chartData"
-          [labels]="chartLabels"
+          [datasets]="barChartData"
+          [labels]="barChartLabels"
+          [options]="barChartOptions"
           chartType="bar"
         ></canvas>
       </div>

@@ -19,6 +19,10 @@ export class TransactionsComponent implements OnInit {
   visibleSorting = false;
   showDot = false;
 
+  selectedCat: string = '';
+  amountRange!: any[];
+  highestAmount!: number;
+
   constructor(private app: AppService, private router: Router) {}
 
   ngOnInit() {
@@ -42,6 +46,14 @@ export class TransactionsComponent implements OnInit {
           this.allTransactions = data as any[];
           if (this.allTransactions.length > 0) {
             this.sort();
+            let highestAmount = Math.max(
+              ...this.allTransactions.map(
+                (transaction) => transaction.data.amount
+              )
+            );
+            console.log(highestAmount);
+            this.highestAmount = highestAmount;
+            this.amountRange = [0, highestAmount];
             this.globalList = this.allTransactions;
           }
         }
@@ -76,7 +88,6 @@ export class TransactionsComponent implements OnInit {
     this.visibleFilters = false;
   }
 
-  selectedCat: string = '';
   onSelect(catName: string) {
     this.selectedCat = catName;
   }
@@ -89,11 +100,22 @@ export class TransactionsComponent implements OnInit {
       );
       this.showDot = true;
     }
+
+    if (this.amountRange.length > 0) {
+      console.log(this.amountRange);
+      this.allTransactions = this.allTransactions.filter(
+        (transaction: any) =>
+          transaction.data.amount >= this.amountRange[0] &&
+          transaction.data.amount <= this.amountRange[1]
+      );
+      this.showDot = true;
+    }
   }
 
   clear() {
     this.selectedCat = '';
     this.showDot = false;
+    this.amountRange = [0, this.highestAmount];
     this.allTransactions = this.globalList;
   }
 
@@ -103,6 +125,10 @@ export class TransactionsComponent implements OnInit {
 
   closeSort() {
     this.visibleSorting = false;
+  }
+
+  formatter(value: number): string {
+    return `₹ ${value}`;
   }
 
   sort() {
@@ -122,13 +148,13 @@ export class TransactionsComponent implements OnInit {
 
       case 'name-asc':
         sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.title > b.data.title ? 1 : -1;
+          return a.data.title.toLowerCase() > b.data.title.toLowerCase() ? 1 : -1;
         });
         break;
 
       case 'name-desc':
         sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.title > b.data.title ? -1 : 1;
+          return a.data.title.toLowerCase() > b.data.title.toLowerCase() ? -1 : 1;
         });
         break;
 

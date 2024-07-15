@@ -12,8 +12,8 @@ export interface User {
   providedIn: 'root',
 })
 export class AppService {
-  private BASE_URL = 'https://budget-app-backend-ten.vercel.app/';
-  //private BASE_URL = 'http://localhost:8000/';
+  //private BASE_URL = 'https://budget-app-backend-ten.vercel.app/';
+  private BASE_URL = 'http://localhost:8000/';
 
   public currentUserSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
@@ -76,12 +76,8 @@ export class AppService {
     return this.http.post(this.BASE_URL + `budget/create`, data);
   }
 
-  share(id: string, userEmail: string) {
-    return this.http.put(this.BASE_URL + `budget/share/${id}/${userEmail}`, {});
-  }
-
-  update(id: string, status: string) {
-    return this.http.put(this.BASE_URL + `budget/update/${id}/${status}`, {});
+  update(id: string, data:any) {
+    return this.http.put(this.BASE_URL + `budget/update/${id}`, data);
   }
 
   get isLoggedIn$(): Observable<boolean> {

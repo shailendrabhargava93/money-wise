@@ -94,8 +94,7 @@
     <button
       *ngIf="!isUpdate"
       nz-button
-      class="bg-indigo-500 hover:bg-indigo-600 hover:text-white  rounded-full w-full"
-      nzType="primary"
+      class="primary rounded-full w-full"
       (click)="submitForm()"
     >
       Add Transaction
@@ -103,8 +102,7 @@
     <button
       *ngIf="isUpdate"
       nz-button
-      class="bg-indigo-500 hover:bg-indigo-600 hover:text-white rounded-full w-full"
-      nzType="primary"
+      class="primary rounded-full w-full"
       (click)="updateTxn()"
     >
       Update Transaction

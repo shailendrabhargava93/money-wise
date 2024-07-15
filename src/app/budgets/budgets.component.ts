@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { STATUS } from './../status.enum';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
@@ -13,14 +14,26 @@ export class BudgetsComponent implements OnInit {
   budgets!: any[];
   isVisible = false;
   isConfirmLoading = false;
-  userEmail: string | null = null;
-  budgetId: string | null = null;
   users!: any[];
 
+  form: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
     private app: AppService,
     private notification: NzMessageService
-  ) {}
+  ) {
+    this.form = this.fb.group({
+      email: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern('^[a-z0-9](.?[a-z0-9]){5,}@gmail.com$'),
+        ],
+      ],
+      budgetId: [null],
+    });
+  }
 
   ngOnInit() {
     this.app.showSpinner();
@@ -44,7 +57,7 @@ export class BudgetsComponent implements OnInit {
 
   onshare(budgetId: string, users: string[], createdBy: string) {
     this.isVisible = true;
-    this.budgetId = budgetId;
+    this.form.get('budgetId')?.setValue(budgetId);
     this.users = this.modifyrUsers(users, createdBy);
   }
 
@@ -60,22 +73,20 @@ export class BudgetsComponent implements OnInit {
 
   oncancel() {
     this.isVisible = !this.isVisible;
-    this.budgetId = null;
-    this.userEmail = null;
+    this.form.get('budgetId')?.setValue(null);
+    this.form.get('email')?.setValue(null);
     this.users = [];
+    this.isConfirmLoading = false;
   }
 
   handleShare() {
-    if (this.userEmail && this.budgetId) {
-      this.budgetId = this.budgetId as string;
-      this.userEmail = this.userEmail as string;
-      if (!this.userEmail?.includes('@gmail.com')) {
-        this.notification.error('Please enter valid gmail id');
-        return;
-      }
+    if (this.form.valid) {
+      const form = this.form.value;
+      const budgetId = this.form.get('budgetId')?.value;
       this.app.showSpinner();
       this.isConfirmLoading = true;
-      this.app.share(this.budgetId, this.userEmail).subscribe(
+      const data = { users: [form.email] };
+      this.app.update(budgetId, data).subscribe(
         (data) => {
           if (data) {
             this.app.hideSpinner();
@@ -86,12 +97,18 @@ export class BudgetsComponent implements OnInit {
         },
         (error) => {
           this.app.hideSpinner();
+          this.isConfirmLoading = false;
           console.error('An error occurred:', error);
           this.notification.error('An error occurred while Sending invite.');
         }
       );
     } else {
-      this.notification.error('Please enter valid gmail id');
+      Object.values(this.form.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
     }
   }
 
@@ -103,8 +120,9 @@ export class BudgetsComponent implements OnInit {
 
   markCompleted() {
     this.app.showSpinner();
-    this.budgetId = this.budgetId as string;
-    this.app.update(this.budgetId, STATUS.COMPLETED).subscribe(
+    const budgetId = this.form.get('budgetId')?.value;
+    const data = { status: STATUS.COMPLETED };
+    this.app.update(budgetId, data).subscribe(
       (data) => {
         if (data) {
           this.app.hideSpinner();
@@ -121,8 +139,9 @@ export class BudgetsComponent implements OnInit {
 
   markDeleted() {
     this.app.showSpinner();
-    this.budgetId = this.budgetId as string;
-    this.app.update(this.budgetId, STATUS.DELETED).subscribe(
+    const budgetId = this.form.get('budgetId')?.value;
+    const data = { status: STATUS.DELETED };
+    this.app.update(budgetId, data).subscribe(
       (data) => {
         if (data) {
           this.app.hideSpinner();
@@ -138,7 +157,7 @@ export class BudgetsComponent implements OnInit {
   }
 
   confirm(budgetId: string, type: string): void {
-    this.budgetId = budgetId;
+    this.form.get('budgetId')?.setValue(budgetId);
     if (type === 'delete') {
       this.markDeleted();
     }

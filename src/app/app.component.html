@@ -66,7 +66,11 @@
       </div>
     </nz-header>
     <nz-content>
-      <nz-spin nzTip="Please wait..." [nzSize]="'large'" [nzSpinning]="isSpinning$ | async">
+      <nz-spin
+        nzTip="Please wait..."
+        [nzSize]="'large'"
+        [nzSpinning]="isSpinning$ | async"
+      >
         <div class="overflow-y-auto inner-content">
           <router-outlet></router-outlet>
         </div>
@@ -223,24 +227,30 @@
 <!-- no budget popup -->
 
 <nz-drawer
-  [nzClosable]="true"
-  [nzCloseIcon]="'close-circle'"
+  [nzClosable]="false"
   [nzVisible]="visible"
   [nzPlacement]="'bottom'"
-  nzTitle="Warning"
+  nzTitle="Info"
+  [nzExtra]="extra"
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>
-    <div class="flex flex-wrap ml-2 mt-2">
-      <span class="ml-2 text-xl text-bold">
-        Before you begin adding transactions, please setup a budget.
-      </span>
-    </div>
-    <br />
-    <div class="flex flex-wrap text-justify ml-2 mt-2">
-      <span class="ml-2 text-md text-gray-500  text-semibold">
-        Navigate to the “Budgets” section and utilize the “New Budget” feature.
-      </span>
+    <div class="flex justify-center mt-2">
+      <nz-empty
+        nzNotFoundImage="assets/Lighthouse-pana.svg"
+        [nzNotFoundContent]="
+          'Please setup a budget. Go to the “Budgets” section and utilize the “New” feature'
+        "
+      ></nz-empty>
     </div>
   </ng-container>
 </nz-drawer>
+<ng-template #extra>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="close()"
+  ></span>
+</ng-template>

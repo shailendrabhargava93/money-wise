@@ -9,26 +9,35 @@ import { ChartOptions } from 'chart.js';
   styleUrls: ['./stats.component.css'],
 })
 export class StatsComponent implements OnInit {
-  // Pie
-  public pieChartOptions: ChartOptions<'doughnut'> = {
-    responsive: false,
-    plugins: { legend: { display: false } },
-  };
-  public pieChartLabels: any[] = [];
-  public pieChartDatasets: any[] = [
-    {
-      data: [],
+  // Doughnut
+  public doughnutChartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
     },
-  ];
+    aspectRatio: 1,
+    cutout: '50%',
+    animation: {
+      animateRotate: false,
+    },
+  };
+  public doughnutChartLabels: any[] = [];
+  public doughnutChartDatasets: any[] = [];
 
   //bar
-  public chartType: string = 'line';
-  public chartLabels: string[] = [];
-  public chartData: any[] = [
-    {
-      data: [],
+  public barChartOptions = {
+    responsive: true,
+    aspectRatio: 1,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
     },
-  ];
+  };
+  public barChartLabels: string[] = [];
+  public barChartData: any[] = [];
 
   constructor(private app: AppService) {}
   ngOnInit(): void {
@@ -71,7 +80,9 @@ export class StatsComponent implements OnInit {
     const dateSum: Record<string, number> = {};
 
     for (const transaction of transactions) {
-      const moddate = transaction.data.date;
+
+      const date = new Date(transaction.data.date);
+      const moddate = date.toISOString().split('T')[0];
       const amount = transaction.data.amount;
 
       if (moddate in dateSum) {
@@ -108,15 +119,15 @@ export class StatsComponent implements OnInit {
         amounts.push(categorySum[category]);
       }
     }
-    this.pieChartLabels = categories;
-    this.pieChartDatasets = [
+    this.doughnutChartLabels = categories;
+    this.doughnutChartDatasets = [
       {
         data: amounts.map((el) => el),
         backgroundColor: this.colorScheme.slice(0, amounts.length),
-        borderColor: this.colorScheme.slice(0, amounts.length),
+        borderColor: 'white',
         hoverBackgroundColor: this.colorScheme.slice(0, amounts.length),
-        hoverBorderColor: this.colorScheme.slice(0, amounts.length),
-        hoverOffset: 15,
+        hoverBorderColor: 'white',
+        hoverOffset: 5,
       },
     ];
 
@@ -131,29 +142,28 @@ export class StatsComponent implements OnInit {
       }
     }
 
-    this.chartLabels = dates;
-    this.chartData = [
+    this.barChartLabels = dates;
+    this.barChartData = [
       {
         data: dateAmounts.map((el) => el),
         label: 'Amount',
+        backgroundColor: this.colorScheme.slice(0, amounts.length),
+        borderColor: 'white',
+        hoverBackgroundColor: this.colorScheme.slice(0, amounts.length),
+        hoverBorderColor: 'white',
       },
     ];
   }
 
   colorScheme = [
-    '#FEA47F',
-    '#25CCF7',
-    '#EAB543',
-    '#FC427B',
-    '#20bf6b',
-    '#3B3B98',
-    '#82589F',
-    '#55E6C1',
-    '#B33771',
-    '#D6A2E8',
-    '#BDC581',
-    '#0fb9b1',
-    '#ea8685',
-    '#9AECDB',
+    '#003f5c',
+    '#2f4b7c',
+    '#665191',
+    '#a05195',
+    '#d45087',
+    '#f95d6a',
+    '#ff7c43',
+    '#ffa600',
+    '#de425b',
   ];
 }
