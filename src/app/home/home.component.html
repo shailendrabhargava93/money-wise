@@ -30,18 +30,21 @@
 
 <div
   *ngIf="!(isBudgetAvailable | async)"
-  class="mx-auto flex flex-col justify-center items-center mt-2"
+  class="flex flex-col h-[60vh] justify-center items-center"
 >
-  <img width="280px" height="280px" src="assets/manage.jpg" />
-  <span class="text-center text-md text-gray-500 mb-2 text-semibold"
-    >Create your first budget and start tracking all expenses wisely</span
-  >
+  <img class="h-[16rem]" src="assets/strategy-pana.svg" />
+  <h1 class="mt-1 text-lg text-bold text-center text-indigo-500">
+    Get Started Now !
+  </h1>
+  <h3 class="mt-1 text-sm text-center text-gray-500 text-semibold">
+    Create your first budget and start tracking all expenses.
+  </h3>
   <button
     nz-button
-    class="bg-indigo-500 hover:bg-indigo-600 rounded-full w-full mt-2"
+    class="bg-indigo-500 hover:bg-indigo-600 rounded-full w-full mt-2 p-1"
     nzType="primary"
     [routerLink]="['/add-budget']"
   >
-    Create Budget
+    Create Your Budget
   </button>
 </div>

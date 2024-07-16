@@ -11,7 +11,7 @@ export class MainCarouselComponent {
     {
       heading: 'Welcome to Money Wise',
       subheading:
-        'Track control of your money by tracking your spending habits wisely',
+        'Take control of your money by tracking your spending habits wisely',
       image: 'assets/slider/Wallet-pana.svg',
     },
     {

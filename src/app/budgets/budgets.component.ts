@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { STATUS } from './../status.enum';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -21,7 +22,8 @@ export class BudgetsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private app: AppService,
-    private notification: NzMessageService
+    private notification: NzMessageService,
+    private router: Router
   ) {
     this.form = this.fb.group({
       email: [
@@ -79,20 +81,42 @@ export class BudgetsComponent implements OnInit {
     this.isConfirmLoading = false;
   }
 
-  handleShare() {
+  handleShare(email?: string) {
+    if (email) {
+      this.form.get('email')?.setValue(email);
+    }
     if (this.form.valid) {
       const form = this.form.value;
       const budgetId = this.form.get('budgetId')?.value;
       this.app.showSpinner();
-      this.isConfirmLoading = true;
-      const data = { users: [form.email] };
+
+      //for remove pass email id
+      let modifiedUsers;
+      if (email) {
+        modifiedUsers = this.users
+          .filter((e) => e.email != form.email)
+          .map((b) => b.email);
+        console.log('remove' + modifiedUsers);
+      } else {
+        this.isConfirmLoading = true;
+        modifiedUsers = this.users.map((e) => e.email);
+        modifiedUsers.push(form.email);
+        console.log('add' + modifiedUsers);
+      }
+      const data = { users: modifiedUsers };
       this.app.update(budgetId, data).subscribe(
         (data) => {
           if (data) {
             this.app.hideSpinner();
             this.isConfirmLoading = false;
-            this.notification.success('Invitation sent !');
+            if (email) {
+              this.notification.success('User Removed !');
+            } else {
+              this.notification.success('Invitation sent !');
+            }
+            this.form.reset();
             this.oncancel();
+            this.reloadCurrentRoute();
           }
         },
         (error) => {
@@ -126,7 +150,8 @@ export class BudgetsComponent implements OnInit {
       (data) => {
         if (data) {
           this.app.hideSpinner();
-          this.notification.success('updated successfully !');
+          this.notification.success('Mark Completed !');
+          this.reloadCurrentRoute();
         }
       },
       (error) => {
@@ -145,7 +170,8 @@ export class BudgetsComponent implements OnInit {
       (data) => {
         if (data) {
           this.app.hideSpinner();
-          this.notification.success('updated successully !');
+          this.notification.success('Mark Deleted !');
+          this.reloadCurrentRoute();
         }
       },
       (error) => {
@@ -154,6 +180,10 @@ export class BudgetsComponent implements OnInit {
         this.notification.error('An error occurred while updating.');
       }
     );
+  }
+
+  removeUser(email: string) {
+    this.handleShare(email);
   }
 
   confirm(budgetId: string, type: string): void {
@@ -169,5 +199,12 @@ export class BudgetsComponent implements OnInit {
 
   isOverspent(budget: any) {
     return budget.data.totalBudget - budget.data.spentAmount < 0 ? true : false;
+  }
+
+  reloadCurrentRoute() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([currentUrl]);
+    });
   }
 }

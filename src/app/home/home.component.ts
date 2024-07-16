@@ -19,14 +19,14 @@ export class HomeComponent {
         switchMap((user) => this.app.getBudgets(user as string)),
         tap((budgets: any) => {
           const isAvailable = budgets && budgets.length > 0;
+          localStorage.setItem('isBudgetAvailable', isAvailable);
+          this.app.isBudgetAvailableSub.next(isAvailable);
           if (isAvailable) {
             const budgetsArray = budgets.map((el: any) => ({
               id: el.id,
               name: el.data.name,
             }));
-            localStorage.setItem('isBudgetAvailable', isAvailable);
             localStorage.setItem('budgets', JSON.stringify(budgetsArray));
-            this.app.isBudgetAvailableSub.next(isAvailable);
             this.app.budgetValuesSub.next(budgetsArray);
           }
         })

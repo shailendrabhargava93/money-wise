@@ -4,12 +4,6 @@
   color: #4f46e5;
 }
 
-::ng-deep.ant-empty-image{
-  display: inline-block;
-  margin-top: 10%;
-}
-
-
 [nz-radio] {
   display: flex;
   align-items: flex-start;

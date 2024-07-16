@@ -166,15 +166,14 @@
             &nbsp;
             <span nz-typography>{{ user.email }}</span>
           </span>
-          <!-- need method to remove user -->
-          <!-- <span
+          <span
             *ngIf="user.delete"
             class="cursor-pointer float-right"
             nz-icon
             nzType="close-circle"
             nzTheme="outline"
-            (click)="updateUser(user.email)"
-          ></span> -->
+            (click)="removeUser(user.email)"
+          ></span>
         </div>
       </nz-list-item>
     </nz-list>

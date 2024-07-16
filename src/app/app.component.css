@@ -27,6 +27,10 @@ nz-header {
   .inner-content {
       height: 88vh;
   }
+  ::ng-deep.ant-empty-image{
+    display: inline-block !important;
+    margin-top: 50% !important;
+  }
 }
 
 nz-footer {
