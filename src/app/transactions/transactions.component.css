@@ -18,3 +18,11 @@
   border-top-left-radius: 1.2rem;
   border-top-right-radius: 1.2rem;
 }
+
+::ng-deep.ant-slider-track {
+  background-color: #4f46e5;
+}
+
+::ng-deep.ant-slider:hover .ant-slider-track {
+  background-color: #5f58de;
+}

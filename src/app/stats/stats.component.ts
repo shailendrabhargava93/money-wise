@@ -41,16 +41,20 @@ export class StatsComponent implements OnInit {
 
   constructor(private app: AppService) {}
   ngOnInit(): void {
+    this.app.showSpinner();
+
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getTransactions(user as string)),
         catchError((error) => {
+          this.app.hideSpinner();
           console.error('Error occurred getTransactions:', error);
           return of([]);
         })
       )
       .subscribe((data) => {
         if (data) {
+          this.app.hideSpinner();
           const output = data as any[];
           if (output.length > 0) {
             this.getCategoriesAndAmounts(output);
@@ -158,12 +162,12 @@ export class StatsComponent implements OnInit {
   colorScheme = [
     '#003f5c',
     '#2f4b7c',
-    '#665191',
-    '#a05195',
-    '#d45087',
-    '#f95d6a',
     '#ff7c43',
-    '#ffa600',
+    '#665191',
+    '#f95d6a',
+    '#a05195',
     '#de425b',
+    '#d45087',
+    '#ffa600',
   ];
 }

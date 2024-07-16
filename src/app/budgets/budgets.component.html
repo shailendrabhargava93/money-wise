@@ -81,18 +81,20 @@
     </p>
     <div class="flex justify-center px-5 mb-2 text-sm">
       <button
+        class="secondary"
         nz-button
         nz-popconfirm
-        nzPopconfirmTitle="Are you certain you want to mark it as completed ?"
+        nzPopconfirmTitle="Are you sure, you want to mark it as completed ?"
         nzPopconfirmPlacement="bottom"
         (nzOnConfirm)="confirm(budget.id, 'complete')"
       >
         <span nz-icon nzType="check-circle"></span></button
       >&nbsp;&nbsp;
       <button
+        class="secondary"
         nz-button
         nz-popconfirm
-        nzPopconfirmTitle="Are you certain you want to mark it as deleted ?"
+        nzPopconfirmTitle="Are you sure, you want to mark it as deleted ?"
         nzPopconfirmPlacement="bottom"
         (nzOnConfirm)="confirm(budget.id, 'delete')"
       >
@@ -114,47 +116,48 @@
   [nzClosable]="false"
   [nzVisible]="isVisible"
   [nzPlacement]="'bottom'"
-  nzTitle="Invite Partner or Family members"
+  nzTitle="Invite Members"
   [nzExtra]="extra"
   (nzOnClose)="oncancel()"
 >
   <ng-container *nzDrawerContent>
-    <form nz-form class="flex flex-row" [formGroup]="form">
-      <nz-form-item class="w-4/5">
-        <nz-form-control [nzErrorTip]="emailErrorTpl">
-          <nz-input-group>
-            <input
-              nz-input
-              placeholder="Enter email"
-              formControlName="email"
-              name="email"
-              email
-            />
+    <form nz-form class="w-full max-w-7xl" [formGroup]="form">
+      <div class="flex items-center border-b border-indigo-500 py-2">
+        <nz-form-item class="w-full">
+          <nz-form-control [nzErrorTip]="emailErrorTpl">
+            <nz-input-group>
+              <input
+                nz-input
+                placeholder="Enter email"
+                formControlName="email"
+                name="email"
+                email
+              />
 
-            <ng-template #emailErrorTpl let-control>
-              <span *ngIf="control.errors?.['pattern']">
-                Please enter valid google email id
-              </span>
-              <span *ngIf="control.errors?.['required']">
-                This is required
-              </span>
-            </ng-template>
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-      &nbsp;&nbsp;&nbsp;
-      <nz-form-item class="w-1/5">
-        <button
-          nz-button
-          class="primary float-right"
-          (click)="handleShare()"
-          [nzLoading]="isConfirmLoading"
-        >
-          Send Invite
-        </button>
-      </nz-form-item>
+              <ng-template #emailErrorTpl let-control>
+                <span *ngIf="control.errors?.['pattern']">
+                  Please enter valid google email id
+                </span>
+                <span *ngIf="control.errors?.['required']">
+                  This is required
+                </span>
+              </ng-template>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <button
+            nz-button
+            class="primary float-right"
+            (click)="handleShare()"
+            [nzLoading]="isConfirmLoading"
+          >
+            Send Invite
+          </button>
+        </nz-form-item>
+      </div>
     </form>
-    <br /><br />
     <nz-list nzBordered>
       <nz-list-item *ngFor="let user of users">
         <div class="contents">
