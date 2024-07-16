@@ -12,8 +12,8 @@ export interface User {
   providedIn: 'root',
 })
 export class AppService {
-  //private BASE_URL = 'https://budget-app-backend-ten.vercel.app/';
-  private BASE_URL = 'http://localhost:8000/';
+  private BASE_URL = 'https://budget-app-backend-ten.vercel.app/';
+  //private BASE_URL = 'http://localhost:8000/';
 
   public currentUserSubject: BehaviorSubject<User | null> =
     new BehaviorSubject<User | null>(null);
