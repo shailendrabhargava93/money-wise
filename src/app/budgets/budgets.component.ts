@@ -20,6 +20,7 @@ export class BudgetsComponent implements OnInit {
   users!: any[];
 
   currentUser!: string;
+  selectedBudgetName!: string;
 
   form: FormGroup;
 
@@ -65,8 +66,14 @@ export class BudgetsComponent implements OnInit {
       });
   }
 
-  onshare(budgetId: string, users: string[], createdBy: string) {
+  onShare(
+    budgetName: string,
+    budgetId: string,
+    users: string[],
+    createdBy: string
+  ) {
     this.isVisible = true;
+    this.selectedBudgetName = budgetName;
     this.form.get('budgetId')?.setValue(budgetId);
     this.users = this.modifyrUsers(users, createdBy);
   }
@@ -102,12 +109,12 @@ export class BudgetsComponent implements OnInit {
         modifiedUsers = this.users
           .filter((e) => e.email != form.email)
           .map((b) => b.email);
-        console.log('remove' + modifiedUsers);
+        console.log('removed');
       } else {
         this.isConfirmLoading = true;
         modifiedUsers = this.users.map((e) => e.email);
         modifiedUsers.push(form.email);
-        console.log('add' + modifiedUsers);
+        console.log('added');
       }
       const data = { users: modifiedUsers };
       this.app.update(budgetId, data).subscribe(
@@ -119,7 +126,16 @@ export class BudgetsComponent implements OnInit {
             } else {
               this.notification.success('Invitation sent !');
 
-              this.sendEmail(this.currentUser, form.email, form.email);
+              if (this.selectedBudgetName && form.email) {
+                this.sendEmail(
+                  this.currentUser,
+                  form.email,
+                  form.email,
+                  this.selectedBudgetName
+                );
+              } else {
+                console.log('budget not selected or email is invalid');
+              }
             }
             this.form.reset();
             this.oncancel();
@@ -214,8 +230,9 @@ export class BudgetsComponent implements OnInit {
     });
   }
 
-  sendEmail(from: string, toName: string, toEmail: string) {
+  sendEmail(from: string, toName: string, toEmail: string, budgetName: string) {
     var templateParams = {
+      budget_name: budgetName,
       from_name: from,
       to_name: toName,
       toEmail: toEmail,

@@ -58,7 +58,7 @@
       </span>
       <span
         class="float-right text-white cursor-pointer mt-1"
-        (click)="onshare(budget.id, budget.data.users, budget.data.createdBy)"
+        (click)="onShare(budget.data.name, budget.id, budget.data.users, budget.data.createdBy)"
         nz-icon
         style="font-size: 20px"
         nzType="usergroup-add"
@@ -169,6 +169,7 @@
             &nbsp;
             <span nz-typography>{{ user.email }}</span>
           </span>
+          <span *ngIf="!user.delete" class="text-gray-400 float-right">(Creator)</span>
           <span
             *ngIf="user.delete"
             class="cursor-pointer float-right"

@@ -86,3 +86,7 @@ button.active > span{
   display: inline-block;
   margin-top: 10%;
 }
+
+::ng-deep.ant-spin-nested-loading>div>.ant-spin{
+  max-height: none;
+}
