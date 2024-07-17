@@ -6,6 +6,8 @@ import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 import { catchError, of, switchMap } from 'rxjs';
 
+import emailjs from '@emailjs/browser';
+
 @Component({
   selector: 'app-budgets',
   templateUrl: './budgets.component.html',
@@ -16,6 +18,8 @@ export class BudgetsComponent implements OnInit {
   isVisible = false;
   isConfirmLoading = false;
   users!: any[];
+
+  currentUser!: string;
 
   form: FormGroup;
 
@@ -39,6 +43,10 @@ export class BudgetsComponent implements OnInit {
 
   ngOnInit() {
     this.app.showSpinner();
+
+    this.app.userName.subscribe((e) => {
+      this.currentUser = e as string;
+    });
 
     this.app.userEmail
       .pipe(
@@ -88,8 +96,6 @@ export class BudgetsComponent implements OnInit {
     if (this.form.valid) {
       const form = this.form.value;
       const budgetId = this.form.get('budgetId')?.value;
-      this.app.showSpinner();
-
       //for remove pass email id
       let modifiedUsers;
       if (email) {
@@ -107,12 +113,13 @@ export class BudgetsComponent implements OnInit {
       this.app.update(budgetId, data).subscribe(
         (data) => {
           if (data) {
-            this.app.hideSpinner();
             this.isConfirmLoading = false;
             if (email) {
               this.notification.success('User Removed !');
             } else {
               this.notification.success('Invitation sent !');
+
+              this.sendEmail(this.currentUser, form.email, form.email);
             }
             this.form.reset();
             this.oncancel();
@@ -120,7 +127,6 @@ export class BudgetsComponent implements OnInit {
           }
         },
         (error) => {
-          this.app.hideSpinner();
           this.isConfirmLoading = false;
           console.error('An error occurred:', error);
           this.notification.error('An error occurred while Sending invite.');
@@ -206,5 +212,26 @@ export class BudgetsComponent implements OnInit {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([currentUrl]);
     });
+  }
+
+  sendEmail(from: string, toName: string, toEmail: string) {
+    var templateParams = {
+      from_name: from,
+      to_name: toName,
+      toEmail: toEmail,
+    };
+
+    emailjs
+      .send('service_qbeg4sl', 'template_0gee8ww', templateParams, {
+        publicKey: 'ZZIokmaL8NAWGBmSN',
+      })
+      .then(
+        (response: any) => {
+          console.log('EMAIL SUCCESS!', response.status, response.text);
+        },
+        (err: any) => {
+          console.log('EMAIL FAILED...', err);
+        }
+      );
   }
 }
