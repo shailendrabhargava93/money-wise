@@ -1,3 +1,4 @@
+import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { BudgetsComponent } from './budgets/budgets.component';
@@ -38,6 +39,11 @@ const routes: Routes = [
   {
     path: 'add-budget',
     component: AddBudgetComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'view-budget',
+    component: BudgetOverviewComponent,
     canActivate: [authGuard],
   },
   {

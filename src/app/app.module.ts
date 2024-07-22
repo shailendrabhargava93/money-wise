@@ -27,6 +27,7 @@ import { BudgetsComponent } from './budgets/budgets.component';
 import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { NgChartsModule } from 'ng2-charts';
+import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
 
 registerLocaleData(en);
 
@@ -50,6 +51,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     MainCarouselComponent,
     AddBudgetComponent,
     CurrencySymbolPipe,
+    BudgetOverviewComponent,
   ],
   imports: [
     BrowserModule,

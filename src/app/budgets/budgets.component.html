@@ -34,7 +34,7 @@
 
 <div class="p-1 mt-2">
   <div
-    *ngFor="let budget of budgets"
+    *ngFor="let budget of budgets" (click)="openOverview(budget)"
     class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4 hover:shadow-2xl transition duration-500 transform hover:scale-105"
   >
     <div

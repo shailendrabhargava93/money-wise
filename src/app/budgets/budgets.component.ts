@@ -251,4 +251,8 @@ export class BudgetsComponent implements OnInit {
         }
       );
   }
+
+  openOverview(budget:any){
+    this.router.navigate(['view-budget'])
+  }
 }

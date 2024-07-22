@@ -1,6 +1,5 @@
 [nz-icon] {
-  margin-right: 6px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 [nz-radio] {
@@ -10,4 +9,9 @@
 
 :ng-deep.ant-drawer-body {
   padding-top: 2px !important;
+}
+
+::ng-deep.ant-drawer-body{
+  padding-top: 8px;
+  padding-left: 8px;
 }
