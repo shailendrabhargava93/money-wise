@@ -13,6 +13,8 @@
 nz-header {
   background: #fff;
   padding: 0;
+  height: 60px;
+  line-height: 60px;
 }
 
 .inner-content {
@@ -89,4 +91,8 @@ button.active > span{
 
 ::ng-deep.ant-spin-nested-loading>div>.ant-spin{
   max-height: none;
+}
+
+:ng-deep.ant-drawer-body {
+  padding-top: 2px !important;
 }

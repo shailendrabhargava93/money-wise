@@ -13,6 +13,7 @@ export class AddTransactionComponent implements OnInit {
   form: FormGroup;
   categories: any[] = [];
   userEmail$ = this.app.userEmail;
+  currency!:any;
   budgets!: any[] | undefined;
   txnId: string | null = null;
   isUpdate = false;
@@ -34,6 +35,7 @@ export class AddTransactionComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.app.currencySymbol.subscribe((c)=> this.currency = c);
     this.userEmail$.subscribe((user) =>
       this.form.controls['user'].setValue(user)
     );

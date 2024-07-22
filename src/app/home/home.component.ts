@@ -1,6 +1,7 @@
 import { AppService } from './../app.service';
 import { Component } from '@angular/core';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap, catchError } from 'rxjs/operators';
+import { EMPTY, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -13,22 +14,36 @@ export class HomeComponent {
 
   constructor(private app: AppService) {
     this.username$ = this.app.userName;
-
+    this.app.showSpinner();
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getBudgets(user as string)),
         tap((budgets: any) => {
-          const isAvailable = budgets && budgets.length > 0;
-          localStorage.setItem('isBudgetAvailable', isAvailable);
-          this.app.isBudgetAvailableSub.next(isAvailable);
-          if (isAvailable) {
-            const budgetsArray = budgets.map((el: any) => ({
-              id: el.id,
-              name: el.data.name,
+          this.app.hideSpinner();
+          const currency = {
+            name: 'Indian rupee',
+            symbol: '₹',
+          };
+          localStorage.setItem('currency', JSON.stringify(currency));
+          this.app.currencySub.next(currency);
+
+          const budgetsExist = budgets && budgets.length > 0;
+          localStorage.setItem('isBudgetAvailable', String(budgetsExist));
+          this.app.isBudgetAvailableSub.next(budgetsExist);
+
+          if (budgetsExist) {
+            const budgetsArray = budgets.map((budget: any) => ({
+              id: budget.id,
+              name: budget.data.name,
             }));
             localStorage.setItem('budgets', JSON.stringify(budgetsArray));
             this.app.budgetValuesSub.next(budgetsArray);
           }
+        }),
+        catchError(error => {
+          this.app.hideSpinner();
+          console.error(error);
+          return of(EMPTY);
         })
       )
       .subscribe();

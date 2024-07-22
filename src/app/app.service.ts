@@ -8,6 +8,11 @@ export interface User {
   photo: string;
 }
 
+export interface Currency {
+  name: string;
+  symbol: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -36,20 +41,31 @@ export class AppService {
   );
   public showPopup$: Observable<boolean>;
 
+  public currencySub: BehaviorSubject<Currency> = new BehaviorSubject<Currency>(
+    {
+      name: 'Indian rupee',
+      symbol: '₹',
+    }
+  );
+  public currency$: Observable<Currency>;
+
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
     const isAvailable = localStorage.getItem('isBudgetAvailable');
     const budgets = localStorage.getItem('budgets');
+    const currency = localStorage.getItem('currency');
 
     this.currentUserSubject.next(JSON.parse(token as string));
     this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
     this.budgetValuesSub.next(JSON.parse(budgets as any));
+    this.currencySub.next(JSON.parse(currency as any));
 
     this.isSpinning$ = this.isSpinningSub.asObservable();
     this.currentUser = this.currentUserSubject.asObservable();
     this.isBudgetAvailableObs$ = this.isBudgetAvailableSub.asObservable();
     this.budgetValuesObs$ = this.budgetValuesSub.asObservable();
     this.showPopup$ = this.showPopupSub.asObservable();
+    this.currency$ = this.currencySub.asObservable();
   }
 
   getTransactions(email: string) {
@@ -76,7 +92,7 @@ export class AppService {
     return this.http.post(this.BASE_URL + `budget/create`, data);
   }
 
-  update(id: string, data:any) {
+  update(id: string, data: any) {
     return this.http.put(this.BASE_URL + `budget/update/${id}`, data);
   }
 
@@ -106,6 +122,14 @@ export class AppService {
     return this.budgetValuesObs$.pipe(map((value) => value));
   }
 
+  get currencyName(): Observable<string | undefined> {
+    return this.currency$.pipe(map((c) => c?.name));
+  }
+
+  get currencySymbol(): Observable<string | undefined> {
+    return this.currency$.pipe(map((c) => c?.symbol));
+  }
+
   showSpinner() {
     this.isSpinningSub.next(true);
   }
@@ -114,8 +138,9 @@ export class AppService {
     this.isSpinningSub.next(false);
   }
 
-  getCurrencyList() {
-    const url = 'https://countriesnow.space/api/v0.1/countries/currency';
+  getCountryWithCurrency() {
+    const url =
+      'https://restcountries.com/v3.1/all?fields=name,currencies,flags';
     return this.http.get(url);
   }
 }

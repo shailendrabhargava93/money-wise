@@ -41,20 +41,17 @@ export class StatsComponent implements OnInit {
 
   constructor(private app: AppService) {}
   ngOnInit(): void {
-    this.app.showSpinner();
 
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getTransactions(user as string)),
         catchError((error) => {
-          this.app.hideSpinner();
           console.error('Error occurred getTransactions:', error);
           return of([]);
         })
       )
       .subscribe((data) => {
         if (data) {
-          this.app.hideSpinner();
           const output = data as any[];
           if (output.length > 0) {
             this.getCategoriesAndAmounts(output);

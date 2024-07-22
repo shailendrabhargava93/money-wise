@@ -36,7 +36,7 @@
       >Amount</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <nz-input-group nzAddOnBefore="₹">
+      <nz-input-group [nzAddOnBefore]="currency">
         <input
           nz-input
           type="number"
