@@ -164,59 +164,9 @@ export class BudgetsComponent implements OnInit {
     );
   }
 
-  markCompleted() {
-    this.app.showSpinner();
-    const budgetId = this.form.get('budgetId')?.value;
-    const data = { status: STATUS.COMPLETED };
-    this.app.update(budgetId, data).subscribe(
-      (data) => {
-        if (data) {
-          this.app.hideSpinner();
-          this.notification.success('Mark Completed !');
-          this.reloadCurrentRoute();
-        }
-      },
-      (error) => {
-        this.app.hideSpinner();
-        console.error('An error occurred:', error);
-        this.notification.error('An error occurred while updating.');
-      }
-    );
-  }
-
-  markDeleted() {
-    this.app.showSpinner();
-    const budgetId = this.form.get('budgetId')?.value;
-    const data = { status: STATUS.DELETED };
-    this.app.update(budgetId, data).subscribe(
-      (data) => {
-        if (data) {
-          this.app.hideSpinner();
-          this.notification.success('Mark Deleted !');
-          this.reloadCurrentRoute();
-        }
-      },
-      (error) => {
-        this.app.hideSpinner();
-        console.error('An error occurred:', error);
-        this.notification.error('An error occurred while updating.');
-      }
-    );
-  }
 
   removeUser(email: string) {
     this.handleShare(email);
-  }
-
-  confirm(budgetId: string, type: string): void {
-    this.form.get('budgetId')?.setValue(budgetId);
-    if (type === 'delete') {
-      this.markDeleted();
-    }
-
-    if (type === 'complete') {
-      this.markCompleted();
-    }
   }
 
   isOverspent(budget: any) {
@@ -252,7 +202,7 @@ export class BudgetsComponent implements OnInit {
       );
   }
 
-  openOverview(budget:any){
-    this.router.navigate(['view-budget'])
+  openOverview(budgetId:any){
+    this.router.navigate(['view-budget', budgetId])
   }
 }

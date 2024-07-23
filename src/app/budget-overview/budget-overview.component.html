@@ -1,1 +1,32 @@
-<p>budget-overview works!</p>
+<div class="mx-auto flex flow-root p-1 w-full">
+  <div class="relative inline-block">
+    <span class="text-xl md:text-2xl font-semibold"> Overview</span>
+    <span
+      class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-500 rounded-full"
+    ></span>
+  </div>
+  &nbsp;&nbsp;
+  <button
+    class="secondary float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    nz-button
+    nz-popconfirm
+    nzPopconfirmTitle="Are you sure, you want to mark it as completed ?"
+    nzPopconfirmPlacement="bottom"
+    (nzOnConfirm)="confirm(budgetId, 'complete')"
+  >
+    <span class="capitalize lg:inline">Complete</span>
+    <span nz-icon nzType="check-circle"></span></button
+  >&nbsp;&nbsp;
+  <button
+    class="secondary float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    nz-button
+    nz-popconfirm
+    nzPopconfirmTitle="Are you sure, you want to mark it as deleted ?"
+    nzPopconfirmPlacement="bottom"
+    (nzOnConfirm)="confirm(budgetId, 'delete')"
+  >
+    <span class="capitalize lg:inline">Delete</span>
+
+    <span nz-icon nzType="delete"> </span>
+  </button>
+</div>

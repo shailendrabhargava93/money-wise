@@ -34,7 +34,7 @@
 
 <div class="p-1 mt-2">
   <div
-    *ngFor="let budget of budgets" (click)="openOverview(budget)"
+    *ngFor="let budget of budgets"
     class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4 hover:shadow-2xl transition duration-500 transform hover:scale-105"
   >
     <div
@@ -80,25 +80,13 @@
       ></nz-progress>
     </p>
     <div class="flex justify-center px-5 mb-2 text-sm">
+
       <button
         class="secondary"
         nz-button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure, you want to mark it as completed ?"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="confirm(budget.id, 'complete')"
+        (click)="openOverview(budget.id)"
       >
-        <span nz-icon nzType="check-circle"></span></button
-      >&nbsp;&nbsp;
-      <button
-        class="secondary"
-        nz-button
-        nz-popconfirm
-        nzPopconfirmTitle="Are you sure, you want to mark it as deleted ?"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="confirm(budget.id, 'delete')"
-      >
-        <span nz-icon nzType="delete"></span>
+        <span nz-icon nzType="fund-view" nzTheme="outline"></span>
       </button>
     </div>
   </div>

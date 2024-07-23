@@ -23,9 +23,17 @@ export class TransactionsComponent implements OnInit {
   amountRange!: any[];
   highestAmount!: number;
 
+  pageNumber: number = 1;
+  loadingMore = false;
+
   constructor(private app: AppService, private router: Router) {}
 
   ngOnInit() {
+    this.getTransactions();
+  }
+
+  onLoadMore() {
+    this.pageNumber = this.pageNumber + 1;
     this.getTransactions();
   }
 
@@ -33,17 +41,25 @@ export class TransactionsComponent implements OnInit {
     this.app.showSpinner();
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getTransactions(user as string)),
+        switchMap((user) =>
+          this.app.getTransactions(user as string, this.pageNumber)
+        ),
         catchError((error) => {
           console.error('Error occurred getTransactions:', error);
           this.app.hideSpinner();
+          this.loadingMore = false;
           return of([]);
         })
       )
       .subscribe((data) => {
         if (data) {
           this.app.hideSpinner();
-          this.allTransactions = data as any[];
+          if (this.pageNumber > 1) {
+            this.allTransactions = this.allTransactions.concat(data);
+          } else {
+            this.allTransactions = data as any[];
+          }
+          this.loadingMore = true;
           if (this.allTransactions.length > 0) {
             this.sort();
             let highestAmount = Math.max(
@@ -93,6 +109,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   apply() {
+    this.loadingMore = false;
     this.closeFilters();
     if (this.selectedCat) {
       this.allTransactions = this.allTransactions.filter(
@@ -102,7 +119,6 @@ export class TransactionsComponent implements OnInit {
     }
 
     if (this.amountRange.length > 0) {
-      console.log(this.amountRange);
       this.allTransactions = this.allTransactions.filter(
         (transaction: any) =>
           transaction.data.amount >= this.amountRange[0] &&
@@ -115,6 +131,7 @@ export class TransactionsComponent implements OnInit {
   clear() {
     this.selectedCat = '';
     this.showDot = false;
+    this.loadingMore = true;
     this.amountRange = [0, this.highestAmount];
     this.allTransactions = this.globalList;
   }
@@ -148,13 +165,17 @@ export class TransactionsComponent implements OnInit {
 
       case 'name-asc':
         sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.title.toLowerCase() > b.data.title.toLowerCase() ? 1 : -1;
+          return a.data.title.toLowerCase() > b.data.title.toLowerCase()
+            ? 1
+            : -1;
         });
         break;
 
       case 'name-desc':
         sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.title.toLowerCase() > b.data.title.toLowerCase() ? -1 : 1;
+          return a.data.title.toLowerCase() > b.data.title.toLowerCase()
+            ? -1
+            : 1;
         });
         break;
 

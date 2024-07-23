@@ -44,7 +44,7 @@ export class StatsComponent implements OnInit {
 
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getTransactions(user as string)),
+        switchMap((user) => this.app.getTransactions(user as string, 1)),
         catchError((error) => {
           console.error('Error occurred getTransactions:', error);
           return of([]);

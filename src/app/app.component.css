@@ -96,3 +96,7 @@ button.active > span{
 :ng-deep.ant-drawer-body {
   padding-top: 2px !important;
 }
+
+::ng-deep.ant-drawer-body{
+  padding-top: 8px;
+}

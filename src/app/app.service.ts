@@ -68,8 +68,8 @@ export class AppService {
     this.currency$ = this.currencySub.asObservable();
   }
 
-  getTransactions(email: string) {
-    return this.http.get(this.BASE_URL + `txn/all/${email}`);
+  getTransactions(email: string, pageNumber: number) {
+    return this.http.get(this.BASE_URL + `txn/all/${email}/${pageNumber}`);
   }
 
   createTransaction(data: any) {
@@ -82,6 +82,10 @@ export class AppService {
 
   getTxnById(id: string) {
     return this.http.get(this.BASE_URL + `txn/${id}`);
+  }
+
+  getBudgetById(id: string) {
+    return this.http.get(this.BASE_URL + `budget/${id}`);
   }
 
   getBudgets(email: string) {

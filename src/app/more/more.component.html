@@ -147,7 +147,7 @@
     </ng-template>
     <div class="flex flex-wrap items-center">
       <nz-radio-group [(ngModel)]="selectedCurrency" (ngModelChange)="update()">
-        <div class="p-2" *ngFor="let country of countryData">
+        <div class="p-1" *ngFor="let country of countryData">
           <span
             class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-2 rounded-lg p-1 ring-1 ring-transparent hover:bg-slate-50"
             nz-radio
