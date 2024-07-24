@@ -18,7 +18,7 @@ export class TransactionsComponent implements OnInit {
   visibleFilters = false;
   visibleSorting = false;
   showDot = false;
-
+  currency = this.app.currency$;
   selectedCat: string = '';
   amountRange!: any[];
   highestAmount!: number;

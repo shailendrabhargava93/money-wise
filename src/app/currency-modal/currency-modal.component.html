@@ -1,0 +1,53 @@
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  [nzPlacement]="'bottom'"
+  nzTitle="Choose Currency"
+  [nzExtra]="extrasort"
+  (nzOnClose)="close()"
+>
+  <ng-container *nzDrawerContent>
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input
+        type="text"
+        nz-input
+        [(ngModel)]="searchCountry"
+        placeholder="Search country"
+        (keydown)="search()"
+      />
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <span nz-icon nzType="search"></span>
+    </ng-template>
+
+    <div class="mt-1">
+      <nz-radio-group [(ngModel)]="selectedCurrency" (ngModelChange)="update()">
+        <span class="space-y-2 mt-1" *ngFor="let c of currencyData">
+          <label
+            class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+            nz-radio
+            [nzValue]="c.currency"
+          >
+            <div class="flex items-center space-x-5">
+              <div class="flex items-center">
+                <img class="w-8 h-6" [src]="c.flag" /> &nbsp;
+              </div>
+              <h2 class="text-md font-medium overflow-hidden truncate w-32">
+                {{ c.name }} ({{ c.symbol }})
+              </h2>
+            </div>
+          </label>
+        </span>
+      </nz-radio-group>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #extrasort>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="close()"
+  ></span>
+</ng-template>

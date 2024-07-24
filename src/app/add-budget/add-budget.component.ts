@@ -11,9 +11,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-budget.component.css'],
 })
 export class AddBudgetComponent {
+  isUpdate = false;
   form: FormGroup;
   userEmail$ = this.app.userEmail;
-  isUpdate = false;
+  currency = this.app.currency$;
+
   constructor(
     private fb: FormBuilder,
     private app: AppService,

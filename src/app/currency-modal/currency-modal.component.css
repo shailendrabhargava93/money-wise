@@ -1,0 +1,9 @@
+[nz-icon] {
+  font-size: 16px;
+}
+
+[nz-radio] {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 3px;
+}

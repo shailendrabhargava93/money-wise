@@ -1,6 +1,5 @@
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { STATUS } from './../status.enum';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,6 +17,7 @@ export class BudgetsComponent implements OnInit {
   isVisible = false;
   isConfirmLoading = false;
   users!: any[];
+  currency = this.app.currency$;
 
   currentUser!: string;
   selectedBudgetName!: string;
@@ -44,7 +44,6 @@ export class BudgetsComponent implements OnInit {
 
   ngOnInit() {
     this.app.showSpinner();
-
     this.app.userName.subscribe((e) => {
       this.currentUser = e as string;
     });
@@ -164,7 +163,6 @@ export class BudgetsComponent implements OnInit {
     );
   }
 
-
   removeUser(email: string) {
     this.handleShare(email);
   }
@@ -202,7 +200,7 @@ export class BudgetsComponent implements OnInit {
       );
   }
 
-  openOverview(budgetId:any){
-    this.router.navigate(['view-budget', budgetId])
+  openOverview(budgetId: any) {
+    this.router.navigate(['view-budget', budgetId]);
   }
 }

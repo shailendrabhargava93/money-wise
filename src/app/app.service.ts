@@ -126,12 +126,8 @@ export class AppService {
     return this.budgetValuesObs$.pipe(map((value) => value));
   }
 
-  get currencyName(): Observable<string | undefined> {
-    return this.currency$.pipe(map((c) => c?.name));
-  }
-
-  get currencySymbol(): Observable<string | undefined> {
-    return this.currency$.pipe(map((c) => c?.symbol));
+  get currency(): Observable<Currency | undefined> {
+    return this.currency$.pipe(map((c) => c));
   }
 
   showSpinner() {

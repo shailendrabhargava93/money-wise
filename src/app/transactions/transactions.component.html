@@ -86,8 +86,8 @@
               {{ txn.data.date | date }}
             </div>
           </div>
-          <div class="text-lg text-indigo-600 font-semibold">
-            ₹ {{ txn.data.amount | number }}
+          <div class="text-md text-indigo-600 font-semibold">
+            {{ (currency | async)?.symbol }} {{ txn.data.amount | number }}
           </div>
         </div>
       </li>

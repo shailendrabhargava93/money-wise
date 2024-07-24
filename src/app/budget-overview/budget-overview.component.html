@@ -30,3 +30,56 @@
     <span nz-icon nzType="delete"> </span>
   </button>
 </div>
+
+<div class="mx-auto flex flex-col justify-center p-2 mt-4 w-full">
+  <div class="flex flow-root">
+    <span class="text-gray-500 float-left">Budget Amount</span>
+    <span class="float-right"
+      >{{ (currency | async)?.symbol }}
+      {{ budgetData.totalBudget | number }}</span
+    >
+    <br />
+    <span class="text-gray-500 float-left">Expenditure Amount</span>
+    <span class="float-right"
+      >{{ (currency | async)?.symbol }}
+      {{ budgetData.spentAmount | number }}</span
+    >
+    <br />
+    <hr />
+    <span class="text-gray-500 float-left">Remaining Amount</span>
+    <span class="float-right"
+      >{{ (currency | async)?.symbol }}
+      {{ budgetData.totalBudget - budgetData.spentAmount | number }}</span
+    >
+    <br><br>
+    <nz-alert nzType="info" [nzDescription]="descTemp"></nz-alert>
+    <ng-template #descTemp>
+
+     <span class="inline-flex">
+      Congratulations!
+      <picture>
+        <source
+          srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.webp"
+          type="image/webp"
+        />
+        <img
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif"
+          alt="🎉"
+          width="32"
+          height="32"
+        />
+      </picture>
+     </span>
+       you have saved {{ (currency | async)?.symbol }}
+      {{ budgetData.totalBudget - budgetData.spentAmount | number }} from you
+      total budget amount.
+
+    </ng-template>
+  </div>
+
+  <!-- waring, spent less, or more -->
+
+  <!-- day wise analysis -->
+
+  <!-- top 5 categiroes -->
+</div>

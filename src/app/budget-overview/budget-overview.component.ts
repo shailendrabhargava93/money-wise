@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
 export class BudgetOverviewComponent {
   budgetId!: string;
   budgetData!: any;
+  currency = this.app.currency$;
   constructor(
     private app: AppService,
     private route: ActivatedRoute,
