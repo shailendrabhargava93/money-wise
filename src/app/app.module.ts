@@ -1,4 +1,3 @@
-import { CurrencySymbolPipe } from './currency-symbol.pipe';
 import { environment } from './../environments/environment.development';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule } from './ng-zorro-antd.module';
@@ -29,6 +28,7 @@ import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { NgChartsModule } from 'ng2-charts';
 import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
 import { CurrencyModalComponent } from './currency-modal/currency-modal.component';
+import { InvitationModalComponent } from './invitation-modal/invitation-modal.component';
 
 registerLocaleData(en);
 
@@ -51,9 +51,9 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     BudgetsComponent,
     MainCarouselComponent,
     AddBudgetComponent,
-    CurrencySymbolPipe,
     BudgetOverviewComponent,
     CurrencyModalComponent,
+    InvitationModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +65,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
-    NgChartsModule
+    NgChartsModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

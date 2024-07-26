@@ -31,7 +31,7 @@
   </button>
 </div>
 
-<div class="mx-auto flex flex-col justify-center p-2 mt-4 w-full">
+<div class="mx-auto flex flex-col justify-center p-2 mt-4 w-full" *ngIf="budgetData">
   <div class="flex flow-root">
     <span class="text-gray-500 float-left">Budget Amount</span>
     <span class="float-right"
@@ -51,29 +51,29 @@
       >{{ (currency | async)?.symbol }}
       {{ budgetData.totalBudget - budgetData.spentAmount | number }}</span
     >
-    <br><br>
+    <br /><br />
     <nz-alert nzType="info" [nzDescription]="descTemp"></nz-alert>
     <ng-template #descTemp>
-
-     <span class="inline-flex">
-      Congratulations!
-      <picture>
-        <source
-          srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.webp"
-          type="image/webp"
-        />
-        <img
-          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif"
-          alt="🎉"
-          width="32"
-          height="32"
-        />
-      </picture>
-     </span>
-       you have saved {{ (currency | async)?.symbol }}
+      <span class="inline-flex">
+        Congratulations!
+        <picture>
+          <source
+            srcset="
+              https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.webp
+            "
+            type="image/webp"
+          />
+          <img
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif"
+            alt="🎉"
+            width="32"
+            height="32"
+          />
+        </picture>
+      </span>
+      you have saved {{ (currency | async)?.symbol }}
       {{ budgetData.totalBudget - budgetData.spentAmount | number }} from you
       total budget amount.
-
     </ng-template>
   </div>
 
@@ -82,4 +82,5 @@
   <!-- day wise analysis -->
 
   <!-- top 5 categiroes -->
+  <app-stats></app-stats>
 </div>

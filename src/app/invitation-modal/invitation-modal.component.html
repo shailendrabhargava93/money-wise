@@ -1,0 +1,82 @@
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  [nzPlacement]="'bottom'"
+  nzTitle="Invite People"
+  [nzExtra]="extra"
+  (nzOnClose)="onClose()"
+>
+  <ng-container *nzDrawerContent>
+    <form nz-form class="w-full max-w-7xl" [formGroup]="form">
+      <div class="flex items-center border-b border-indigo-500 py-2">
+        <nz-form-item class="w-full">
+          <nz-form-control [nzErrorTip]="emailErrorTpl">
+            <nz-input-group>
+              <input
+                nz-input
+                placeholder="Enter email"
+                formControlName="email"
+                name="email"
+                email
+              />
+
+              <ng-template #emailErrorTpl let-control>
+                <span *ngIf="control.errors?.['pattern']">
+                  Please enter valid google email id
+                </span>
+                <span *ngIf="control.errors?.['required']">
+                  This is required
+                </span>
+              </ng-template>
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <button
+            nz-button
+            class="primary float-right"
+            (click)="handleShare()"
+            [nzLoading]="isConfirmLoading"
+          >
+            Send Invite
+          </button>
+        </nz-form-item>
+      </div>
+    </form>
+    <nz-list nzBordered>
+      <nz-list-item *ngFor="let user of users">
+        <div class="contents">
+          <span class="float-left">
+            <nz-avatar
+              nzIcon="user"
+              style="background-color: rgb(86, 86, 241)"
+            ></nz-avatar>
+            &nbsp;
+            <span nz-typography>{{ user.email }}</span>
+          </span>
+          <span *ngIf="!user.delete" class="text-gray-400 float-right"
+            >(Creator)</span
+          >
+          <span
+            *ngIf="user.delete"
+            class="cursor-pointer float-right"
+            nz-icon
+            nzType="close-circle"
+            nzTheme="outline"
+            (click)="removeUser(user.email)"
+          ></span>
+        </div>
+      </nz-list-item>
+    </nz-list>
+  </ng-container>
+</nz-drawer>
+<ng-template #extra>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="onClose()"
+  ></span>
+</ng-template>

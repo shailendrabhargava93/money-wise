@@ -158,13 +158,13 @@ export class StatsComponent implements OnInit {
 
   colorScheme = [
     '#003f5c',
+    '#de425b',
     '#2f4b7c',
     '#ff7c43',
-    '#665191',
-    '#f95d6a',
-    '#a05195',
-    '#de425b',
     '#d45087',
+    '#665191',
+    '#a05195',
+    '#f95d6a',
     '#ffa600',
   ];
 }
