@@ -81,7 +81,7 @@ export class TransactionsComponent implements OnInit {
       const icon = CAT_ICON[category as keyof typeof CAT_ICON];
       return `/assets/icons/${icon}.png`;
     }
-    return 'NA';
+    return `/assets/icons/list.png`;
   }
 
   onTxn(txnId: string) {

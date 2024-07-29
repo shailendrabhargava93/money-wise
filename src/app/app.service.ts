@@ -68,8 +68,11 @@ export class AppService {
     this.currency$ = this.currencySub.asObservable();
   }
 
-  getTransactions(email: string, pageNumber: number) {
-    return this.http.get(this.BASE_URL + `txn/all/${email}/${pageNumber}`);
+  getTransactions(email: string, pageNumber: number, count?: number) {
+    count = count ? count : 10;
+    return this.http.get(
+      this.BASE_URL + `txn/all/${email}/${pageNumber}/${count}`
+    );
   }
 
   createTransaction(data: any) {
@@ -98,6 +101,10 @@ export class AppService {
 
   update(id: string, data: any) {
     return this.http.put(this.BASE_URL + `budget/update/${id}`, data);
+  }
+
+  getStats(id: string) {
+    return this.http.get(this.BASE_URL + `budget/stats/${id}`);
   }
 
   get isLoggedIn$(): Observable<boolean> {

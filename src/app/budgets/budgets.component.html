@@ -35,16 +35,16 @@
 <div class="p-1 mt-2">
   <div
     *ngFor="let budget of budgets"
-    class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4 hover:shadow-2xl transition duration-500 transform hover:scale-105"
+    class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4"
   >
     <div
       class="flex flex-col justify-start bg-gradient-to-r from-indigo-400 to-indigo-500 h-20 p-4 flow-root"
     >
       <span class="float-left">
-        <p class="ml-4 text-white text-lg font-semibold">
+        <p class="text-white text-lg font-semibold">
           {{ budget.data.name }}
         </p>
-        <p class="ml-4 text-white text-sm">
+        <p class="text-white text-sm">
           <span class="font-bold"
             >{{ (currency | async)?.symbol }}
             {{
@@ -65,7 +65,7 @@
         nzTheme="outline"
       ></span>
     </div>
-    <p class="py-6 px-6 text-md tracking-wide flow-root">
+    <p class="py-4 px-4 text-md tracking-wide flow-root">
       <span class="float-left">{{
         budget.data.startDate | date : "dd MMM"
       }}</span>

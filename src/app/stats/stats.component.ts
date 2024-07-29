@@ -1,6 +1,5 @@
-import { switchMap, catchError, of } from 'rxjs';
 import { AppService } from './../app.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 
 @Component({
@@ -9,6 +8,8 @@ import { ChartOptions } from 'chart.js';
   styleUrls: ['./stats.component.css'],
 })
 export class StatsComponent implements OnInit {
+  @Input() budgetId!: string;
+
   // Doughnut
   public doughnutChartOptions: ChartOptions<'doughnut'> = {
     responsive: true,
@@ -41,70 +42,16 @@ export class StatsComponent implements OnInit {
 
   constructor(private app: AppService) {}
   ngOnInit(): void {
-
-    this.app.userEmail
-      .pipe(
-        switchMap((user) => this.app.getTransactions(user as string, 1)),
-        catchError((error) => {
-          console.error('Error occurred getTransactions:', error);
-          return of([]);
-        })
-      )
-      .subscribe((data) => {
-        if (data) {
-          const output = data as any[];
-          if (output.length > 0) {
-            this.getCategoriesAndAmounts(output);
-          }
-        }
-      });
-  }
-
-  sumAmountByCategory(transactions: any[]): Record<string, number> {
-    const categorySum: Record<string, number> = {};
-
-    for (const transaction of transactions) {
-      const category = transaction.data.category;
-      const amount = transaction.data.amount;
-
-      if (category in categorySum) {
-        categorySum[category] += amount;
-      } else {
-        categorySum[category] = amount;
+    this.app.getStats(this.budgetId).subscribe((data) => {
+      if (data) {
+        this.formatDataForCharts(data);
       }
-    }
-
-    return categorySum;
+    });
   }
 
-  sumAmountByDate(transactions: any[]): Record<string, number> {
-    const dateSum: Record<string, number> = {};
-
-    for (const transaction of transactions) {
-
-      const date = new Date(transaction.data.date);
-      const moddate = date.toISOString().split('T')[0];
-      const amount = transaction.data.amount;
-
-      if (moddate in dateSum) {
-        dateSum[moddate] += amount;
-      } else {
-        dateSum[moddate] = amount;
-      }
-    }
-
-    const sortedKeys = Object.keys(dateSum).sort();
-    let sortedData: { [key: string]: number } = {};
-    for (let key of sortedKeys) {
-      sortedData[key] = dateSum[key];
-    }
-
-    return sortedData;
-  }
-
-  getCategoriesAndAmounts(transactions: any[]) {
-    const categorySum = this.sumAmountByCategory(transactions);
-    const dateSum = this.sumAmountByDate(transactions);
+  formatDataForCharts(data: any) {
+    const categorySum = data.categoryData;
+    const dateSum = data.datesData;
 
     console.log(categorySum, dateSum);
 

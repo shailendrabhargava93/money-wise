@@ -11,8 +11,8 @@
       <input
         type="text"
         nz-input
-        [(ngModel)]="searchCountry"
-        placeholder="Search country"
+        [(ngModel)]="searchCurrency"
+        placeholder="Search Currency"
         (keydown)="search()"
       />
     </nz-input-group>
@@ -24,7 +24,7 @@
       <nz-radio-group [(ngModel)]="selectedCurrency" (ngModelChange)="update()">
         <span class="space-y-2 mt-1" *ngFor="let c of currencyData">
           <label
-            class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 gap-6 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
+            class="text-slate-700 has-[:checked]:ring-indigo-200 has-[:checked]:text-indigo-800 has-[:checked]:bg-indigo-50 rounded-lg p-2 ring-1 ring-transparent hover:bg-slate-50"
             nz-radio
             [nzValue]="c.currency"
           >
@@ -32,8 +32,8 @@
               <div class="flex items-center">
                 <img class="w-8 h-6" [src]="c.flag" /> &nbsp;
               </div>
-              <h2 class="text-md font-medium overflow-hidden truncate w-32">
-                {{ c.name }} ({{ c.symbol }})
+              <h2 class="text-md overflow-hidden truncate w-60">
+                {{ c.currency }} ({{ c.symbol }})
               </h2>
             </div>
           </label>

@@ -29,6 +29,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
 import { CurrencyModalComponent } from './currency-modal/currency-modal.component';
 import { InvitationModalComponent } from './invitation-modal/invitation-modal.component';
+import { WarningModalComponent } from './warning-modal/warning-modal.component';
 
 registerLocaleData(en);
 
@@ -54,6 +55,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     BudgetOverviewComponent,
     CurrencyModalComponent,
     InvitationModalComponent,
+    WarningModalComponent,
   ],
   imports: [
     BrowserModule,

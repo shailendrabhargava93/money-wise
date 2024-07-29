@@ -11,7 +11,7 @@ export class CurrencyModalComponent {
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
 
   selectedCurrency!: string;
-  searchCountry!: string;
+  searchCurrency!: string;
   globalCurrencyData: any[] = [];
   currencyData: any[] = [];
 
@@ -39,14 +39,12 @@ export class CurrencyModalComponent {
 
     for (let obj of data) {
       if (Object.keys(obj.currencies).length > 0) {
-        let name = obj.name.common;
         let currencyCode = Object.keys(obj.currencies)[0];
         let currencyName = obj.currencies[currencyCode].name;
         let currencySymbol = obj.currencies[currencyCode].symbol;
         let flag = obj.flags.svg;
 
         let newObject = {
-          name: name,
           currency: currencyName,
           symbol: currencySymbol,
           flag: flag,
@@ -58,20 +56,18 @@ export class CurrencyModalComponent {
   }
 
   update() {
-    console.log(this.selectedCurrency);
     const obj = this.currencyData.find(
       (c) => c.currency == this.selectedCurrency
     );
-    console.log(obj);
     const updated = { name: obj.currency, symbol: obj.symbol };
     localStorage.setItem('currency', JSON.stringify(updated));
     this.app.currencySub.next(updated);
   }
 
   search() {
-    if (this.searchCountry && this.searchCountry.length > 1) {
+    if (this.searchCurrency && this.searchCurrency.length > 1) {
       this.currencyData = this.currencyData.filter((c) =>
-        c.name.toLowerCase().includes(this.searchCountry.toLowerCase())
+        c.currency.toLowerCase().includes(this.searchCurrency.toLowerCase())
       );
     } else {
       this.currencyData = this.globalCurrencyData;
