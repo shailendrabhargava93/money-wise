@@ -79,11 +79,40 @@
         [nzStrokeWidth]="10"
       ></nz-progress>
     </p>
-    <div class="flex justify-center px-5 mb-2 text-sm">
-      <button class="secondary" nz-button (click)="openOverview(budget.id)">
-        <span nz-icon nzType="fund-view" nzTheme="outline"></span>
-      </button>
+
+    <div class="flex flow-root p-4">
+      <div class="mt-1">
+        <!-- <span class="text-gray-500 ">{{budget.data.users.length }} members</span> -->
+        <span class="float-left">
+          <nz-avatar-group>
+            <span class="-mr-1" *ngFor="let user of budget.data.users; let i = index">
+              <nz-avatar
+                *ngIf="i < 2"
+                style="background-color: #4f46e5"
+                nzIcon="user"
+              ></nz-avatar>
+            </span>
+          </nz-avatar-group>
+          <nz-avatar
+            *ngIf="budget.data.users.length > 2"
+            style="background-color: #f4f1f0; color: #6a64e5"
+            [nzText]="'+' + (budget.data.users.length - 2)"
+          ></nz-avatar>
+        </span>
+        <span class="text-gray-500 float-right">
+          <span
+            class="cursor-pointer text-gray-400"
+            nz-icon
+            nzType="right-circle"
+            nzTheme="fill"
+            (click)="openOverview(budget.id)"
+          ></span>
+        </span>
+      </div>
     </div>
+    <!-- <button class="secondary" nz-button >
+        <span nz-icon nzType="fund-view" nzTheme="outline"></span>
+      </button> -->
   </div>
 </div>
 

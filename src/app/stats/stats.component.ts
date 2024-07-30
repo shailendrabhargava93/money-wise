@@ -9,6 +9,7 @@ import { ChartOptions } from 'chart.js';
 })
 export class StatsComponent implements OnInit {
   @Input() budgetId!: string;
+  categoryListData: { category: string; sum: number; count: number }[] = [];
 
   // Doughnut
   public doughnutChartOptions: ChartOptions<'doughnut'> = {
@@ -50,10 +51,8 @@ export class StatsComponent implements OnInit {
   }
 
   formatDataForCharts(data: any) {
-    const categorySum = data.categoryData;
+    const categorySum = data.categoryTxnCount;
     const dateSum = data.datesData;
-
-    console.log(categorySum, dateSum);
 
     const categories: string[] = [];
     const amounts: number[] = [];
@@ -63,8 +62,13 @@ export class StatsComponent implements OnInit {
 
     for (const category in categorySum) {
       if (categorySum.hasOwnProperty(category)) {
+        this.categoryListData.push({
+          category: category,
+          sum: categorySum[category].sumAmount,
+          count: categorySum[category].count,
+        });
         categories.push(category);
-        amounts.push(categorySum[category]);
+        amounts.push(categorySum[category].sumAmount);
       }
     }
     this.doughnutChartLabels = categories;

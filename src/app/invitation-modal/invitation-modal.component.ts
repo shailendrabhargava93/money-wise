@@ -150,17 +150,17 @@ export class InvitationModalComponent implements OnChanges {
       toEmail: toEmail,
     };
 
-    emailjs
-      .send('service_qbeg4sl', 'template_0gee8ww', templateParams, {
-        publicKey: 'ZZIokmaL8NAWGBmSN',
-      })
-      .then(
-        (response: any) => {
-          console.log('EMAIL SUCCESS!', response.status, response.text);
-        },
-        (err: any) => {
-          console.log('EMAIL FAILED...', err);
-        }
-      );
+    // emailjs
+    //   .send('service_qbeg4sl', 'template_0gee8ww', templateParams, {
+    //     publicKey: 'ZZIokmaL8NAWGBmSN',
+    //   })
+    //   .then(
+    //     (response: any) => {
+    //       console.log('EMAIL SUCCESS!', response.status, response.text);
+    //     },
+    //     (err: any) => {
+    //       console.log('EMAIL FAILED...', err);
+    //     }
+    //   );
   }
 }

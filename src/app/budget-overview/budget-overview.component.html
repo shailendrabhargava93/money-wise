@@ -12,7 +12,7 @@
     nz-popconfirm
     nzPopconfirmTitle="Are you sure, you want to mark it as completed ?"
     nzPopconfirmPlacement="bottom"
-    (nzOnConfirm)="confirm(budgetId, 'complete')"
+    (nzOnConfirm)="confirm('complete')"
   >
     <span class="capitalize lg:inline mr-1">Complete</span>
     <span nz-icon nzType="check-circle"></span></button
@@ -23,7 +23,7 @@
     nz-popconfirm
     nzPopconfirmTitle="Are you sure, you want to mark it as deleted ?"
     nzPopconfirmPlacement="bottom"
-    (nzOnConfirm)="confirm(budgetId, 'delete')"
+    (nzOnConfirm)="confirm('delete')"
   >
     <span class="capitalize lg:inline mr-1">Delete</span>
 
@@ -36,54 +36,66 @@
   *ngIf="budgetData"
 >
   <div class="flex flow-root">
-    <span class="text-gray-500 float-left">Budget Amount</span>
-    <span class="float-right"
-      >{{ (currency | async)?.symbol }}
-      {{ budgetData.totalBudget | number }}</span
-    >
+    <div class="mt-1">
+      <span class="text-gray-500 float-left">Budget Amount</span>
+      <span class="float-right"
+        >{{ (currency | async)?.symbol }}
+        {{ budgetData.totalBudget | number }}</span
+      >
+    </div>
     <br />
-    <span class="text-gray-500 float-left">Expenditure Amount</span>
-    <span class="float-right"
-      >{{ (currency | async)?.symbol }}
-      {{ budgetData.spentAmount | number }}</span
-    >
+    <div class="mt-1">
+      <span class="text-gray-500 float-left">Expenditure Amount</span>
+      <span class="float-right"
+        >{{ (currency | async)?.symbol }}
+        {{ budgetData.spentAmount | number }}</span
+      >
+    </div>
     <br />
     <hr />
-    <span class="text-gray-500 float-left">Remaining Amount</span>
-    <span class="float-right"
-      >{{ (currency | async)?.symbol }}
-      {{ budgetData.totalBudget - budgetData.spentAmount | number }}</span
-    >
+    <div class="mt-1">
+      <span class="text-gray-500 float-left">Remaining Amount</span>
+      <span class="float-right"
+        >{{ (currency | async)?.symbol }}
+        {{ budgetData.totalBudget - budgetData.spentAmount | number }}</span
+      >
+    </div>
     <br /><br />
-    <nz-alert nzType="info" [nzDescription]="descTemp"></nz-alert>
-    <ng-template #descTemp>
-      <span class="inline-flex">
-        Congratulations!
-        <picture>
-          <source
-            srcset="
-              https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.webp
-            "
-            type="image/webp"
-          />
-          <img
-            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif"
-            alt="🎉"
-            width="32"
-            height="32"
-          />
-        </picture>
-      </span>
-      you have saved {{ (currency | async)?.symbol }}
-      {{ budgetData.totalBudget - budgetData.spentAmount | number }} from you
-      total budget amount.
-    </ng-template>
+    <div *ngIf="!budgetData.overspent">
+      <nz-alert nzType="success" [nzDescription]="descTemp"></nz-alert>
+      <ng-template #descTemp>
+        <span class="inline-flex">
+          Congratulations! &nbsp;
+          <picture>
+            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp" type="image/webp">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif" alt="🥳" width="20" height="20">
+          </picture>
+        </span>
+        You have saved {{ (currency | async)?.symbol }}
+        <span class="font-semibold">{{
+          budgetData.totalBudget - budgetData.spentAmount | number
+        }}</span>
+        from you total budget amount.
+      </ng-template>
+    </div>
+    <div *ngIf="budgetData.overspent">
+      <nz-alert nzType="error" [nzDescription]="descTemp"></nz-alert>
+      <ng-template #descTemp>
+        <span class="inline-flex">
+          Oops! &nbsp;
+          <picture>
+            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/274c/512.webp" type="image/webp">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/274c/512.gif" alt="❌" width="20" height="20">
+          </picture>
+        </span>
+        You have exceeded {{ (currency | async)?.symbol }}
+        <span class="font-semibold">{{
+          budgetData.totalBudget - budgetData.spentAmount | number
+        }}</span>
+        from you total budget amount.
+      </ng-template>
+    </div>
   </div>
 
-  <!-- waring, spent less, or more -->
-
-  <!-- day wise analysis -->
-
-  <!-- top 5 categiroes -->
   <app-stats [budgetId]="budgetId"></app-stats>
 </div>

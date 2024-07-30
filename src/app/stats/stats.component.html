@@ -1,7 +1,50 @@
-<div class="w-full">
+<div class="container px-4 py-2 mx-auto flex justify-center items-center">
+  <div class="p-6 pb-2 border bg-white rounded-md shadow-dashboard">
+    <div class="flex flex-wrap items-center justify-between mb-1 -m-2">
+      <div class="w-auto p-2">
+        <h2 class="text-md font-semibold text-gray-600">
+          Expenditure by Category
+        </h2>
+      </div>
+    </div>
+    <div class="flex flex-wrap">
+      <canvas
+        baseChart
+        [type]="'doughnut'"
+        [datasets]="doughnutChartDatasets"
+        [labels]="doughnutChartLabels"
+        [options]="doughnutChartOptions"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>
+
+<div class="container px-4 py-2 mx-auto flex justify-center items-center">
+  <div class="p-6 pb-2 border bg-white rounded-md shadow-dashboard">
+    <div class="flex flex-wrap items-center justify-between mb-1 -m-2">
+      <div class="w-auto p-2">
+        <h2 class="text-md font-semibold text-gray-600">
+          Day-by-Day Expenditure
+        </h2>
+      </div>
+    </div>
+    <div class="flex flex-wrap">
+      <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        chartType="bar"
+      ></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="w-full"> -->
   <!-- doughnut  -->
-  <div class="flex flex-wrap gap-4 justify-center pt-4">
-    <div class="flex flex-col rounded-xl shadow-md p-4 border border-gray-200 w-80">
+  <!-- <div class="flex flex-wrap gap-4 justify-center pt-4">
+    <div class="flex flex-col rounded-xl shadow-md p-4 border border-gray-200 w-96">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
         Expenditure by Category
       </h2>
@@ -15,10 +58,10 @@
       >
       </canvas>
     </div>
-  </div>
+  </div> -->
 
   <!-- bar -->
-  <div class="flex flex-wrap gap-4 justify-center pt-3 mb-6">
+  <!-- <div class="flex flex-wrap gap-4 justify-center pt-3 mb-6">
     <div class="flex flex-col rounded-xl shadow-md p-6 border border-gray-200 w-80">
       <h2 class="text-gray-500 text-md font-semibold pb-1">
         Day-by-Day Expenditure
@@ -33,5 +76,7 @@
         ></canvas>
       </div>
     </div>
-  </div>
-</div>
+  </div> -->
+<!-- </div> -->
+
+<app-category-list [categoryData]="categoryListData"></app-category-list>

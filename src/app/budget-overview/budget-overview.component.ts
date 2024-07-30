@@ -32,11 +32,16 @@ export class BudgetOverviewComponent {
       if (data) {
         this.app.hideSpinner();
         this.budgetData = data;
+        this.budgetData['overspent'] = this.isOverspent(data);
       }
     });
   }
 
-  confirm(budgetId: string, type: string): void {
+  isOverspent(budget: any) {
+    return budget.totalBudget - budget.spentAmount < 0 ? true : false;
+  }
+
+  confirm(type: string): void {
     if (type === 'delete') {
       this.markDeleted();
     }
