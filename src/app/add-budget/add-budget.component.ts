@@ -1,5 +1,5 @@
 import { STATUS } from './../status.enum';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,12 +15,14 @@ export class AddBudgetComponent {
   form: FormGroup;
   userEmail$ = this.app.userEmail;
   currency = this.app.currency$;
+  budgetNameSuggestions!: string[];
+  budgetAmountSuggestions!: number[];
 
   constructor(
     private fb: FormBuilder,
     private app: AppService,
     private message: NzMessageService,
-    private router: Router,
+    private router: Router
   ) {
     this.form = this.fb.group({
       startDate: [null, [Validators.required]],
@@ -41,6 +43,19 @@ export class AddBudgetComponent {
     let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     this.form.get('startDate')?.setValue(firstDay);
     this.form.get('endDate')?.setValue(lastDay);
+
+    const opt1 = date.toLocaleString('en-US', { month: 'short' });
+    const opt2 = date.toLocaleString('en-US', { month: 'long' });
+    const opt3 = date.toLocaleString('en-US', { year: '2-digit' });
+
+    this.budgetNameSuggestions = [
+      `${opt1} ${date.getFullYear()}`,
+      `${opt2} ${date.getFullYear()}`,
+      `Month ${opt1}`,
+      `${opt1} ${opt3}`,
+    ];
+
+    this.budgetAmountSuggestions = [10000, 20000, 25000, 30000];
   }
   createBudget(): void {
     if (this.form.valid) {
@@ -67,5 +82,13 @@ export class AddBudgetComponent {
         }
       });
     }
+  }
+
+  onNameClick(name: string) {
+    this.form.get('name')?.setValue(name);
+  }
+
+  onAmountClick(amount: number) {
+    this.form.get('totalBudget')?.setValue(amount);
   }
 }

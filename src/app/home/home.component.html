@@ -26,9 +26,8 @@
   </div>
 </div> -->
 
-
 <div
-  *ngIf="!(isBudgetAvailable | async)"
+  *ngIf="!isBudgetAvailable"
   class="flex flex-col h-[60vh] justify-center items-center"
 >
   <img class="h-[16rem]" src="assets/strategy-pana.svg" />
@@ -46,4 +45,81 @@
   >
     Create Your Budget
   </button>
+</div>
+
+
+<div class="py-5" *ngIf="!isBudgetAvailable">
+  <div class="flow-root">
+    <h3 class="text-gray-500 float-left fond-medium">Top spending</h3>
+    <h3 class="text-gray-800 float-right fond-medium">See all</h3>
+  </div>
+  <div
+    class="mx-auto  flex flex-col rounded-xl border-2 border-coolGray-100 bg-white px-6 py-8"
+  >
+  <nz-tag [nzColor]="'#87d068'">Sample</nz-tag>
+    <div class="mb-4 mt-4 text-md text-blue-600 flex">
+      <ul role="list" class="divide-y divide-gray-100">
+        <li class="flex justify-between py-5">
+          <div class="flex min-w-0 gap-x-4">
+            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/assets/icons/bills.png" alt="">
+            <div class="min-w-0 mt-4 flex-auto">
+              <p class="text-sm font-semibold leading-6 text-gray-900">Bills</p>
+            </div>
+          </div>
+          <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end mt-4">
+            <p class="text-sm leading-6 text-gray-900">$ 5000</p>
+          </div>
+        </li>
+        <li class="flex justify-between py-5">
+          <div class="flex min-w-0 gap-x-4">
+            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/assets/icons/shopping.png" alt="">
+            <div class="min-w-0 mt-4 flex-auto">
+              <p class="text-sm font-semibold leading-6 text-gray-900">Shopping</p>
+            </div>
+          </div>
+          <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+            <p class="text-sm leading-6 text-gray-900 mt-4">$ 2900</p>
+          </div>
+        </li>
+        <li class="flex justify-between gap-x-6 py-5">
+          <div class="flex min-w-0 gap-x-4">
+            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/assets/icons/taxi.png" alt="">
+            <div class="min-w-0 mt-4 flex-auto">
+              <p class="text-sm font-semibold leading-6 text-gray-900">Transportation</p>
+            </div>
+          </div>
+          <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+            <p class="text-sm leading-6 text-gray-900 mt-4">$ 1200</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="py-5" *ngIf="!isBudgetAvailable">
+  <div class="flow-root">
+    <h3 class="text-gray-500 float-left fond-medium">Recent transactions</h3>
+    <h3 class="text-gray-800 float-right fond-medium">See all</h3>
+  </div>
+  <div
+    class="mx-auto flex flex-col items-center rounded-xl border-2 border-coolGray-100 bg-white px-6 py-8 text-center"
+  >
+    <div class="mb-4 mt-4 text-md text-blue-600 flex">
+      <p class="text-gray-500">Added transactions will show up here</p>
+      &nbsp;
+      <picture>
+        <source
+          srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64c/512.webp"
+          type="image/webp"
+        />
+        <img
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64c/512.gif"
+          alt="🙌"
+          width="20"
+          height="20"
+        />
+      </picture>
+    </div>
+  </div>
 </div>

@@ -67,7 +67,6 @@ export class TransactionsComponent implements OnInit {
                 (transaction) => transaction.data.amount
               )
             );
-            console.log(highestAmount);
             this.highestAmount = highestAmount;
             this.amountRange = [0, highestAmount];
             this.globalList = this.allTransactions;

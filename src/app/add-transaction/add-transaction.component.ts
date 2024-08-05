@@ -17,6 +17,7 @@ export class AddTransactionComponent implements OnInit {
   budgets!: any[] | undefined;
   txnId: string | null = null;
   isUpdate = false;
+  dateSuggestions!: Date[];
   constructor(
     private fb: FormBuilder,
     private app: AppService,
@@ -55,6 +56,11 @@ export class AddTransactionComponent implements OnInit {
     );
     const date = new Date();
     this.form.controls['date'].setValue(date);
+
+    const yesterday = new Date(new Date().setDate(date.getDate() - 1));
+    const tommorrow = new Date(new Date().setDate(date.getDate() + 1));
+
+    this.dateSuggestions = [yesterday, tommorrow];
 
     this.txnId = this.route.snapshot.paramMap.get('id');
     if (this.txnId) {
@@ -118,5 +124,9 @@ export class AddTransactionComponent implements OnInit {
         }
       );
     }
+  }
+
+  onDateClick(date: Date) {
+    this.form.controls['date'].setValue(date);
   }
 }

@@ -6,7 +6,7 @@
 >
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category" nzRequired
-      >Category</nz-form-label
+      >Choose Category</nz-form-label
     >
 
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
@@ -49,7 +49,7 @@
 
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
-      >Title</nz-form-label
+      >Expense Details</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <input
@@ -61,10 +61,28 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Date</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Transaction Date</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-date-picker formControlName="date"></nz-date-picker>
     </nz-form-control>
+    <span class="inline-flex mt-3">
+      <span
+        class="text-xs text-gray-400 mr-1"
+        nz-tooltip
+        nzTooltipTitle="Suggestions"
+        nz-icon
+        nzType="info-circle"
+        nzTheme="outline"
+      ></span>
+      <nz-tag
+        class="cursor-pointer"
+        *ngFor="let date of dateSuggestions"
+        [nzColor]="'geekblue'"
+        (click)="onDateClick(date)"
+      >
+        {{ date.toLocaleDateString('fr-CA') }}
+      </nz-tag>
+    </span>
   </nz-form-item>
 
   <nz-form-item>

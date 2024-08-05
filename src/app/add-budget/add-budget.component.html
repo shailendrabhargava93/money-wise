@@ -19,7 +19,7 @@
   </nz-form-item>
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
-      >Budgeted Amount</nz-form-label
+      >Budget Amount</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group [nzAddOnBefore]="(currency | async)?.symbol">
@@ -31,19 +31,52 @@
         />
       </nz-input-group>
     </nz-form-control>
+    <span class="inline-flex mt-3">
+      <span
+        class="text-xs text-gray-400 mr-1"
+        nz-tooltip
+        nzTooltipTitle="Suggestions"
+        nz-icon
+        nzType="info-circle"
+        nzTheme="outline"
+      ></span>
+      <nz-tag
+        class="cursor-pointer"
+        *ngFor="let amount of budgetAmountSuggestions"
+        [nzColor]="'geekblue'"
+        (click)="onAmountClick(amount)"
+      >
+        {{ (currency | async)?.symbol }} {{ amount | number }}
+      </nz-tag>
+    </span>
   </nz-form-item>
 
   <nz-form-item>
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
-      >Name Budget</nz-form-label
+      >Name Your Budget</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <input
-        placeholder="Enter expense title"
-        nz-input
-        formControlName="name"
-      />
+      <input placeholder="Enter Budget Name" nz-input formControlName="name" />
     </nz-form-control>
+
+    <span class="inline-flex mt-3">
+      <span
+        class="text-xs text-gray-400 mr-1"
+        nz-tooltip
+        nzTooltipTitle="Suggestions"
+        nz-icon
+        nzType="info-circle"
+        nzTheme="outline"
+      ></span>
+      <nz-tag
+        class="cursor-pointer"
+        *ngFor="let name of budgetNameSuggestions"
+        [nzColor]="'geekblue'"
+        (click)="onNameClick(name)"
+      >
+        {{ name }}
+      </nz-tag>
+    </span>
   </nz-form-item>
 
   <nz-form-item nz-row class="register-area flex content-center">

@@ -43,8 +43,8 @@ export class AppService {
 
   public currencySub: BehaviorSubject<Currency> = new BehaviorSubject<Currency>(
     {
-      name: 'Indian rupee',
-      symbol: '₹',
+      name: '',
+      symbol: '',
     }
   );
   public currency$: Observable<Currency>;
