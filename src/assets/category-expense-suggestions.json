@@ -1,0 +1,92 @@
+[
+  {
+    "key": "Housing",
+    "values": [
+      "Mortgage/rent",
+      "Home repairs/Maintenance",
+      "Home improvement",
+      "Furnishings",
+      "House cleaning",
+      "Pest control",
+      "Furniture",
+      "Laundry"
+    ]
+  },
+  {
+    "key": "Utilities",
+    "values": [
+      "Landline/Home phone",
+      "Mobile phone",
+      "Garbage",
+      "Water",
+      "Electricity"
+    ]
+  },
+  {
+    "key": "Food",
+    "values": [
+      "Coffee shops",
+      "Breakfast",
+      "Lunch",
+      "Dinner",
+      "Drinks",
+      "Snacks",
+      "Restaurants"
+    ]
+  },
+  {
+    "key": "Healthcare",
+    "values": [
+      "Doctor bills",
+      "Hospital bills",
+      "Prescription Medications",
+      "Medical devices",
+      "Glasses/contacts",
+      "Vitamins/supplements",
+      "Dentist visits"
+    ]
+  },
+  {
+    "key": "Transportation",
+    "values": [
+      "Car insurance",
+      "Maintenance Repairs",
+      "Public transportation",
+      "Ride sharing (Uber, Lyft)",
+      "Tolls",
+      "Parking",
+      "Private Cab"
+    ]
+  },
+  {
+    "key": "Entertainment",
+    "values": [
+      "Games",
+      "Movies",
+      "Concerts",
+      "Sporting events",
+      "Hobbies/Crafts",
+      "Books"
+    ]
+  },
+  {
+    "key": "Travel",
+    "values": [
+      "Vacation",
+      "Trips for weddings, bachelor/bachelorette parties",
+      "Trips to see family",
+      "Business Trip",
+      "Souvenirs",
+      "Hotel Stays"
+    ]
+  },
+  {
+    "key": "Subscriptions",
+    "values": [
+      "Subscriptions (Netflix, Amazon, Disney)",
+      "Sports TV subscription (ESPN, Fox Sports)",
+      "Magazines",
+      "Music (Spotify, Pandora)"
+    ]
+  }
+]

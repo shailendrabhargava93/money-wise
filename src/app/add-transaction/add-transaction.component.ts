@@ -4,6 +4,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-add-transaction',
   templateUrl: './add-transaction.component.html',
@@ -18,6 +19,7 @@ export class AddTransactionComponent implements OnInit {
   txnId: string | null = null;
   isUpdate = false;
   dateSuggestions!: Date[];
+  expesneSuggestions!: string[];
   constructor(
     private fb: FormBuilder,
     private app: AppService,
@@ -62,6 +64,17 @@ export class AddTransactionComponent implements OnInit {
 
     this.dateSuggestions = [yesterday, tommorrow];
 
+    this.app.getJSON().subscribe(data => {
+      console.log(data);
+
+      this.form.get('category')?.valueChanges.subscribe((value) => {
+        if (value) {
+          const filtered = data.filter((el:any) => el.key === value);
+          this.expesneSuggestions = filtered.length > 0 ? filtered[0].values : null;
+        }
+      });
+    });
+
     this.txnId = this.route.snapshot.paramMap.get('id');
     if (this.txnId) {
       this.getTxn(this.txnId);
@@ -93,6 +106,10 @@ export class AddTransactionComponent implements OnInit {
         }
       });
     }
+  }
+
+  onClick(exp: string) {
+    this.form.controls['title'].setValue(exp);
   }
 
   getTxn(txnId: string) {

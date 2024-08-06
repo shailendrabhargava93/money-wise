@@ -68,6 +68,10 @@ export class AppService {
     this.currency$ = this.currencySub.asObservable();
   }
 
+  public getJSON(): Observable<any> {
+    return this.http.get("./assets/category-expense-suggestions.json");
+  }
+
   getTransactions(email: string, pageNumber: number, count?: number) {
     count = count ? count : 10;
     return this.http.get(

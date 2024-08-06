@@ -8,105 +8,58 @@
   </div>
 </div>
 <!-- component -->
-<!-- <div class="flex p-1 justify-center items-center w-full">
-  <div class="relative cursor-pointer dark:text-white">
-    <span
-      class="absolute top-0 left-0 w-full h-full mt-1 ml-1 bg-indigo-500 rounded-lg"
-    ></span>
-    <div
-      class="relative p-2 bg-white border-2 border-indigo-500 rounded-lg hover:scale-105 transition duration-500"
-    >
-      <div class="flex items-center">
-        <span class="text-xl">😎</span>
-        <h3 class="my-2 ml-3 text-lg font-bold text-gray-800">
-          Hello, {{ username$ | async }}
-        </h3>
-      </div>
-    </div>
+
+<div class="py-4" *ngIf="isBudgetAvailable | async">
+  <div class="flow-root">
+    <span class="ml-2 text-2xl text-black-600 float-left flex">Hey, {{ username$ | async }}
+      <picture class="mt-1 ml-2">
+        <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.webp" type="image/webp">
+        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.gif" alt="👋" width="25" height="25">
+      </picture>
+    </span>
   </div>
-</div> -->
+</div>
 
 <div
-  *ngIf="!isBudgetAvailable"
-  class="flex flex-col h-[60vh] justify-center items-center"
+  *ngIf="!(isBudgetAvailable | async)"
+  class="flex flex-col h-[55vh] justify-center items-center"
 >
-  <img class="h-[16rem]" src="assets/strategy-pana.svg" />
-  <h1 class="mt-1 text-lg text-bold text-center text-indigo-500">
-    Get Started Now !
+  <h1 class="mt-1 text-2xl text-bold text-center text-indigo-500 inline-flex">
+    Get • Set • Budget
+    <picture class="mt-1 ml-2">
+      <source
+        srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.webp"
+        type="image/webp"
+      />
+      <img
+        src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif"
+        alt="🚀"
+        width="25"
+        height="25"
+      />
+    </picture>
   </h1>
+  <img class="h-[18rem]" src="assets/strategy-pana.svg" />
   <h3 class="mt-1 text-sm text-center text-gray-500 text-semibold">
     Create your first budget and start tracking all expenses.
+    <a class="text-indigo-400" [routerLink]="['/add-budget']"
+      >Create Your Budget</a
+    >
   </h3>
-  <button
-    nz-button
-    class="bg-indigo-500 hover:bg-indigo-600 rounded-full w-full mt-2 p-1"
-    nzType="primary"
-    [routerLink]="['/add-budget']"
-  >
-    Create Your Budget
-  </button>
 </div>
 
-
-<div class="py-5" *ngIf="!isBudgetAvailable">
+<div class="py-4" *ngIf="!(isBudgetAvailable | async)">
   <div class="flow-root">
-    <h3 class="text-gray-500 float-left fond-medium">Top spending</h3>
-    <h3 class="text-gray-800 float-right fond-medium">See all</h3>
+    <span class="text-gray-600 float-left">Recent transactions</span>
+    <span class="text-gray-500 float-right"
+      ><a [routerLink]="['/transactions']">See all</a></span
+    >
   </div>
   <div
-    class="mx-auto  flex flex-col rounded-xl border-2 border-coolGray-100 bg-white px-6 py-8"
+    class="mx-auto flex flex-col items-center rounded-xl border-2 border-Gray-100 bg-white px-6 py-8 text-center"
   >
-  <nz-tag [nzColor]="'#87d068'">Sample</nz-tag>
-    <div class="mb-4 mt-4 text-md text-blue-600 flex">
-      <ul role="list" class="divide-y divide-gray-100">
-        <li class="flex justify-between py-5">
-          <div class="flex min-w-0 gap-x-4">
-            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/assets/icons/bills.png" alt="">
-            <div class="min-w-0 mt-4 flex-auto">
-              <p class="text-sm font-semibold leading-6 text-gray-900">Bills</p>
-            </div>
-          </div>
-          <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end mt-4">
-            <p class="text-sm leading-6 text-gray-900">$ 5000</p>
-          </div>
-        </li>
-        <li class="flex justify-between py-5">
-          <div class="flex min-w-0 gap-x-4">
-            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/assets/icons/shopping.png" alt="">
-            <div class="min-w-0 mt-4 flex-auto">
-              <p class="text-sm font-semibold leading-6 text-gray-900">Shopping</p>
-            </div>
-          </div>
-          <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-            <p class="text-sm leading-6 text-gray-900 mt-4">$ 2900</p>
-          </div>
-        </li>
-        <li class="flex justify-between gap-x-6 py-5">
-          <div class="flex min-w-0 gap-x-4">
-            <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="/assets/icons/taxi.png" alt="">
-            <div class="min-w-0 mt-4 flex-auto">
-              <p class="text-sm font-semibold leading-6 text-gray-900">Transportation</p>
-            </div>
-          </div>
-          <div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-            <p class="text-sm leading-6 text-gray-900 mt-4">$ 1200</p>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="py-5" *ngIf="!isBudgetAvailable">
-  <div class="flow-root">
-    <h3 class="text-gray-500 float-left fond-medium">Recent transactions</h3>
-    <h3 class="text-gray-800 float-right fond-medium">See all</h3>
-  </div>
-  <div
-    class="mx-auto flex flex-col items-center rounded-xl border-2 border-coolGray-100 bg-white px-6 py-8 text-center"
-  >
-    <div class="mb-4 mt-4 text-md text-blue-600 flex">
-      <p class="text-gray-500">Added transactions will show up here</p>
+    <div class="mb-4 mt-4 text-md flex">
+      <p class="text-gray-500">Your latest transactions will appear here</p>
       &nbsp;
       <picture>
         <source

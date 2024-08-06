@@ -58,6 +58,24 @@
         formControlName="title"
       />
     </nz-form-control>
+    <span class="inline-flex mt-3 scroll-sm" *ngIf="expesneSuggestions && expesneSuggestions.length > 0">
+      <span
+        class="text-xs text-gray-400 mr-1"
+        nz-tooltip
+        nzTooltipTitle="Suggestions"
+        nz-icon
+        nzType="info-circle"
+        nzTheme="outline"
+      ></span>
+      <nz-tag
+        class="cursor-pointer"
+        *ngFor="let exp of expesneSuggestions"
+        [nzColor]="'geekblue'"
+        (click)="onClick(exp)"
+      >
+        {{ exp }}
+      </nz-tag>
+    </span>
   </nz-form-item>
 
   <nz-form-item>
