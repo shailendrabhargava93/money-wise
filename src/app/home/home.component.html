@@ -9,17 +9,6 @@
 </div>
 <!-- component -->
 
-<div class="py-4" *ngIf="isBudgetAvailable | async">
-  <div class="flow-root">
-    <span class="ml-2 text-2xl text-black-600 float-left flex">Hey, {{ username$ | async }}
-      <picture class="mt-1 ml-2">
-        <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.webp" type="image/webp">
-        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.gif" alt="👋" width="25" height="25">
-      </picture>
-    </span>
-  </div>
-</div>
-
 <div
   *ngIf="!(isBudgetAvailable | async)"
   class="flex flex-col h-[55vh] justify-center items-center"
@@ -41,24 +30,93 @@
   </h1>
   <img class="h-[18rem]" src="assets/strategy-pana.svg" />
   <h3 class="mt-1 text-sm text-center text-gray-500 text-semibold">
-    Create your first budget and start tracking all expenses.
+    Create your first budget and start tracking all expenses
     <a class="text-indigo-400" [routerLink]="['/add-budget']"
       >Create Your Budget</a
     >
   </h3>
 </div>
 
-<div class="py-4" *ngIf="!(isBudgetAvailable | async)">
+<!-- if budget exists -->
+
+<div class="py-3" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
-    <span class="text-gray-600 float-left">Recent transactions</span>
-    <span class="text-gray-500 float-right"
-      ><a [routerLink]="['/transactions']">See all</a></span
-    >
+    <span class="ml-2 text-2xl text-black-600 float-left flex"
+      >Hey, {{ username$ | async }}
+      <picture class="mt-1 ml-2">
+        <source
+          srcset="
+            https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.webp
+          "
+          type="image/webp"
+        />
+        <img
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44b_1f3fb/512.gif"
+          alt="👋"
+          width="25"
+          height="25"
+        />
+      </picture>
+    </span>
   </div>
-  <div
-    class="mx-auto flex flex-col items-center rounded-xl border-2 border-Gray-100 bg-white px-6 py-8 text-center"
-  >
-    <div class="mb-4 mt-4 text-md flex">
+</div>
+
+<div class="py-2" *ngIf="isBudgetAvailable | async">
+  <div class="flow-root p-2">
+    <span class="text-gray-600 float-left font-semibold">Spending</span>
+    <br />
+    <nz-segmented
+      class="float-left py-1 px-1 bg-indigo-100 hover:bg-indigo-100 mt-1"
+      [nzOptions]="options"
+      [(ngModel)]="selectedIndex"
+    ></nz-segmented>
+    <div
+      class="w-32 flex float-right flex-row items-center bg-indigo-100 rounded py-1 px-1 mt-1"
+    >
+      <div class="mt-1 pl-2 fill-current">
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-width="1.5"
+            d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+          />
+        </svg>
+      </div>
+      <div class="text-right text-xl text-red-400 pl-2">
+        <span class="" *ngIf="selectedIndex === 0"
+          >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
+        </span>
+        <span class="" *ngIf="selectedIndex === 1"
+          >{{ (currency | async)?.symbol }} {{ weekSpening | number }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="py-2">
+  <div class="flow-root p-2">
+    <span class="text-gray-600 float-left font-semibold"
+      >Recent transactions</span
+    >
+    <span class="text-indigo-500 float-right"
+      ><a [routerLink]="['/transactions']" class="text-xs">See all</a>
+    </span>
+  </div>
+  <div class="mx-auto flex flex-col">
+    <div
+      class="mb-4 mt-4 text-md flex items-center justify-center text-center px-6 py-8 rounded-lg border-[1px] border-Gray-200"
+      *ngIf="!(isBudgetAvailable | async)"
+    >
       <p class="text-gray-500">Your latest transactions will appear here</p>
       &nbsp;
       <picture>
@@ -73,6 +131,13 @@
           height="20"
         />
       </picture>
+    </div>
+    <div class="" *ngIf="isBudgetAvailable | async">
+      <app-transaction-list
+        [allTransactions]="recentTxns"
+        [loadMore]="false"
+        [enableEmpty]="false"
+      ></app-transaction-list>
     </div>
   </div>
 </div>

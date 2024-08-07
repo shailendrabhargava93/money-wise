@@ -69,6 +69,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzPipesModule } from 'ng-zorro-antd/pipes';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzSegmentedModule } from 'ng-zorro-antd/segmented';
 
 @NgModule({
   exports: [
@@ -141,6 +142,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzResizableModule,
     NzPipesModule,
     NzSpaceModule,
+    NzSegmentedModule
   ],
 })
 export class NgZorroAntdModule {}

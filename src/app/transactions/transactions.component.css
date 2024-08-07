@@ -26,9 +26,3 @@
 ::ng-deep.ant-slider:hover .ant-slider-track {
   background-color: #5f58de;
 }
-
-.loadmore {
-  text-align: center;
-  height: 30px;
-  margin-bottom: 30px;
-}

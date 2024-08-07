@@ -33,9 +33,6 @@ export class AppService {
     new BehaviorSubject<boolean>(false);
   public isBudgetAvailableObs$: Observable<boolean>;
 
-  public budgetValuesSub: BehaviorSubject<[]> = new BehaviorSubject<[]>([]);
-  public budgetValuesObs$: Observable<[]>;
-
   public showPopupSub: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -57,19 +54,17 @@ export class AppService {
 
     this.currentUserSubject.next(JSON.parse(token as string));
     this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
-    this.budgetValuesSub.next(JSON.parse(budgets as any));
     this.currencySub.next(JSON.parse(currency as any));
 
     this.isSpinning$ = this.isSpinningSub.asObservable();
     this.currentUser = this.currentUserSubject.asObservable();
     this.isBudgetAvailableObs$ = this.isBudgetAvailableSub.asObservable();
-    this.budgetValuesObs$ = this.budgetValuesSub.asObservable();
     this.showPopup$ = this.showPopupSub.asObservable();
     this.currency$ = this.currencySub.asObservable();
   }
 
   public getJSON(): Observable<any> {
-    return this.http.get("./assets/category-expense-suggestions.json");
+    return this.http.get('./assets/category-expense-suggestions.json');
   }
 
   getTransactions(email: string, pageNumber: number, count?: number) {
@@ -131,10 +126,6 @@ export class AppService {
 
   get isBudgetAvailable(): Observable<boolean | undefined> {
     return this.isBudgetAvailableObs$.pipe(map((value) => value));
-  }
-
-  get budgetValues(): Observable<any[] | undefined> {
-    return this.budgetValuesObs$.pipe(map((value) => value));
   }
 
   get currency(): Observable<Currency | undefined> {

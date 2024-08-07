@@ -85,7 +85,10 @@
         <!-- <span class="text-gray-500 ">{{budget.data.users.length }} members</span> -->
         <span class="float-left">
           <nz-avatar-group>
-            <span class="-mr-1" *ngFor="let user of budget.data.users; let i = index">
+            <span
+              class="-mr-1"
+              *ngFor="let user of budget.data.users; let i = index"
+            >
               <nz-avatar
                 *ngIf="i < 2"
                 style="background-color: #4f46e5"
@@ -104,7 +107,7 @@
             class="cursor-pointer text-gray-400"
             nz-icon
             nzType="right-circle"
-            nzTheme="fill"
+            nzTheme="outline"
             (click)="openOverview(budget.id)"
           ></span>
         </span>

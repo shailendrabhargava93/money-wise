@@ -40,7 +40,6 @@ export class AppComponent implements AfterContentChecked {
     localStorage.clear();
     this.app.currentUserSubject.next(null);
     this.app.isBudgetAvailableSub.next(false);
-    this.app.budgetValuesSub.next([]);
     this.router.navigate(['login']);
     this.message.success(`Logged Out successfully !`);
   }

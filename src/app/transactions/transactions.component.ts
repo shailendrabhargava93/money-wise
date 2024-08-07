@@ -18,7 +18,6 @@ export class TransactionsComponent implements OnInit {
   visibleFilters = false;
   visibleSorting = false;
   showDot = false;
-  currency = this.app.currency$;
   selectedCat: string = '';
   amountRange!: any[];
   highestAmount!: number;
@@ -26,13 +25,13 @@ export class TransactionsComponent implements OnInit {
   pageNumber: number = 1;
   loadingMore = false;
 
-  constructor(private app: AppService, private router: Router) {}
+  constructor(private app: AppService) {}
 
   ngOnInit() {
     this.getTransactions();
   }
 
-  onLoadMore() {
+  onLoadMore(): void {
     this.pageNumber = this.pageNumber + 1;
     this.getTransactions();
   }
@@ -73,18 +72,6 @@ export class TransactionsComponent implements OnInit {
           }
         }
       });
-  }
-
-  getIcon(category: string): string {
-    if (category in CAT_ICON) {
-      const icon = CAT_ICON[category as keyof typeof CAT_ICON];
-      return `/assets/icons/${icon}.png`;
-    }
-    return `/assets/icons/list.png`;
-  }
-
-  onTxn(txnId: string) {
-    this.router.navigate(['edit', txnId]);
   }
 
   openFilters(): void {

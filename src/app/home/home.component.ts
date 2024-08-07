@@ -9,43 +9,85 @@ import { EMPTY, of } from 'rxjs';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  username$: any;
+  recentTxns!: any[];
+  username$ = this.app.userName;
   isBudgetAvailable = this.app.isBudgetAvailableObs$;
+  todaySpending!: number;
+  weekSpening!: number;
+  selectedIndex = 0;
+  currency = this.app.currency$;
+
+  options = [
+    { label: 'Today', value: 'today', icon: 'aim' },
+    { label: 'Week', value: 'week', icon: 'calendar' },
+  ];
 
   constructor(private app: AppService) {
-    this.username$ = this.app.userName;
     this.app.showSpinner();
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getBudgets(user as string)),
-        tap((budgets: any) => {
+        switchMap((user) => this.app.getTransactions(user as string, 1, 3)),
+        tap((txns: any) => {
           this.app.hideSpinner();
-          const currency = {
-            name: 'Indian rupee',
-            symbol: '₹',
-          };
-          localStorage.setItem('currency', JSON.stringify(currency));
-          this.app.currencySub.next(currency);
 
-          const budgetsExist = budgets && budgets.length > 0;
-          localStorage.setItem('isBudgetAvailable', String(budgetsExist));
-          this.app.isBudgetAvailableSub.next(budgetsExist);
+          if (txns.length > 0) {
+            const budgetsExist = txns && txns.length > 0;
+            this.recentTxns = txns;
+            this.todaySpending = this.getTodaysTotalSpending(this.recentTxns);
+            this.weekSpening = this.getCurrentWeeksTotalSpending(
+              this.recentTxns
+            );
+            const currency = {
+              name: 'Indian rupee',
+              symbol: '₹',
+            };
+            localStorage.setItem('isBudgetAvailable', String(budgetsExist));
+            localStorage.setItem('currency', JSON.stringify(currency));
 
-          if (budgetsExist) {
-            const budgetsArray = budgets.map((budget: any) => ({
-              id: budget.id,
-              name: budget.data.name,
-            }));
-            localStorage.setItem('budgets', JSON.stringify(budgetsArray));
-            this.app.budgetValuesSub.next(budgetsArray);
+            this.app.currencySub.next(currency);
+            this.app.isBudgetAvailableSub.next(budgetsExist);
           }
         }),
-        catchError(error => {
+        catchError((error) => {
           this.app.hideSpinner();
           console.error(error);
           return of(EMPTY);
         })
       )
       .subscribe();
+  }
+
+  getTodaysTotalSpending(transactions: any[]): number {
+    const today = new Date().toISOString().split('T')[0];
+
+    const filteredTransactions = transactions.filter((transaction) => {
+      const transactionDate = new Date(transaction.data.date)
+        .toISOString()
+        .split('T')[0];
+      return transactionDate === today;
+    });
+
+    const totalAmount = filteredTransactions.reduce(
+      (total, transaction) => total + transaction.data.amount,
+      0
+    );
+
+    return totalAmount;
+  }
+
+  getCurrentWeeksTotalSpending(transactions: any[]): number {
+    const today = new Date();
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+
+    const total = transactions
+      .filter((transaction) => {
+        const transactionDate = new Date(transaction.data.date);
+        return transactionDate >= startOfWeek && transactionDate <= today;
+      })
+      .reduce((total, transaction) => total + transaction.data.amount, 0);
+
+    return total;
   }
 }

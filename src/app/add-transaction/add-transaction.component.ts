@@ -1,3 +1,4 @@
+import { switchMap, catchError, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CAT_ICON } from './../category-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -15,7 +16,7 @@ export class AddTransactionComponent implements OnInit {
   categories: any[] = [];
   userEmail$ = this.app.userEmail;
   currency = this.app.currency$;
-  budgets!: any[] | undefined;
+  budgets!: any[];
   txnId: string | null = null;
   isUpdate = false;
   dateSuggestions!: Date[];
@@ -42,12 +43,28 @@ export class AddTransactionComponent implements OnInit {
       this.form.controls['user'].setValue(user)
     );
 
-    this.app.budgetValues.subscribe((values) => {
-      this.budgets = values;
-      if (this.budgets?.length === 1) {
-        this.form.controls['budgetId'].setValue(this.budgets[0].id);
-      }
-    });
+    this.app.userEmail
+      .pipe(
+        switchMap((user) => this.app.getBudgets(user as string)),
+        catchError((error) => {
+          console.error('Error occurred getBudgets:', error);
+          this.app.hideSpinner();
+          return of([]);
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.budgets = (data as any[]).map((el) => {
+            return {
+              id: el.id,
+              name: el.data.name
+            };
+          });
+          if (this.budgets?.length === 1) {
+            this.form.controls['budgetId'].setValue(this.budgets[0].id);
+          }
+        }
+      });
 
     for (var n in CAT_ICON) {
       const icon = CAT_ICON[n as keyof typeof CAT_ICON];
@@ -64,13 +81,12 @@ export class AddTransactionComponent implements OnInit {
 
     this.dateSuggestions = [yesterday, tommorrow];
 
-    this.app.getJSON().subscribe(data => {
-      console.log(data);
-
+    this.app.getJSON().subscribe((data) => {
       this.form.get('category')?.valueChanges.subscribe((value) => {
         if (value) {
-          const filtered = data.filter((el:any) => el.key === value);
-          this.expesneSuggestions = filtered.length > 0 ? filtered[0].values : null;
+          const filtered = data.filter((el: any) => el.key === value);
+          this.expesneSuggestions =
+            filtered.length > 0 ? filtered[0].values : null;
         }
       });
     });
