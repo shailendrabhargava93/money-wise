@@ -10,6 +10,16 @@
 
 <div class="p-1 mt-1">
   <div nz-col>
+    <nz-card class="flex justify-center">
+      <nz-avatar
+        class="cursor-pointer justify-center"
+        nz-dropdown
+        nzIcon="user"
+        nzSrc="{{ userPhoto$ | async }}"
+      ></nz-avatar>
+      <br>
+      <span class="justify-center">{{ userEmail$ | async }}</span>
+    </nz-card>
     <nz-card>
       <nz-card-meta [nzAvatar]="template1" nzTitle="Account"></nz-card-meta>
       Cash
@@ -143,6 +153,10 @@
       </span>
     </ng-template>
   </div>
+  <br>
+  <button nz-button class="primary rounded-full w-full" (click)="logout()">
+    Sign Out
+  </button>
 </div>
 
 <app-currency-modal

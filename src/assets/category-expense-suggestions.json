@@ -23,6 +23,41 @@
     ]
   },
   {
+    "key": "Bills",
+    "values": [
+      "Landline/Home phone",
+      "Mobile phone",
+      "Garbage",
+      "Water",
+      "Electricity"
+    ]
+  },
+  {
+    "key": "Fitness",
+    "values": [
+      "Gym Membership",
+      "Fitness Equipments",
+      "Diet Suppliments"
+    ]
+  },
+  {
+    "key": "Shopping",
+    "values": [
+      "Casual Shopping",
+      "Festive Shopping",
+      "Wedding Shopping"
+    ]
+  },
+  {
+    "key": "Groceries",
+    "values": [
+      "Fruits & Veggies",
+      "Home Supplies",
+      "Canned foods",
+      "Frozen foods"
+    ]
+  },
+  {
     "key": "Food",
     "values": [
       "Coffee shops",
@@ -66,7 +101,8 @@
       "Concerts",
       "Sporting events",
       "Hobbies/Crafts",
-      "Books"
+      "Books",
+      "Comedy Gigs"
     ]
   },
   {

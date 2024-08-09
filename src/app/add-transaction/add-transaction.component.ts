@@ -57,7 +57,7 @@ export class AddTransactionComponent implements OnInit {
           this.budgets = (data as any[]).map((el) => {
             return {
               id: el.id,
-              name: el.data.name
+              name: el.data.name,
             };
           });
           if (this.budgets?.length === 1) {
@@ -76,6 +76,8 @@ export class AddTransactionComponent implements OnInit {
     const date = new Date();
     this.form.controls['date'].setValue(date);
 
+    this.form.controls['category'].setValue('Other');
+
     const yesterday = new Date(new Date().setDate(date.getDate() - 1));
     const tommorrow = new Date(new Date().setDate(date.getDate() + 1));
 
@@ -87,6 +89,9 @@ export class AddTransactionComponent implements OnInit {
           const filtered = data.filter((el: any) => el.key === value);
           this.expesneSuggestions =
             filtered.length > 0 ? filtered[0].values : null;
+          if (this.expesneSuggestions) {
+            this.expesneSuggestions = this.shuffle(this.expesneSuggestions);
+          }
         }
       });
     });
@@ -95,6 +100,17 @@ export class AddTransactionComponent implements OnInit {
     if (this.txnId) {
       this.getTxn(this.txnId);
     }
+  }
+
+  shuffle = (array: string[]) => {
+    return array.sort(() => Math.random() - 0.5);
+  };
+
+  get selectedCatIcon() {
+    const icon =
+      CAT_ICON[this.form.get('category')?.value as keyof typeof CAT_ICON];
+      console.log(icon)
+    return `/assets/icons/${icon}.png`;
   }
 
   submitForm(): void {

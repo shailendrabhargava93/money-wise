@@ -22,6 +22,27 @@ export class HomeComponent {
     { label: 'Week', value: 'week', icon: 'calendar' },
   ];
 
+  array = [
+    {
+      icon: 'assets/home/digital_1.png',
+      subheading: 'Limit your use of credit cards to avoid overspending.',
+    },
+    {
+      icon: 'assets/home/digital_2.png',
+      subheading: 'Cancel any unused or unnecessary subscriptions.',
+    },
+    {
+      icon: 'assets/home/digital_3.png',
+      subheading:
+        'Allocate a specific amount for non-essential spending each month.',
+    },
+    {
+      icon: 'assets/home/digital_4.png',
+      subheading:
+        'Regularly check your bank and credit card statements for any discrepancies.',
+    },
+  ];
+
   constructor(private app: AppService) {
     this.app.showSpinner();
     this.app.userEmail

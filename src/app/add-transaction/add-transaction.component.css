@@ -13,3 +13,9 @@ nz-date-picker {
     overflow-x: auto;
   }
 }
+
+
+::ng-deep.ant-input-group-addon, .ant-input-group-wrap {
+  width: 42px !important;
+  background-color: white !important;
+}

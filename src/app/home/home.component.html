@@ -91,7 +91,7 @@
           />
         </svg>
       </div>
-      <div class="text-right text-xl text-red-400 pl-2">
+      <div class="text-right text-xl text-indigo-4500 pl-2">
         <span class="" *ngIf="selectedIndex === 0"
           >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
         </span>
@@ -139,5 +139,26 @@
         [enableEmpty]="false"
       ></app-transaction-list>
     </div>
+  </div>
+</div>
+
+<div class="py-2 mb-1" *ngIf="isBudgetAvailable | async">
+  <div class="flow-root p-2">
+    <span class="text-gray-600 float-left font-semibold">Recommendations</span>
+    <br />
+    <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
+      <div *ngFor="let el of array" nz-carousel-content>
+        <div
+          class="flex flex-col h-[10vh] justify-center items-center bg-indigo-100 rounded-md"
+        >
+          <span class="flex justify-center">
+            <img class="" width="35px" height="35px" [src]="el.icon" />
+            <h3 class="mt-1 ml-2 text-sm text-center text-black-500">
+              {{ el.subheading }}
+            </h3>
+          </span>
+        </div>
+      </div>
+    </nz-carousel>
   </div>
 </div>

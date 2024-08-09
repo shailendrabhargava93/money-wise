@@ -10,24 +10,29 @@
     >
 
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <nz-select
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Select category"
-        formControlName="category"
-      >
-        <nz-option
-          nzCustomContent
-          *ngFor="let opt of categories"
-          nzLabel="{{ opt.name }}"
-          nzValue="{{ opt.name }}"
+      <nz-input-group [nzAddOnBefore]="template">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select category"
+          formControlName="category"
         >
-          <span class="flex flex-row">
-            <img src="{{ opt.icon }}" width="25px" height="25px" />
-            &nbsp;&nbsp;{{ opt.name }}
-          </span>
-        </nz-option>
-      </nz-select>
+          <nz-option
+            nzCustomContent
+            *ngFor="let opt of categories"
+            nzLabel="{{ opt.name }}"
+            nzValue="{{ opt.name }}"
+          >
+            <span class="flex flex-row">
+              <img src="{{ opt.icon }}" width="25px" height="25px" />
+              &nbsp;&nbsp;{{ opt.name }}
+            </span>
+          </nz-option>
+        </nz-select>
+        <ng-template #template>
+          <img [src]="selectedCatIcon" width="22px" height="22px" />
+        </ng-template>
+      </nz-input-group>
     </nz-form-control>
   </nz-form-item>
 
@@ -36,7 +41,7 @@
       >Amount</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <nz-input-group [nzAddOnBefore]="(currency | async)?.symbol">
+      <nz-input-group [nzAddOnBefore]="curTemp">
         <input
           nz-input
           type="number"
@@ -44,6 +49,12 @@
           formControlName="amount"
         />
       </nz-input-group>
+      <ng-template #curTemp
+        ><span
+          class="text-lg"
+          >{{(currency | async)?.symbol}}</span
+        ></ng-template
+      >
     </nz-form-control>
   </nz-form-item>
 
@@ -52,21 +63,38 @@
       >Expense Details</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <input
-        placeholder="Enter expense title"
-        nz-input
-        formControlName="title"
-      />
+      <nz-input-group [nzAddOnBefore]="titletemp">
+        <input
+          placeholder="Enter expense title"
+          nz-input
+          formControlName="title"
+        />
+      </nz-input-group>
+      <ng-template #titletemp>
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+            d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+          />
+        </svg>
+      </ng-template>
     </nz-form-control>
-    <span class="inline-flex mt-3 scroll-sm" *ngIf="expesneSuggestions && expesneSuggestions.length > 0">
-      <span
-        class="text-xs text-gray-400 mr-1"
-        nz-tooltip
-        nzTooltipTitle="Suggestions"
-        nz-icon
-        nzType="info-circle"
-        nzTheme="outline"
-      ></span>
+    <span
+      class="inline-flex mt-3 scroll-sm"
+      *ngIf="expesneSuggestions && expesneSuggestions.length > 0"
+    >
+
       <nz-tag
         class="cursor-pointer"
         *ngFor="let exp of expesneSuggestions"
@@ -79,26 +107,42 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Transaction Date</nz-form-label>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired
+      >Transaction Date</nz-form-label
+    >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <nz-date-picker formControlName="date"></nz-date-picker>
+      <nz-input-group [nzAddOnBefore]="datetemp">
+        <nz-date-picker formControlName="date" nzSuffixIcon=""></nz-date-picker>
+      </nz-input-group>
+      <ng-template #datetemp>
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1"
+            d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1Zm3-7h.01v.01H8V13Zm4 0h.01v.01H12V13Zm4 0h.01v.01H16V13Zm-8 4h.01v.01H8V17Zm4 0h.01v.01H12V17Zm4 0h.01v.01H16V17Z"
+          />
+        </svg>
+      </ng-template>
     </nz-form-control>
     <span class="inline-flex mt-3">
-      <span
-        class="text-xs text-gray-400 mr-1"
-        nz-tooltip
-        nzTooltipTitle="Suggestions"
-        nz-icon
-        nzType="info-circle"
-        nzTheme="outline"
-      ></span>
+
       <nz-tag
         class="cursor-pointer"
         *ngFor="let date of dateSuggestions"
         [nzColor]="'geekblue'"
         (click)="onDateClick(date)"
       >
-        {{ date.toLocaleDateString('fr-CA') }}
+        {{ date.toLocaleDateString("fr-CA") }}
       </nz-tag>
     </span>
   </nz-form-item>
@@ -108,21 +152,49 @@
       >Include in Budget</nz-form-label
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
-      <nz-select
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="Select Budget"
-        formControlName="budgetId"
-      >
-        <nz-option
-          nzCustomContent
-          *ngFor="let opt of budgets"
-          nzLabel="{{ opt.name }}"
-          nzValue="{{ opt.id }}"
+      <nz-input-group [nzAddOnBefore]="bugTemp">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select Budget"
+          formControlName="budgetId"
         >
-          {{ opt.name }}
-        </nz-option>
-      </nz-select>
+          <nz-option
+            nzCustomContent
+            *ngFor="let opt of budgets"
+            nzLabel="{{ opt.name }}"
+            nzValue="{{ opt.id }}"
+          >
+            {{ opt.name }}
+          </nz-option>
+        </nz-select>
+      </nz-input-group>
+      <ng-template #bugTemp>
+        <svg
+          class="w-6 h-6 text-gray-800 dark:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.8"
+            d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z"
+          />
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="0.8"
+            d="M13.5 3c-.169 0-.334.014-.5.025V11h7.975c.011-.166.025-.331.025-.5A7.5 7.5 0 0 0 13.5 3Z"
+          />
+        </svg>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
 

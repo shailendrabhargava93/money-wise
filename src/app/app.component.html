@@ -46,22 +46,6 @@
             nzTooltipTitle="No Recent updates"
             nzTheme="outline"
           ></span>
-          <nz-avatar
-            class="cursor-pointer m-4"
-            nz-dropdown
-            [nzDropdownMenu]="menu"
-            nzIcon="user"
-            nzSrc="{{ userPhoto$ | async }}"
-          ></nz-avatar>
-
-          <nz-dropdown-menu #menu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item nzDanger (click)="logout()">
-                Logout&nbsp;
-                <span nz-icon nzType="poweroff" nz-button></span>
-              </li>
-            </ul>
-          </nz-dropdown-menu>
         </span>
       </div>
     </nz-header>

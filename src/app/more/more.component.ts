@@ -1,3 +1,6 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +12,14 @@ import { Component, OnInit } from '@angular/core';
 export class MoreComponent implements OnInit {
   enableCurrencyModal = false;
   currency = this.app.currency$;
-  constructor(private app: AppService) {}
+  userPhoto$ = this.app.userPhoto;
+  userEmail$ = this.app.userEmail;
+  constructor(
+    private app: AppService,
+    private router: Router,
+    private angularFireAuth: AngularFireAuth,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -18,5 +28,14 @@ export class MoreComponent implements OnInit {
   }
   onclose() {
     this.enableCurrencyModal = false;
+  }
+
+  logout() {
+    this.angularFireAuth.signOut();
+    localStorage.clear();
+    this.app.currentUserSubject.next(null);
+    this.app.isBudgetAvailableSub.next(false);
+    this.router.navigate(['login']);
+    this.message.success(`Logged Out successfully !`);
   }
 }
