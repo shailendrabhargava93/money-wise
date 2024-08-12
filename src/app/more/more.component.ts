@@ -11,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoreComponent implements OnInit {
   enableCurrencyModal = false;
+  enableOtherModal = false;
   currency = this.app.currency$;
   userPhoto$ = this.app.userPhoto;
   userEmail$ = this.app.userEmail;
@@ -37,5 +38,9 @@ export class MoreComponent implements OnInit {
     this.app.isBudgetAvailableSub.next(false);
     this.router.navigate(['login']);
     this.message.success(`Logged Out successfully !`);
+  }
+
+  openModal(){
+    this.enableOtherModal = !this.enableOtherModal;
   }
 }

@@ -17,6 +17,7 @@ export class AddBudgetComponent {
   currency = this.app.currency$;
   budgetNameSuggestions!: string[];
   budgetAmountSuggestions!: number[];
+  dateFormat = 'dd-MMM-yyyy';
 
   constructor(
     private fb: FormBuilder,

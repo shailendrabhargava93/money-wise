@@ -56,14 +56,6 @@
           {{ budget.data.totalBudget | number }}
         </p>
       </span>
-      <span
-        class="float-right text-white cursor-pointer mt-1"
-        (click)="onShare(budget)"
-        nz-icon
-        style="font-size: 20px"
-        nzType="usergroup-add"
-        nzTheme="outline"
-      ></span>
     </div>
     <p class="py-4 px-4 text-md tracking-wide flow-root">
       <span class="float-left">{{
@@ -81,8 +73,7 @@
     </p>
 
     <div class="flex flow-root p-4">
-      <div class="mt-1">
-        <!-- <span class="text-gray-500 ">{{budget.data.users.length }} members</span> -->
+      <div class="">
         <span class="float-left">
           <nz-avatar-group>
             <span
@@ -91,31 +82,41 @@
             >
               <nz-avatar
                 *ngIf="i < 2"
-                style="background-color: #4f46e5"
+                style="background-color: #9197f8"
                 nzIcon="user"
               ></nz-avatar>
             </span>
           </nz-avatar-group>
           <nz-avatar
             *ngIf="budget.data.users.length > 2"
-            style="background-color: #f4f1f0; color: #6a64e5"
+            style="background-color: #9197f8; color: #c2c2c2"
             [nzText]="'+' + (budget.data.users.length - 2)"
           ></nz-avatar>
+          <span
+            class="text-white cursor-pointer ml-1"
+            (click)="onShare(budget)"
+            nz-icon
+            style="
+              font-size: 20px;
+              border-radius: 50%;
+              padding: 6px;
+              background: #9197f8;
+            "
+            nzType="usergroup-add"
+            nzTheme="outline"
+          ></span>
         </span>
         <span class="text-gray-500 float-right">
           <span
             class="cursor-pointer text-gray-400"
             nz-icon
-            nzType="right-circle"
+            nzType="right"
             nzTheme="outline"
             (click)="openOverview(budget.id)"
           ></span>
         </span>
       </div>
     </div>
-    <!-- <button class="secondary" nz-button >
-        <span nz-icon nzType="fund-view" nzTheme="outline"></span>
-      </button> -->
   </div>
 </div>
 

@@ -64,35 +64,59 @@
     <div *ngIf="!budgetData.overspent">
       <nz-alert nzType="success" [nzDescription]="descTemp"></nz-alert>
       <ng-template #descTemp>
-        <span class="inline-flex">
-          Congratulations! &nbsp;
-          <picture>
-            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp" type="image/webp">
-            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif" alt="🥳" width="20" height="20">
-          </picture>
-        </span>
-        You have saved {{ (currency | async)?.symbol }}
-        <span class="font-semibold">{{
-          budgetData.totalBudget - budgetData.spentAmount | number
-        }}</span>
-        from you total budget amount.
+        <div *ngIf="budgetData.status === 'completed'">
+          <span class="inline-flex">
+            Congratulations! &nbsp;
+            <picture>
+              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp" type="image/webp">
+              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif" alt="🥳" width="20" height="20">
+            </picture>
+          </span>
+          You have saved {{ (currency | async)?.symbol }}
+          <span class="font-semibold">{{
+            budgetData.totalBudget - budgetData.spentAmount | number
+          }}</span>
+          from you total budget amount.
+        </div>
+        <div *ngIf="budgetData.status === 'active'">
+          <span class="inline-flex">
+            Great Going! &nbsp;
+            <picture>
+              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.webp" type="image/webp">
+              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif" alt="👍" width="20" height="20">
+            </picture>
+          </span>
+          You are under your budget limit.
+        </div>
       </ng-template>
     </div>
     <div *ngIf="budgetData.overspent">
       <nz-alert nzType="error" [nzDescription]="descTemp"></nz-alert>
       <ng-template #descTemp>
-        <span class="inline-flex">
-          Oops! &nbsp;
-          <picture>
-            <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.webp" type="image/webp">
-            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif" alt="❗" width="20" height="20">
-          </picture>
-        </span>
-        You have exceeded {{ (currency | async)?.symbol }}
-        <span class="font-semibold">{{
-          budgetData.totalBudget - budgetData.spentAmount | number
-        }}</span>
-        from you total budget amount.
+        <div *ngIf="budgetData.status === 'completed'">
+          <span class="inline-flex">
+            Oops! &nbsp;
+            <picture>
+              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.webp" type="image/webp">
+              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif" alt="❗" width="20" height="20">
+            </picture>
+          </span>
+          You have exceeded {{ (currency | async)?.symbol }}
+          <span class="font-semibold">{{
+            budgetData.totalBudget - budgetData.spentAmount | number
+          }}</span>
+          from you total budget amount.
+        </div>
+        <div *ngIf="budgetData.status === 'active'">
+          <span class="inline-flex">
+            Slow Down ! &nbsp;
+            <picture>
+              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.webp" type="image/webp">
+              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif" alt="😥" width="20" height="20">
+            </picture>
+          </span>
+          At this rate you'll exhaust your budget early.
+        </div>
       </ng-template>
     </div>
   </div>

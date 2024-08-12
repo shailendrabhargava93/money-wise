@@ -13,7 +13,7 @@
       <nz-input-group [nzAddOnBefore]="template">
         <nz-select
           nzShowSearch
-          nzAllowClear
+          [nzAllowClear]="false"
           nzPlaceHolder="Select category"
           formControlName="category"
         >
@@ -50,10 +50,9 @@
         />
       </nz-input-group>
       <ng-template #curTemp
-        ><span
-          class="text-lg"
-          >{{(currency | async)?.symbol}}</span
-        ></ng-template
+        ><span class="text-lg">{{
+          (currency | async)?.symbol
+        }}</span></ng-template
       >
     </nz-form-control>
   </nz-form-item>
@@ -65,7 +64,7 @@
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group [nzAddOnBefore]="titletemp">
         <input
-          placeholder="Enter expense title"
+          placeholder="Enter expense details"
           nz-input
           formControlName="title"
         />
@@ -94,7 +93,6 @@
       class="inline-flex mt-3 scroll-sm"
       *ngIf="expesneSuggestions && expesneSuggestions.length > 0"
     >
-
       <nz-tag
         class="cursor-pointer"
         *ngFor="let exp of expesneSuggestions"
@@ -112,7 +110,12 @@
     >
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group [nzAddOnBefore]="datetemp">
-        <nz-date-picker formControlName="date" nzSuffixIcon=""></nz-date-picker>
+        <nz-date-picker
+          [nzAllowClear]="false"
+          formControlName="date"
+          nzSuffixIcon=""
+          [nzFormat]="dateFormat"
+        ></nz-date-picker>
       </nz-input-group>
       <ng-template #datetemp>
         <svg
@@ -135,14 +138,13 @@
       </ng-template>
     </nz-form-control>
     <span class="inline-flex mt-3">
-
       <nz-tag
         class="cursor-pointer"
         *ngFor="let date of dateSuggestions"
         [nzColor]="'geekblue'"
         (click)="onDateClick(date)"
       >
-        {{ date.toLocaleDateString("fr-CA") }}
+        {{ date }}
       </nz-tag>
     </span>
   </nz-form-item>
@@ -155,7 +157,7 @@
       <nz-input-group [nzAddOnBefore]="bugTemp">
         <nz-select
           nzShowSearch
-          nzAllowClear
+          [nzAllowClear]="false"
           nzPlaceHolder="Select Budget"
           formControlName="budgetId"
         >

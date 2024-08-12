@@ -149,11 +149,11 @@
     <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
       <div *ngFor="let el of array" nz-carousel-content>
         <div
-          class="flex flex-col h-[10vh] justify-center items-center bg-indigo-100 rounded-md"
+          class="flex flex-col h-[10vh] p-0.5 justify-center items-center bg-indigo-50 rounded-md"
         >
           <span class="flex justify-center">
-            <img class="" width="35px" height="35px" [src]="el.icon" />
-            <h3 class="mt-1 ml-2 text-sm text-center text-black-500">
+            <img class="" width="32px" height="32px" [src]="el.icon" />
+            <h3 class="mt-1 ml-1 text-sm text-center text-black-500">
               {{ el.subheading }}
             </h3>
           </span>

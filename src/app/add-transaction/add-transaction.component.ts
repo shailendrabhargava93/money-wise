@@ -19,8 +19,9 @@ export class AddTransactionComponent implements OnInit {
   budgets!: any[];
   txnId: string | null = null;
   isUpdate = false;
-  dateSuggestions!: Date[];
+  dateSuggestions!: string[];
   expesneSuggestions!: string[];
+  dateFormat = 'dd-MMM-yyyy';
   constructor(
     private fb: FormBuilder,
     private app: AppService,
@@ -78,8 +79,12 @@ export class AddTransactionComponent implements OnInit {
 
     this.form.controls['category'].setValue('Other');
 
-    const yesterday = new Date(new Date().setDate(date.getDate() - 1));
-    const tommorrow = new Date(new Date().setDate(date.getDate() + 1));
+    const yesterday = this.formatDate(
+      new Date(new Date().setDate(date.getDate() - 1))
+    );
+    const tommorrow = this.formatDate(
+      new Date(new Date().setDate(date.getDate() + 1))
+    );
 
     this.dateSuggestions = [yesterday, tommorrow];
 
@@ -106,10 +111,20 @@ export class AddTransactionComponent implements OnInit {
     return array.sort(() => Math.random() - 0.5);
   };
 
+  private formatDate(date: Date) {
+    return date
+      .toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+      })
+      .replace(/ /g, '-');
+  }
+
   get selectedCatIcon() {
     const icon =
       CAT_ICON[this.form.get('category')?.value as keyof typeof CAT_ICON];
-      console.log(icon)
+    console.log(icon);
     return `/assets/icons/${icon}.png`;
   }
 
@@ -175,7 +190,7 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
-  onDateClick(date: Date) {
+  onDateClick(date: string) {
     this.form.controls['date'].setValue(date);
   }
 }

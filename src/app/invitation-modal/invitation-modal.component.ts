@@ -52,7 +52,9 @@ export class InvitationModalComponent implements OnChanges {
       this.currentUser = e as string;
     });
 
-    this.budget = changes['budget'].currentValue;
+    if (changes && changes['budget']) {
+      this.budget = changes['budget'].currentValue;
+    }
 
     if (this.budget) {
       this.form.get('budgetId')?.setValue(this.budget.id);

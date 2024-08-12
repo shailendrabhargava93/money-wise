@@ -10,20 +10,37 @@
 
 <div class="p-1 mt-1">
   <div nz-col>
-    <nz-card class="flex justify-center">
+    <!-- profile section : start -->
+    <nz-card class="flex justify-center mb-1 profile">
       <nz-avatar
-        class="cursor-pointer justify-center"
-        nz-dropdown
+        [nzSize]="64"
         nzIcon="user"
         nzSrc="{{ userPhoto$ | async }}"
       ></nz-avatar>
-      <br>
-      <span class="justify-center">{{ userEmail$ | async }}</span>
+      <br />
+      <span class="justify-center ml-0.5 mt-0.5">{{ userEmail$ | async }}</span>
     </nz-card>
+    <!-- profile section : end -->
+
+    <!-- settings: start -->
+    <div class="flow-root p-1">
+      <span class="text-gray-600 float-left font-semibold">Settings</span>
+    </div>
     <nz-card>
-      <nz-card-meta [nzAvatar]="template1" nzTitle="Account"></nz-card-meta>
+      <nz-card-meta [nzAvatar]="template1" [nzTitle]="acc_title"></nz-card-meta>
       Cash
     </nz-card>
+    <ng-template #acc_title>
+      <span class="cursor-pointer" (click)="openModal()">
+        Account
+        <span
+          class="float-right icon-sm"
+          nz-icon
+          nzType="right"
+          nzTheme="outline"
+        ></span>
+      </span>
+    </ng-template>
     <ng-template #template1>
       <span nz-icon>
         <svg
@@ -50,7 +67,6 @@
       </span>
     </ng-template>
   </div>
-  <br />
   <div nz-col>
     <nz-card>
       <nz-card-meta [nzAvatar]="template2" [nzTitle]="c_title"></nz-card-meta>
@@ -62,7 +78,7 @@
       <span class="cursor-pointer" (click)="open()">
         Currency
         <span
-          class="float-right"
+          class="float-right icon-sm"
           nz-icon
           nzType="right"
           nzTheme="outline"
@@ -122,12 +138,22 @@
       </span>
     </ng-template>
   </div>
-  <br />
   <div nz-col>
     <nz-card>
-      <nz-card-meta [nzAvatar]="template3" nzTitle="Categories"></nz-card-meta>
+      <nz-card-meta [nzAvatar]="template3" [nzTitle]="cat_title"></nz-card-meta>
       All Categories
     </nz-card>
+    <ng-template #cat_title>
+      <span class="cursor-pointer" (click)="openModal()">
+        Categories
+        <span
+          class="float-right icon-sm"
+          nz-icon
+          nzType="right"
+          nzTheme="outline"
+        ></span>
+      </span>
+    </ng-template>
     <ng-template #template3>
       <span nz-icon>
         <svg
@@ -153,11 +179,191 @@
       </span>
     </ng-template>
   </div>
-  <br>
-  <button nz-button class="primary rounded-full w-full" (click)="logout()">
-    Sign Out
+  <br />
+  <br />
+  <!-- settings: end -->
+
+  <!-- Others : start -->
+  <div class="flow-root p-1">
+    <span class="text-gray-600 float-left font-semibold">Other</span>
+  </div>
+  <nz-card>
+    <nz-card-meta [nzAvatar]="temp_about" [nzTitle]="abt_title"></nz-card-meta>
+  </nz-card>
+  <ng-template #abt_title>
+    <span class="cursor-pointer" (click)="openModal()">
+      About App
+      <span class="float-right icon-sm" nz-icon nzType="right" nzTheme="outline"></span>
+    </span>
+  </ng-template>
+  <ng-template #temp_about>
+    <svg
+      width="30px"
+      height="30px"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <rect width="24" height="24" fill="white"></rect>
+        <circle
+          cx="12"
+          cy="12"
+          r="9"
+          stroke="#4f46e5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></circle>
+        <path
+          d="M12 11V17"
+          stroke="#4f46e5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+        <path
+          d="M11.75 8V7H12.25V8H11.75Z"
+          stroke="#4f46e5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></path>
+      </g>
+    </svg>
+  </ng-template>
+
+  <nz-card>
+    <nz-card-meta [nzAvatar]="temp_tc" [nzTitle]="tc_title"></nz-card-meta>
+  </nz-card>
+  <ng-template #tc_title>
+    <span class="cursor-pointer" (click)="openModal()">
+      Query/Feedback
+      <span class="float-right icon-sm" nz-icon nzType="right" nzTheme="outline"></span>
+    </span>
+  </ng-template>
+  <ng-template #temp_tc>
+    <span nz-icon>
+      <svg
+        width="28px"
+        height="28px"
+        version="1.0"
+        id="Layer_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 64 64"
+        enable-background="new 0 0 64 64"
+        xml:space="preserve"
+        fill="#4f46e5"
+        stroke="#4f46e5"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
+          <g>
+            <path
+              fill="#4f46e5"
+              d="M60,0H16c-2.211,0-4,1.789-4,4v6H4c-2.211,0-4,1.789-4,4v30c0,2.211,1.789,4,4,4h7c0.553,0,1,0.447,1,1v11 c0,1.617,0.973,3.078,2.469,3.695C14.965,63.902,15.484,64,16,64c1.039,0,2.062-0.406,2.828-1.172l14.156-14.156 c0,0,0.516-0.672,1.672-0.672S50,48,50,48c2.211,0,4-1.789,4-4v-8h6c2.211,0,4-1.789,4-4V4C64,1.789,62.211,0,60,0z M52,44 c0,1.105-0.895,2-2,2c0,0-14.687,0-15.344,0C32.709,46,32,47,32,47S20,59,18,61c-2.141,2.141-4,0.391-4-1c0-1,0-12,0-12 c0-1.105-0.895-2-2-2H4c-1.105,0-2-0.895-2-2V14c0-1.105,0.895-2,2-2h46c1.105,0,2,0.895,2,2V44z M62,32c0,1.105-0.895,2-2,2h-6V14 c0-2.211-1.789-4-4-4H14V4c0-1.105,0.895-2,2-2h44c1.105,0,2,0.895,2,2V32z"
+            ></path>
+            <path
+              fill="#4f46e5"
+              d="M13,24h13c0.553,0,1-0.447,1-1s-0.447-1-1-1H13c-0.553,0-1,0.447-1,1S12.447,24,13,24z"
+            ></path>
+            <path
+              fill="#4f46e5"
+              d="M41,28H13c-0.553,0-1,0.447-1,1s0.447,1,1,1h28c0.553,0,1-0.447,1-1S41.553,28,41,28z"
+            ></path>
+            <path
+              fill="#4f46e5"
+              d="M34,34H13c-0.553,0-1,0.447-1,1s0.447,1,1,1h21c0.553,0,1-0.447,1-1S34.553,34,34,34z"
+            ></path>
+          </g>
+        </g>
+      </svg>
+    </span>
+  </ng-template>
+  <br />
+  <!-- signout -->
+  <button
+    nz-button
+    class="mb-5 bg-red-500 text-white hover:bg-red-600 hover:text-white rounded-full w-full"
+    (click)="logout()"
+  >
+    <div class="flex flex-row justify-center">
+      Sign Out
+      <svg
+        class="ml-2 mt-1"
+        fill="#FFFFFF"
+        height="15px"
+        width="15px"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 471.2 471.2"
+        xml:space="preserve"
+        stroke="#FFFFFF"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
+          <g>
+            <g>
+              <path
+                d="M227.619,444.2h-122.9c-33.4,0-60.5-27.2-60.5-60.5V87.5c0-33.4,27.2-60.5,60.5-60.5h124.9c7.5,0,13.5-6,13.5-13.5 s-6-13.5-13.5-13.5h-124.9c-48.3,0-87.5,39.3-87.5,87.5v296.2c0,48.3,39.3,87.5,87.5,87.5h122.9c7.5,0,13.5-6,13.5-13.5 S235.019,444.2,227.619,444.2z"
+              ></path>
+              <path
+                d="M450.019,226.1l-85.8-85.8c-5.3-5.3-13.8-5.3-19.1,0c-5.3,5.3-5.3,13.8,0,19.1l62.8,62.8h-273.9c-7.5,0-13.5,6-13.5,13.5 s6,13.5,13.5,13.5h273.9l-62.8,62.8c-5.3,5.3-5.3,13.8,0,19.1c2.6,2.6,6.1,4,9.5,4s6.9-1.3,9.5-4l85.8-85.8 C455.319,239.9,455.319,231.3,450.019,226.1z"
+              ></path>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
   </button>
 </div>
+
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="enableOtherModal"
+  [nzPlacement]="'bottom'"
+  nzTitle="Info"
+  [nzExtra]="extrasort"
+  (nzOnClose)="openModal()"
+>
+  <ng-container *nzDrawerContent>
+    <div class="flex flex-col justify-center items-center mt-2">
+      <span class="text-black-500">
+        <h1 class="-ml-3">Work in Progress</h1>
+        <br>
+        <picture>
+          <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.webp" type="image/webp">
+          <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.gif" alt="⚙" width="64" height="64">
+        </picture>
+      </span>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #extrasort>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="openModal()"
+  ></span>
+</ng-template>
 
 <app-currency-modal
   [visible]="enableCurrencyModal"
