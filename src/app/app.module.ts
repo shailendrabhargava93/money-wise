@@ -32,6 +32,7 @@ import { InvitationModalComponent } from './invitation-modal/invitation-modal.co
 import { WarningModalComponent } from './warning-modal/warning-modal.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { CompleteBudgetComponent } from './complete-budget/complete-budget.component';
 
 registerLocaleData(en);
 
@@ -60,6 +61,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     WarningModalComponent,
     CategoryListComponent,
     TransactionListComponent,
+    CompleteBudgetComponent,
   ],
   imports: [
     BrowserModule,

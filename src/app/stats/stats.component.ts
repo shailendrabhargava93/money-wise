@@ -2,6 +2,10 @@ import { AppService } from './../app.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 
+export class WeeklyData {
+  [key: string]: { [date: string]: number };
+}
+
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
@@ -83,6 +87,9 @@ export class StatsComponent implements OnInit {
       },
     ];
 
+    const weeklyData = this.groupDataByWeek(dateSum);
+    console.log(weeklyData);
+
     for (const date in dateSum) {
       if (dateSum.hasOwnProperty(date)) {
         const formattedDate = new Date(date).toLocaleDateString('en-US', {
@@ -105,6 +112,27 @@ export class StatsComponent implements OnInit {
         hoverBorderColor: 'white',
       },
     ];
+  }
+
+  groupDataByWeek(data: { [date: string]: number }): WeeklyData {
+    const weeklyData: WeeklyData = {};
+
+    for (const date in data) {
+      const week = this.getWeekNumber(new Date(date));
+      if (!weeklyData[week]) {
+        weeklyData[week] = {};
+      }
+      weeklyData[week][date] = data[date];
+    }
+
+    return weeklyData;
+  }
+
+  getWeekNumber(d: Date): string {
+    const startOfMonth = new Date(d.getFullYear(), d.getMonth(), 1);
+    const weekOfMonth =
+      Math.floor((d.getDate() + startOfMonth.getDay() - 1) / 7) + 1;
+    return `Week ${weekOfMonth}`;
   }
 
   colorScheme = [

@@ -191,9 +191,14 @@
     <nz-card-meta [nzAvatar]="temp_about" [nzTitle]="abt_title"></nz-card-meta>
   </nz-card>
   <ng-template #abt_title>
-    <span class="cursor-pointer" (click)="openModal()">
+    <span class="cursor-pointer" (click)="openAbout()">
       About App
-      <span class="float-right icon-sm" nz-icon nzType="right" nzTheme="outline"></span>
+      <span
+        class="float-right icon-sm"
+        nz-icon
+        nzType="right"
+        nzTheme="outline"
+      ></span>
     </span>
   </ng-template>
   <ng-template #temp_about>
@@ -240,9 +245,14 @@
     <nz-card-meta [nzAvatar]="temp_tc" [nzTitle]="tc_title"></nz-card-meta>
   </nz-card>
   <ng-template #tc_title>
-    <span class="cursor-pointer" (click)="openModal()">
+    <span class="cursor-pointer" (click)="openQuery()">
       Query/Feedback
-      <span class="float-right icon-sm" nz-icon nzType="right" nzTheme="outline"></span>
+      <span
+        class="float-right icon-sm"
+        nz-icon
+        nzType="right"
+        nzTheme="outline"
+      ></span>
     </span>
   </ng-template>
   <ng-template #temp_tc>
@@ -332,6 +342,7 @@
       </svg>
     </div>
   </button>
+  <span class="flex justify-center text-gray-400 mb-0.5">Version(1.0.0) Made with ❤️ in India</span>
 </div>
 
 <nz-drawer
@@ -346,10 +357,20 @@
     <div class="flex flex-col justify-center items-center mt-2">
       <span class="text-black-500">
         <h1 class="-ml-3">Work in Progress</h1>
-        <br>
+        <br />
         <picture>
-          <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.webp" type="image/webp">
-          <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.gif" alt="⚙" width="64" height="64">
+          <source
+            srcset="
+              https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.webp
+            "
+            type="image/webp"
+          />
+          <img
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.gif"
+            alt="⚙"
+            width="64"
+            height="64"
+          />
         </picture>
       </span>
     </div>
@@ -362,6 +383,116 @@
     nzType="close-circle"
     nzTheme="outline"
     (click)="openModal()"
+  ></span>
+</ng-template>
+
+<!-- About modal-->
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="enableAbout"
+  [nzPlacement]="'bottom'"
+  nzTitle="About"
+  [nzExtra]="tempExtraAbout"
+  (nzOnClose)="openAbout()"
+>
+  <ng-container *nzDrawerContent>
+    <div class="flex flex-col justify-center items-center mt-2">
+      <span class="text-black-500">
+        <h1 class="text-indigo-500 text-center text-lg">
+          Moneywise - Expense Manager
+        </h1>
+        <span>
+          MoneyWise is a versatile and comprehensive tool for anyone looking to
+          take control of their finances, offering a blend of simplicity and
+          powerful features to help you achieve your financial goals.
+        </span>
+        <br />
+        <span>Here are some of its key features:</span><br />
+        <span
+          ><b>Budget Creation</b> - MoneyWise allows users to create detailed
+          budgets tailored to their specific needs. You can set up budgets
+          according to your dates, ensuring you have a clear plan for your
+          spending.</span
+        >
+        <br />
+        <span
+          ><b>Expense Tracking</b> - Adding expenses is straightforward with
+          MoneyWise. You can categorize your expenses, add notes. This helps in
+          keeping track of where your money is going and ensures you stay within
+          your budget.</span
+        ><br />
+        <span
+          ><b>Financial Analysis</b> - One of the standout features of MoneyWise
+          is its ability to provide detailed financial analysis. The app
+          generates insightful reports and visualizations, such as pie charts
+          and bar graphs, to help you understand your spending patterns. This
+          analysis can be crucial for identifying areas where you can save money
+          and improve your financial health.</span
+        ><br />
+        <span
+          ><b>Security</b> - The app prioritizes the security of your financial
+          data, ensuring that all your information is encrypted and
+          protected.</span
+        ><br />
+        <span
+          ><b>User-Friendly Interface</b> - MoneyWise is designed with a
+          user-friendly interface, making it easy for anyone to navigate and use
+          the app effectively. Whether you’re a financial novice or an expert,
+          you’ll find the app intuitive and helpful.</span
+        ><br />
+      </span>
+    </div>
+    <br>
+    <div>
+      <span clas="text-indigo-200">Icons & Illustrations</span>
+      <li><a href="https://freepik.com/">Freepik</a></li>
+      <li><a href="https://flaticon.com/">FLATICON</a></li>
+      <li><a href="https://ng.ant.design/">NZ Zorro</a></li>
+      <li><a href="https://www.svgrepo.com/">SVG Repo</a></li>
+      <li><a href="https://storyset.com/">Storyset</a></li>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #tempExtraAbout>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="openAbout()"
+  ></span>
+</ng-template>
+
+<!-- query modal-->
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="enableQuery"
+  [nzPlacement]="'bottom'"
+  nzTitle="Feedback"
+  [nzExtra]="tempExtraQuery"
+  (nzOnClose)="openQuery()"
+>
+  <ng-container *nzDrawerContent>
+    <div class="flex flex-col justify-center items-center mt-2">
+      <textarea
+        nz-input
+        placeholder="Enter comments or feedback"
+        [nzAutosize]="{ minRows: 3, maxRows: 5 }"
+      ></textarea>
+      <br>
+      <button nz-button class="primary float-right" (click)="sendFeeback()">
+        Submit
+      </button>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #tempExtraQuery>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="openQuery()"
   ></span>
 </ng-template>
 
