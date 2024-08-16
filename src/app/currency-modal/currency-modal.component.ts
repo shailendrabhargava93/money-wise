@@ -1,12 +1,12 @@
 import { AppService } from './../app.service';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-currency-modal',
   templateUrl: './currency-modal.component.html',
   styleUrls: ['./currency-modal.component.css'],
 })
-export class CurrencyModalComponent {
+export class CurrencyModalComponent implements OnInit {
   @Input() visible: boolean = false;
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
 

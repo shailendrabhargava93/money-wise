@@ -11,7 +11,7 @@
 <div class="p-1 mt-1">
   <div nz-col>
     <!-- profile section : start -->
-    <nz-card class="flex justify-center mb-1 profile">
+    <nz-card class="flex justify-center mb-1 profile" [nzBorderless]="true">
       <nz-avatar
         [nzSize]="64"
         nzIcon="user"
@@ -26,7 +26,7 @@
     <div class="flow-root p-1">
       <span class="text-gray-600 float-left font-semibold">Settings</span>
     </div>
-    <nz-card>
+    <nz-card >
       <nz-card-meta [nzAvatar]="template1" [nzTitle]="acc_title"></nz-card-meta>
       Cash
     </nz-card>
@@ -303,7 +303,7 @@
   <!-- signout -->
   <button
     nz-button
-    class="mb-5 bg-red-500 text-white hover:bg-red-600 hover:text-white rounded-full w-full"
+    class="mb-2 bg-red-500 text-white hover:bg-red-600 hover:text-white rounded-full w-full"
     (click)="logout()"
   >
     <div class="flex flex-row justify-center">
@@ -342,7 +342,9 @@
       </svg>
     </div>
   </button>
-  <span class="flex justify-center text-gray-400 mb-0.5">Version(1.0.0) Made with ❤️ in India</span>
+  <span class="flex justify-center text-gray-400 mb-5"
+    >Version(1.0.0) Made with ❤️ in India</span
+  >
 </div>
 
 <nz-drawer
@@ -442,7 +444,7 @@
         ><br />
       </span>
     </div>
-    <br>
+    <br />
     <div>
       <span clas="text-indigo-200">Icons & Illustrations</span>
       <li><a href="https://freepik.com/">Freepik</a></li>
@@ -479,8 +481,12 @@
         placeholder="Enter comments or feedback"
         [nzAutosize]="{ minRows: 3, maxRows: 5 }"
       ></textarea>
-      <br>
-      <button nz-button class="primary float-right" (click)="sendFeeback()">
+      <br />
+      <button
+        nz-button
+        class="primary rounded-full w-full"
+        (click)="sendFeeback()"
+      >
         Submit
       </button>
     </div>

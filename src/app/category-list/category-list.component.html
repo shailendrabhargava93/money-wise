@@ -1,14 +1,16 @@
 <div class="container py-2 mx-auto flex justify-center items-center">
   <div class="p-2 border bg-white rounded-md shadow-dashboard">
-    <div class="flex flex-wrap items-center justify-between mb-1 ">
+    <div class="flex flex-wrap items-center justify-between mb-1">
       <div class="w-auto p-0.5">
-        <h2 class="text-md font-semibold text-gray-600">Category Analysis</h2>
+        <h2 class="text-md font-semibold text-gray-600">
+          All Category Analysis
+        </h2>
       </div>
     </div>
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap mb-2">
       <div
-        class="w-full flex flex-wrap items-center justify-between py-4 border-b border-coolGray-100"
-        *ngFor="let cat of categoryData"
+        *ngFor="let cat of categoryData;"
+        class="w-full flex flex-wrap items-center justify-between py-2 border-b border-coolGray-100"
       >
         <div class="w-auto p-0.5">
           <div class="flex flex-wrap items-center">
@@ -16,10 +18,10 @@
               <div
                 class="flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md"
               >
-              <img
-                [src]="getIcon(cat.category)"
-                class="object-cover w-8 h-8"
-              />
+                <img
+                  [src]="getIcon(cat.category)"
+                  class="object-cover w-8 h-8"
+                />
               </div>
             </div>
             <div class="w-auto p-0.5">
@@ -33,7 +35,7 @@
           </div>
         </div>
         <div class="w-auto p-0.5">
-          <p class="text-xs text-coolGray-500 font-medium">
+          <p class="text-sm text-coolGray-500 font-medium">
             {{ (currency | async)?.symbol }} {{ cat.sum }}
           </p>
         </div>

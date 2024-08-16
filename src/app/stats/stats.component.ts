@@ -14,6 +14,8 @@ export class WeeklyData {
 export class StatsComponent implements OnInit {
   @Input() budgetId!: string;
   categoryListData: { category: string; sum: number; count: number }[] = [];
+  selectedWeek = 'Week 1';
+  weeklyData: any;
 
   // Doughnut
   public doughnutChartOptions: ChartOptions<'doughnut'> = {
@@ -61,9 +63,6 @@ export class StatsComponent implements OnInit {
     const categories: string[] = [];
     const amounts: number[] = [];
 
-    const dates: string[] = [];
-    let dateAmounts: number[] = [];
-
     for (const category in categorySum) {
       if (categorySum.hasOwnProperty(category)) {
         this.categoryListData.push({
@@ -89,15 +88,28 @@ export class StatsComponent implements OnInit {
 
     const weeklyData = this.groupDataByWeek(dateSum);
     console.log(weeklyData);
+    this.weeklyData = weeklyData;
 
-    for (const date in dateSum) {
-      if (dateSum.hasOwnProperty(date)) {
+    this.onClick(this.selectedWeek);
+  }
+
+  onClick(week: string) {
+    this.selectedWeek = week;
+    const selectedWeekData = this.weeklyData[this.selectedWeek];
+    this.onWeekSelect(selectedWeekData);
+  }
+
+  onWeekSelect(selectedWeekData: any) {
+    const dates: string[] = [];
+    let dateAmounts: number[] = [];
+    for (const date in selectedWeekData) {
+      if (selectedWeekData.hasOwnProperty(date)) {
         const formattedDate = new Date(date).toLocaleDateString('en-US', {
           day: '2-digit',
           month: 'short',
         });
         dates.push(formattedDate);
-        dateAmounts.push(dateSum[date]);
+        dateAmounts.push(selectedWeekData[date]);
       }
     }
 
@@ -106,9 +118,9 @@ export class StatsComponent implements OnInit {
       {
         data: dateAmounts.map((el) => el),
         label: 'Amount',
-        backgroundColor: this.colorScheme.slice(0, amounts.length),
+        backgroundColor: this.colorScheme.slice(0, dateAmounts.length),
         borderColor: 'white',
-        hoverBackgroundColor: this.colorScheme.slice(0, amounts.length),
+        hoverBackgroundColor: this.colorScheme.slice(0, dateAmounts.length),
         hoverBorderColor: 'white',
       },
     ];

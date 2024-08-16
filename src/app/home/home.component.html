@@ -41,12 +41,22 @@
 
 <div class="py-3" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
-    <span class="ml-2 text-2xl text-black-600 float-left flex"
-      >Hey, {{ username$ | async }}
+    <span class="ml-2 text-xl text-black-600 float-left flex"
+      >{{ greeting }}, {{ username$ | async }}
       <picture class="mt-1 ml-2">
         <picture>
-          <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp" type="image/webp">
-          <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif" alt="😎" width="32" height="32">
+          <source
+            srcset="
+              https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp
+            "
+            type="image/webp"
+          />
+          <img
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif"
+            alt="😎"
+            width="32"
+            height="32"
+          />
         </picture>
       </picture>
     </span>
@@ -58,16 +68,16 @@
     <span class="text-gray-600 float-left font-semibold">Spending</span>
     <br />
     <nz-segmented
-      class="float-left py-1 px-1 bg-indigo-100 hover:bg-indigo-100 mt-1"
+      class="w-40 float-left py-1 px-1 bg-indigo-100 hover:bg-indigo-100 mt-1 rounded-full"
       [nzOptions]="options"
       [(ngModel)]="selectedIndex"
     ></nz-segmented>
     <div
-      class="w-32 flex float-right flex-row items-center bg-indigo-100 rounded py-1 px-1 mt-1"
+      class="w-40 flex float-right flex-row bg-indigo-100 rounded-full py-1 px-1 mt-1"
     >
       <div class="mt-1 pl-2 fill-current">
         <svg
-          class="w-6 h-6 text-gray-800 dark:text-white"
+          class="w-5 h-5 text-gray-800 dark:text-white"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -83,11 +93,11 @@
           />
         </svg>
       </div>
-      <div class="text-right text-xl text-indigo-4500 pl-2">
-        <span class="" *ngIf="selectedIndex === 0"
+      <div class="flow-root text-xl text-indigo-4500 pl-2">
+        <span class="float-right" *ngIf="selectedIndex === 0"
           >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
         </span>
-        <span class="" *ngIf="selectedIndex === 1"
+        <span class="float-right" *ngIf="selectedIndex === 1"
           >{{ (currency | async)?.symbol }} {{ weekSpening | number }}
         </span>
       </div>

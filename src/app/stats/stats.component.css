@@ -1,0 +1,4 @@
+::ng-deep.ant-tabs-small>.ant-tabs-nav .ant-tabs-tab {
+  padding: 5px 0;
+  font-size: 12px;
+}

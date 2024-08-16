@@ -124,7 +124,6 @@ export class AddTransactionComponent implements OnInit {
   get selectedCatIcon() {
     const icon =
       CAT_ICON[this.form.get('category')?.value as keyof typeof CAT_ICON];
-    console.log(icon);
     return `/assets/icons/${icon}.png`;
   }
 

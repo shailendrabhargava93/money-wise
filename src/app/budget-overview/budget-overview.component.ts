@@ -1,5 +1,3 @@
-import { STATUS } from './../status.enum';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
@@ -13,11 +11,9 @@ export class BudgetOverviewComponent {
   budgetId!: string;
   budgetData!: any;
   currency = this.app.currency$;
-  constructor(
-    private app: AppService,
-    private route: ActivatedRoute,
-    private notification: NzMessageService
-  ) {}
+  action!: string;
+  visible = false;
+  constructor(private app: AppService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.budgetId = this.route.snapshot.paramMap.get('id') as string;
@@ -41,51 +37,18 @@ export class BudgetOverviewComponent {
     return budget.totalBudget - budget.spentAmount < 0 ? true : false;
   }
 
-  confirm(type: string): void {
+  onAction(type: string): void {
     if (type === 'delete') {
-      this.markDeleted();
+      this.action = type;
     }
 
     if (type === 'complete') {
-      this.markCompleted();
+      this.action = type;
     }
+    this.visible = true;
   }
 
-  markCompleted() {
-    this.app.showSpinner();
-    const budgetId = this.budgetId;
-    const data = { status: STATUS.COMPLETED };
-    this.app.update(budgetId, data).subscribe(
-      (data) => {
-        if (data) {
-          this.app.hideSpinner();
-          this.notification.success('Mark Completed !');
-        }
-      },
-      (error) => {
-        this.app.hideSpinner();
-        console.error('An error occurred:', error);
-        this.notification.error('An error occurred while updating.');
-      }
-    );
-  }
-
-  markDeleted() {
-    this.app.showSpinner();
-    const budgetId = this.budgetId;
-    const data = { status: STATUS.DELETED };
-    this.app.update(budgetId, data).subscribe(
-      (data) => {
-        if (data) {
-          this.app.hideSpinner();
-          this.notification.success('Mark Deleted !');
-        }
-      },
-      (error) => {
-        this.app.hideSpinner();
-        console.error('An error occurred:', error);
-        this.notification.error('An error occurred while updating.');
-      }
-    );
+  close() {
+    this.visible = false;
   }
 }

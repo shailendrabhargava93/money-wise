@@ -1,6 +1,6 @@
 <div class="mx-auto flex flow-root p-1 w-full">
   <div class="relative inline-block">
-    <span class="text-xl md:text-2xl font-semibold"> Overview</span>
+    <span class="text-xl md:text-2xl font-semibold"> Summary</span>
     <span
       class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-500 rounded-full"
     ></span>
@@ -9,10 +9,7 @@
   <button
     class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
     type="button"
-    nz-popconfirm
-    nzPopconfirmTitle="Are you sure, you want to mark it as completed ?"
-    nzPopconfirmPlacement="bottom"
-    (nzOnConfirm)="confirm('complete')"
+    (click)="onAction('complete')"
   >
     <span class="capitalize lg:inline mr-1">Complete</span>
     <span nz-icon nzType="check-circle"></span></button
@@ -20,10 +17,7 @@
   <button
     class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
     type="button"
-    nz-popconfirm
-    nzPopconfirmTitle="Are you sure, you want to mark it as deleted ?"
-    nzPopconfirmPlacement="bottom"
-    (nzOnConfirm)="confirm('delete')"
+    (click)="onAction('delete')"
   >
     <span class="capitalize lg:inline mr-1">Delete</span>
 
@@ -68,8 +62,18 @@
           <span class="inline-flex">
             Congratulations! &nbsp;
             <picture>
-              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp" type="image/webp">
-              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif" alt="🥳" width="20" height="20">
+              <source
+                srcset="
+                  https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp
+                "
+                type="image/webp"
+              />
+              <img
+                src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif"
+                alt="🥳"
+                width="20"
+                height="20"
+              />
             </picture>
           </span>
           You have saved {{ (currency | async)?.symbol }}
@@ -82,8 +86,18 @@
           <span class="inline-flex">
             Great Going! &nbsp;
             <picture>
-              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.webp" type="image/webp">
-              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif" alt="👍" width="20" height="20">
+              <source
+                srcset="
+                  https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.webp
+                "
+                type="image/webp"
+              />
+              <img
+                src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif"
+                alt="👍"
+                width="20"
+                height="20"
+              />
             </picture>
           </span>
           You are under your budget limit.
@@ -97,8 +111,18 @@
           <span class="inline-flex">
             Oops! &nbsp;
             <picture>
-              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.webp" type="image/webp">
-              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif" alt="❗" width="20" height="20">
+              <source
+                srcset="
+                  https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.webp
+                "
+                type="image/webp"
+              />
+              <img
+                src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif"
+                alt="❗"
+                width="20"
+                height="20"
+              />
             </picture>
           </span>
           You have exceeded {{ (currency | async)?.symbol }}
@@ -111,8 +135,18 @@
           <span class="inline-flex">
             Slow Down ! &nbsp;
             <picture>
-              <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.webp" type="image/webp">
-              <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif" alt="😥" width="20" height="20">
+              <source
+                srcset="
+                  https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.webp
+                "
+                type="image/webp"
+              />
+              <img
+                src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif"
+                alt="😥"
+                width="20"
+                height="20"
+              />
             </picture>
           </span>
           At this rate you'll exhaust your budget early.
@@ -123,3 +157,10 @@
 
   <app-stats [budgetId]="budgetId"></app-stats>
 </div>
+
+<app-confirm-modal
+  [action]="action"
+  [budgetId]="budgetId"
+  [visible]="visible"
+  (closeModal)="close()"
+></app-confirm-modal>

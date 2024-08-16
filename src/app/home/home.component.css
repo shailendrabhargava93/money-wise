@@ -4,3 +4,11 @@
 ::ng-deep.ant-carousel .slick-dots-bottom {
   bottom: 1px;
 }
+
+::ng-deep.ant-segmented-item{
+  border-radius: 9999px;
+}
+
+::ng-deep.ant-segmented:not(.ant-segmented-disabled):focus, .ant-segmented:not(.ant-segmented-disabled):hover {
+  background-color: none;
+}
