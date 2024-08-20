@@ -39,11 +39,11 @@
 
 <!-- if budget exists -->
 
-<div class="py-3" *ngIf="isBudgetAvailable | async">
+<div class="py-3 p-1" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
-    <span class="ml-2 text-xl text-black-600 float-left flex"
+    <span class="text-xl text-black-600 float-left flex"
       >{{ greeting }}, {{ username$ | async }}
-      <picture class="mt-1 ml-2">
+      <picture class="ml-2">
         <picture>
           <source
             srcset="
@@ -54,8 +54,8 @@
           <img
             src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif"
             alt="😎"
-            width="32"
-            height="32"
+            width="25"
+            height="25"
           />
         </picture>
       </picture>
@@ -63,9 +63,9 @@
   </div>
 </div>
 
-<div class="py-2" *ngIf="isBudgetAvailable | async">
-  <div class="flow-root p-2">
-    <span class="text-gray-600 float-left font-semibold">Spending</span>
+<div class="py-3 p-1" *ngIf="isBudgetAvailable | async">
+  <div class="flow-root">
+    <span class="text-gray-500 float-left font-semibold">Spending</span>
     <br />
     <nz-segmented
       class="w-40 float-left py-1 px-1 bg-indigo-100 hover:bg-indigo-100 mt-1 rounded-full"
@@ -93,11 +93,11 @@
           />
         </svg>
       </div>
-      <div class="flow-root text-xl text-indigo-4500 pl-2">
-        <span class="float-right" *ngIf="selectedIndex === 0"
+      <div class="flex text-xl text-indigo-4500 pl-2">
+        <span class="flex-end" *ngIf="selectedIndex === 0"
           >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
         </span>
-        <span class="float-right" *ngIf="selectedIndex === 1"
+        <span class="flex-end" *ngIf="selectedIndex === 1"
           >{{ (currency | async)?.symbol }} {{ weekSpening | number }}
         </span>
       </div>
@@ -105,9 +105,9 @@
   </div>
 </div>
 
-<div class="py-2">
-  <div class="flow-root p-2">
-    <span class="text-gray-600 float-left font-semibold"
+<div class="py-2 p-1">
+  <div class="flow-root">
+    <span class="text-gray-500 float-left font-semibold"
       >Recent transactions</span
     >
     <span class="text-indigo-500 float-right"
@@ -116,7 +116,7 @@
   </div>
   <div class="mx-auto flex flex-col">
     <div
-      class="mb-4 mt-4 text-md flex items-center justify-center text-center px-6 py-8 rounded-lg border-[1px] border-Gray-200"
+      class="mb-4 text-md flex items-center justify-center text-center px-6 py-10 rounded-lg border-[1px] border-Gray-200"
       *ngIf="!(isBudgetAvailable | async)"
     >
       <p class="text-gray-500">Your latest transactions will appear here</p>
@@ -144,9 +144,9 @@
   </div>
 </div>
 
-<div class="py-2 mb-1" *ngIf="isBudgetAvailable | async">
-  <div class="flow-root p-2">
-    <span class="text-gray-600 float-left font-semibold">Recommendations</span>
+<div class="py-2 p-1 mb-1" *ngIf="isBudgetAvailable | async">
+  <div class="flow-root">
+    <span class="text-gray-500 float-left font-semibold">Recommendations</span>
     <br />
     <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
       <div *ngFor="let el of array" nz-carousel-content>

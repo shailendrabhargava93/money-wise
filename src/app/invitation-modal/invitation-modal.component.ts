@@ -43,6 +43,7 @@ export class InvitationModalComponent implements OnChanges {
           Validators.pattern('^[a-z0-9](.?[a-z0-9]){5,}@gmail.com$'),
         ],
       ],
+      notify:[false],
       budgetId: [null],
     });
   }
@@ -101,7 +102,7 @@ export class InvitationModalComponent implements OnChanges {
             } else {
               this.notification.success('Invitation sent !');
 
-              if (this.budget.name && form.email) {
+              if (this.budget.name && form.email && form.notify) {
                 this.sendEmail(
                   this.currentUser,
                   form.email,
@@ -152,17 +153,17 @@ export class InvitationModalComponent implements OnChanges {
       toEmail: toEmail,
     };
 
-    // emailjs
-    //   .send('service_qbeg4sl', 'template_0gee8ww', templateParams, {
-    //     publicKey: 'ZZIokmaL8NAWGBmSN',
-    //   })
-    //   .then(
-    //     (response: any) => {
-    //       console.log('EMAIL SUCCESS!', response.status, response.text);
-    //     },
-    //     (err: any) => {
-    //       console.log('EMAIL FAILED...', err);
-    //     }
-    //   );
+    emailjs
+      .send('service_qbeg4sl', 'template_0gee8ww', templateParams, {
+        publicKey: 'ZZIokmaL8NAWGBmSN',
+      })
+      .then(
+        (response: any) => {
+          console.log('EMAIL SUCCESS!', response.status, response.text);
+        },
+        (err: any) => {
+          console.log('EMAIL FAILED...', err);
+        }
+      );
   }
 }

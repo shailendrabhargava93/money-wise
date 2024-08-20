@@ -1,5 +1,5 @@
 <nz-list>
-  <div class="mx-auto flex flex-col justify-center p-2 w-full">
+  <div class="mx-auto flex flex-col px-1 justify-center w-full">
     <ul class="flex flex-col">
       <li class="flex flex-row mb-2" *ngFor="let txn of allTransactions">
         <div
@@ -32,7 +32,7 @@
   <div
     class="loadmore"
     nz-list-load-more
-    *ngIf="loadMore && allTransactions && allTransactions.length > 0"
+    *ngIf="loadMore && allTransactions && allTransactions.length >= 10"
   >
     <button
       type="button"

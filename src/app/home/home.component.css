@@ -10,5 +10,5 @@
 }
 
 ::ng-deep.ant-segmented:not(.ant-segmented-disabled):focus, .ant-segmented:not(.ant-segmented-disabled):hover {
-  background-color: none;
+  background: initial;
 }

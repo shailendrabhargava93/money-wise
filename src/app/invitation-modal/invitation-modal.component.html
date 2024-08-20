@@ -8,6 +8,10 @@
 >
   <ng-container *nzDrawerContent>
     <form nz-form class="w-full max-w-7xl" [formGroup]="form">
+      <div class="mb-2">
+        <span class="text-xs mr-2">Send Notification</span>
+        <nz-switch formControlName="notify"></nz-switch>
+      </div>
       <div class="flex border-b border-indigo-500">
         <nz-form-item class="w-full">
           <nz-form-control [nzErrorTip]="emailErrorTpl">
@@ -22,7 +26,7 @@
 
               <ng-template #emailErrorTpl let-control>
                 <span *ngIf="control.errors?.['pattern']">
-                  Please enter valid google email id
+                  Please enter valid gmail id
                 </span>
                 <span *ngIf="control.errors?.['required']">
                   This is required
@@ -32,10 +36,10 @@
           </nz-form-control>
         </nz-form-item>
         &nbsp;
-        <nz-form-item>
+        <nz-form-item class="w-2/4">
           <button
             nz-button
-            class="primary rounded-full float-right"
+            class="primary float-right"
             (click)="handleShare()"
             [nzLoading]="isConfirmLoading"
           >

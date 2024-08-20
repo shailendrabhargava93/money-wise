@@ -4,7 +4,7 @@
   [formGroup]="form"
   class="p-1 h-full justify-center"
 >
-  <nz-form-item>
+  <nz-form-item class="txn-item">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="category" nzRequired
       >Category</nz-form-label
     >
@@ -36,7 +36,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item class="txn-item">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="amount" nzRequired
       >Amount</nz-form-label
     >
@@ -57,7 +57,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item class="txn-item">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="title"
       >Note</nz-form-label
     >
@@ -104,7 +104,7 @@
     </span>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item class="txn-item">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Date</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group [nzAddOnBefore]="datetemp">
@@ -147,7 +147,7 @@
     </span>
   </nz-form-item>
 
-  <nz-form-item>
+  <nz-form-item class="txn-item">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Budget</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group [nzAddOnBefore]="bugTemp">
@@ -196,7 +196,7 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item nz-row class="register-area flex content-center">
+  <nz-form-item nz-row class="txn-item register-area flex content-center">
     <button
       *ngIf="!isUpdate"
       nz-button

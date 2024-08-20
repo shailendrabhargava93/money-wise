@@ -2,7 +2,7 @@ nz-date-picker {
   display: block;
 }
 
-::ng-deep.ant-form-item {
+::ng-deep.txn-item.ant-form-item {
   margin: 0px 18px 18px 18px;
 }
 
