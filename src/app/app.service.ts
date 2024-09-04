@@ -90,8 +90,8 @@ export class AppService {
     return this.http.get(this.BASE_URL + `budget/${id}`);
   }
 
-  getBudgets(email: string) {
-    return this.http.get(this.BASE_URL + `budget/all/${email}`);
+  getBudgets(email: string, status: string) {
+    return this.http.get(this.BASE_URL + `budget/all/${email}/${status}`);
   }
 
   createBudget(data: any) {
@@ -104,6 +104,10 @@ export class AppService {
 
   getStats(id: string) {
     return this.http.get(this.BASE_URL + `budget/stats/${id}`);
+  }
+
+  getFilterTxn(data: any) {
+    return this.http.post(this.BASE_URL + `txn/filter`, data);
   }
 
   get isLoggedIn$(): Observable<boolean> {

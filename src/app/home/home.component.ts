@@ -50,12 +50,12 @@ export class HomeComponent {
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getTransactions(user as string, 1, 3)),
-        tap((txns: any) => {
+        tap((data: any) => {
           this.app.hideSpinner();
 
-          if (txns.length > 0) {
-            const budgetsExist = txns && txns.length > 0;
-            this.recentTxns = txns;
+          if (data.txns.length > 0) {
+            const budgetsExist = data.txns && data.txns.length > 0;
+            this.recentTxns = data.txns;
             this.todaySpending = this.getTodaysTotalSpending(this.recentTxns);
             this.weekSpening = this.getCurrentWeeksTotalSpending(
               this.recentTxns

@@ -11,14 +11,13 @@ import { of } from 'rxjs';
   styleUrls: ['./transactions.component.css'],
 })
 export class TransactionsComponent implements OnInit {
-  globalList: any[] = [];
   allTransactions!: any[];
   categories: any[] = [];
   sortingType = 'date-asc';
   visibleFilters = false;
   visibleSorting = false;
   showDot = false;
-  selectedCat: string = '';
+  selectedCategoies: string[] = [];
   amountRange!: any[];
   highestAmount!: number;
 
@@ -50,25 +49,18 @@ export class TransactionsComponent implements OnInit {
           return of([]);
         })
       )
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         if (data) {
           this.app.hideSpinner();
           if (this.pageNumber > 1) {
             this.allTransactions = this.allTransactions.concat(data);
           } else {
-            this.allTransactions = data as any[];
+            this.allTransactions = data.txns as any[];
           }
           this.loadingMore = true;
           if (this.allTransactions.length > 0) {
             this.sort();
-            let highestAmount = Math.max(
-              ...this.allTransactions.map(
-                (transaction) => transaction.data.amount
-              )
-            );
-            this.highestAmount = highestAmount;
-            this.amountRange = [0, highestAmount];
-            this.globalList = this.allTransactions;
+            this.highestAmount = data.max;
           }
         }
       });
@@ -91,35 +83,36 @@ export class TransactionsComponent implements OnInit {
   }
 
   onSelect(catName: string) {
-    this.selectedCat = catName;
+    this.selectedCategoies.push(catName);
   }
 
   apply() {
     this.loadingMore = false;
+    this.app.showSpinner();
     this.closeFilters();
-    if (this.selectedCat) {
-      this.allTransactions = this.allTransactions.filter(
-        (transaction: any) => transaction.data.category === this.selectedCat
-      );
-      this.showDot = true;
-    }
-
-    if (this.amountRange.length > 0) {
-      this.allTransactions = this.allTransactions.filter(
-        (transaction: any) =>
-          transaction.data.amount >= this.amountRange[0] &&
-          transaction.data.amount <= this.amountRange[1]
-      );
-      this.showDot = true;
-    }
+    let email;
+    this.app.userEmail.subscribe((m) => (email = m));
+    const data = {
+      email: email,
+      categories: this.selectedCategoies,
+      min: this.amountRange ? this.amountRange[0] : null,
+      max: this.amountRange ? this.amountRange[1] : null,
+    };
+    this.app.getFilterTxn(data).subscribe((data) => {
+      if (data) {
+        this.app.hideSpinner();
+        this.allTransactions = data as any[];
+        this.showDot = true;
+      }
+    });
   }
 
   clear() {
-    this.selectedCat = '';
     this.showDot = false;
     this.loadingMore = true;
-    this.amountRange = [0, this.highestAmount];
-    this.allTransactions = this.globalList;
+    this.selectedCategoies = [];
+    this.amountRange = [];
+    this.getTransactions();
   }
 
   openSort() {

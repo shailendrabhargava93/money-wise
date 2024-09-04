@@ -7,6 +7,7 @@
   </div>
   &nbsp;&nbsp;
   <button
+    *ngIf="budgetData && budgetData.status === 'active'"
     class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
     type="button"
     (click)="onAction('complete')"
@@ -15,6 +16,7 @@
     <span nz-icon nzType="check-circle"></span></button
   >&nbsp;&nbsp;
   <button
+    *ngIf="budgetData && budgetData.status === 'active'"
     class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
     type="button"
     (click)="onAction('delete')"

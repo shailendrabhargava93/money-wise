@@ -1,1 +1,22 @@
-<p>work in progress !</p>
+<div class="mx-auto flex flow-root p-1 w-full">
+  <div class="relative inline-block">
+    <span class="text-xl md:text-2xl font-semibold"> Archived </span>
+    <span
+      class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-500 rounded-full"
+    ></span>
+  </div>
+</div>
+<br>
+<div clas="mt-2 p-2">
+  <ul nz-list [nzDataSource]="data" nzBordered nzSize="large">
+    <li nz-list-item nzNoFlex *ngFor="let item of data">
+      <ul nz-list-item-actions>
+        <nz-list-item-action>
+          <a (click)="openOverview(item.id)">view</a>
+        </nz-list-item-action>
+      </ul>
+      {{ item.data.name }}
+    </li>
+  </ul>
+
+</div>

@@ -1,3 +1,4 @@
+import { STATUS } from './../status.enum';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
@@ -22,7 +23,7 @@ export class BudgetsComponent implements OnInit {
     this.app.showSpinner();
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getBudgets(user as string)),
+        switchMap((user) => this.app.getBudgets(user as string, STATUS.ACTIVE)),
         catchError((error) => {
           console.error('Error occurred getBudgets:', error);
           this.app.hideSpinner();

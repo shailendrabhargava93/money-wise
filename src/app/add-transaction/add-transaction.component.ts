@@ -1,3 +1,4 @@
+import { STATUS } from './../status.enum';
 import { switchMap, catchError, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CAT_ICON } from './../category-icons';
@@ -46,7 +47,7 @@ export class AddTransactionComponent implements OnInit {
 
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getBudgets(user as string)),
+        switchMap((user) => this.app.getBudgets(user as string, STATUS.ACTIVE)),
         catchError((error) => {
           console.error('Error occurred getBudgets:', error);
           this.app.hideSpinner();
