@@ -49,7 +49,6 @@ export class AppService {
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
     const isAvailable = localStorage.getItem('isBudgetAvailable');
-    const budgets = localStorage.getItem('budgets');
     const currency = localStorage.getItem('currency');
 
     this.currentUserSubject.next(JSON.parse(token as string));

@@ -17,7 +17,7 @@ export class TransactionsComponent implements OnInit {
   visibleFilters = false;
   visibleSorting = false;
   showDot = false;
-  selectedCategoies: string[] = [];
+  selectedCategories: string[] = [];
   amountRange!: any[];
   highestAmount!: number;
 
@@ -83,7 +83,12 @@ export class TransactionsComponent implements OnInit {
   }
 
   onSelect(catName: string) {
-    this.selectedCategoies.push(catName);
+    const index = this.selectedCategories.indexOf(catName);
+    if (index > -1) {
+      this.selectedCategories.splice(index, 1);
+    } else {
+      this.selectedCategories.push(catName);
+    }
   }
 
   apply() {
@@ -94,7 +99,7 @@ export class TransactionsComponent implements OnInit {
     this.app.userEmail.subscribe((m) => (email = m));
     const data = {
       email: email,
-      categories: this.selectedCategoies,
+      categories: this.selectedCategories,
       min: this.amountRange ? this.amountRange[0] : null,
       max: this.amountRange ? this.amountRange[1] : null,
     };
@@ -110,7 +115,7 @@ export class TransactionsComponent implements OnInit {
   clear() {
     this.showDot = false;
     this.loadingMore = true;
-    this.selectedCategoies = [];
+    this.selectedCategories = [];
     this.amountRange = [];
     this.getTransactions();
   }

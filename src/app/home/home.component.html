@@ -65,7 +65,7 @@
 
 <div class="py-3 p-1" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
-    <span class="text-gray-500 float-left font-semibold">Spending</span>
+    <span class="text-black float-left font-semibold">Spending</span>
     <br />
     <nz-segmented
       class="w-40 float-left py-1 px-1 bg-indigo-100 hover:bg-indigo-100 mt-1 rounded-full"
@@ -73,33 +73,36 @@
       [(ngModel)]="selectedIndex"
     ></nz-segmented>
     <div
-      class="w-40 flex float-right flex-row bg-indigo-100 rounded-full py-1 px-1 mt-1"
+      class="w-40 flex float-right bg-indigo-100 rounded-full py-1 px-1 mt-1"
     >
-      <div class="mt-1 pl-2 fill-current">
-        <svg
-          class="w-5 h-5 text-gray-800 dark:text-white"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-width="1.5"
-            d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-          />
-        </svg>
-      </div>
-      <div class="flex text-xl text-indigo-4500 pl-2">
-        <span class="flex-end" *ngIf="selectedIndex === 0"
-          >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
-        </span>
-        <span class="flex-end" *ngIf="selectedIndex === 1"
-          >{{ (currency | async)?.symbol }} {{ weekSpening | number }}
-        </span>
+      <div class="flex items-center w-full">
+        <div class="mt-1 pl-2 fill-current">
+          <svg
+            class="w-5 h-5 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-width="1.5"
+              d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+            />
+          </svg>
+        </div>
+
+        <div class="flex text-xl text-indigo-4500 pl-2">
+          <span class="" *ngIf="selectedIndex === 0"
+            >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
+          </span>
+          <span class="" *ngIf="selectedIndex === 1"
+            >{{ (currency | async)?.symbol }} {{ weekSpening | number }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
@@ -107,9 +110,7 @@
 
 <div class="py-2 p-1">
   <div class="flow-root">
-    <span class="text-gray-500 float-left font-semibold"
-      >Recent transactions</span
-    >
+    <span class="text-black float-left font-semibold">Recent transactions</span>
     <span class="text-indigo-500 float-right"
       ><a [routerLink]="['/transactions']" class="text-xs">See all</a>
     </span>
@@ -146,7 +147,7 @@
 
 <div class="py-2 p-1 mb-1" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
-    <span class="text-gray-500 float-left font-semibold">Recommendations</span>
+    <span class="text-black float-left font-semibold">Recommendations</span>
     <br />
     <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
       <div *ngFor="let el of array" nz-carousel-content>
@@ -164,3 +165,8 @@
     </nz-carousel>
   </div>
 </div>
+
+<app-currency-modal
+  [visible]="enableCurrencyModal"
+  (closeModal)="onclose()"
+></app-currency-modal>

@@ -17,6 +17,7 @@ export class HomeComponent {
   selectedIndex = 0;
   currency = this.app.currency$;
   greeting!: string;
+  enableCurrencyModal = false;
 
   options = [
     { label: 'Today', value: 'today', icon: 'aim' },
@@ -49,7 +50,7 @@ export class HomeComponent {
     this.app.showSpinner();
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getTransactions(user as string, 1, 3)),
+        switchMap((user) => this.app.getTransactions(user as string, 1, 4)),
         tap((data: any) => {
           this.app.hideSpinner();
 
@@ -60,15 +61,15 @@ export class HomeComponent {
             this.weekSpening = this.getCurrentWeeksTotalSpending(
               this.recentTxns
             );
-            const currency = {
-              name: 'Indian rupee',
-              symbol: '₹',
-            };
             localStorage.setItem('isBudgetAvailable', String(budgetsExist));
-            localStorage.setItem('currency', JSON.stringify(currency));
-
-            this.app.currencySub.next(currency);
             this.app.isBudgetAvailableSub.next(budgetsExist);
+          } else {
+            const currency = localStorage.getItem('currency');
+            if (!currency) {
+              this.enableCurrencyModal = true;
+            } else {
+              this.enableCurrencyModal = false;
+            }
           }
         }),
         catchError((error) => {
@@ -131,5 +132,8 @@ export class HomeComponent {
       .reduce((total, transaction) => total + transaction.data.amount, 0);
 
     return total;
+  }
+  onclose() {
+    this.enableCurrencyModal = false;
   }
 }
