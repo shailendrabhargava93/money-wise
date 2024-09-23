@@ -34,6 +34,11 @@ export class BudgetsComponent implements OnInit {
         if (data) {
           this.app.hideSpinner();
           this.budgets = data as any;
+          const budgetsExist = this.budgets && this.budgets.length > 0;
+          if (budgetsExist) {
+            localStorage.setItem('isBudgetAvailable', String(budgetsExist));
+            this.app.isBudgetAvailableSub.next(budgetsExist);
+          }
         }
       });
   }

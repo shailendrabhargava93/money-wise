@@ -12,6 +12,7 @@ export class TransactionListComponent {
   @Input() allTransactions!: any[];
   @Input() loadMore: boolean = false;
   @Input() enableEmpty: boolean = true;
+  @Input() emptyMessage: string = 'You have no transactions';
   @Output() loadMoreRecords: EventEmitter<any> = new EventEmitter<any>();
 
   currency = this.app.currency$;

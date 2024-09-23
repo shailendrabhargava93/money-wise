@@ -90,6 +90,7 @@
             >
               <nz-avatar
                 *ngIf="i < 2"
+                nz-tooltip [nzTooltipTitle]="user"
                 style="background-color: #9197f8"
                 nzIcon="user"
               ></nz-avatar>
@@ -103,6 +104,7 @@
           <span
             class="text-white cursor-pointer ml-1"
             (click)="onShare(budget)"
+            nz-tooltip nzTooltipTitle="Add user to budget"
             nz-icon
             style="
               font-size: 20px;

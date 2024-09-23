@@ -4,13 +4,9 @@
   [nzPlacement]="'bottom'"
   nzTitle="Choose Currency"
   [nzExtra]="extrasort"
-  [nzSize]="'large'"
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>
-    <span class="text-sm text-gray-600"
-      >Please select currency your budgets and transactions.</span
-    >
     <nz-input-group [nzSuffix]="suffixIconSearch">
       <input
         type="text"

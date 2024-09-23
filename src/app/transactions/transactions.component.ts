@@ -21,9 +21,10 @@ export class TransactionsComponent implements OnInit {
   amountRange!: any[];
   highestAmount!: number;
 
+  message!: string;
   pageNumber: number = 1;
   loadingMore = false;
-
+  currency!: string | undefined;
   constructor(private app: AppService) {}
 
   ngOnInit() {
@@ -50,23 +51,26 @@ export class TransactionsComponent implements OnInit {
         })
       )
       .subscribe((data: any) => {
-        if (data) {
+        if (data && data.txns) {
           this.app.hideSpinner();
+          this.loadingMore = true;
           if (this.pageNumber > 1) {
-            this.allTransactions = this.allTransactions.concat(data);
+            this.allTransactions = this.allTransactions.concat(data.txns);
           } else {
             this.allTransactions = data.txns as any[];
           }
-          this.loadingMore = true;
-          if (this.allTransactions.length > 0) {
+          if (this.allTransactions && this.allTransactions.length > 0) {
             this.sort();
             this.highestAmount = data.max;
           }
+        } else {
+          this.allTransactions = data;
         }
       });
   }
 
   openFilters(): void {
+    this.app.currency.subscribe((m) => (this.currency = m?.symbol));
     this.visibleFilters = true;
     for (var n in CAT_ICON) {
       const icon = CAT_ICON[n as keyof typeof CAT_ICON];
@@ -108,6 +112,7 @@ export class TransactionsComponent implements OnInit {
         this.app.hideSpinner();
         this.allTransactions = data as any[];
         this.showDot = true;
+        this.message = 'No matching data found'
       }
     });
   }
@@ -129,7 +134,10 @@ export class TransactionsComponent implements OnInit {
   }
 
   formatter(value: number): string {
-    return `₹ ${value}`;
+    if (this.currency != undefined) {
+      return `${this.currency} ${value}`;
+    }
+    return `${value}`;
   }
 
   sort() {

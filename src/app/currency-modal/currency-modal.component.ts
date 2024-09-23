@@ -62,6 +62,7 @@ export class CurrencyModalComponent implements OnInit {
     const updated = { name: obj.currency, symbol: obj.symbol };
     localStorage.setItem('currency', JSON.stringify(updated));
     this.app.currencySub.next(updated);
+    this.close();
   }
 
   search() {

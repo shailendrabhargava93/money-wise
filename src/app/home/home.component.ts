@@ -1,3 +1,4 @@
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component } from '@angular/core';
 import { switchMap, tap, catchError } from 'rxjs/operators';
@@ -27,25 +28,25 @@ export class HomeComponent {
   array = [
     {
       icon: 'assets/home/digital_1.png',
-      subheading: 'Limit your use of credit cards to avoid overspending.',
+      subheading: 'Limit your use of credit cards to avoid overspending',
     },
     {
       icon: 'assets/home/digital_2.png',
-      subheading: 'Cancel any unused or unnecessary subscriptions.',
+      subheading: 'Cancel any unused or unnecessary subscriptions',
     },
     {
       icon: 'assets/home/digital_3.png',
       subheading:
-        'Allocate a specific amount for non-essential spending each month.',
+        'Allocate a specific amount for non-essential spending each month',
     },
     {
       icon: 'assets/home/digital_4.png',
       subheading:
-        'Regularly check your bank and credit card statements for any discrepancies.',
+        'Regularly check your bank and credit card statements for any discrepancies',
     },
   ];
 
-  constructor(private app: AppService) {
+  constructor(private app: AppService, private message: NzMessageService) {
     this.getGreeting();
     this.app.showSpinner();
     this.app.userEmail
@@ -54,7 +55,7 @@ export class HomeComponent {
         tap((data: any) => {
           this.app.hideSpinner();
 
-          if (data.txns.length > 0) {
+          if (data && data.txns && data.txns.length > 0) {
             const budgetsExist = data.txns && data.txns.length > 0;
             this.recentTxns = data.txns;
             this.todaySpending = this.getTodaysTotalSpending(this.recentTxns);
@@ -66,7 +67,15 @@ export class HomeComponent {
           } else {
             const currency = localStorage.getItem('currency');
             if (!currency) {
-              this.enableCurrencyModal = true;
+              const ref = this.message.success(
+                'Select the main currency for all your transactions.',
+                {
+                  nzDuration: 3000,
+                }
+              );
+              ref.onClose.subscribe((d) => {
+                this.enableCurrencyModal = true;
+              });
             } else {
               this.enableCurrencyModal = false;
             }
@@ -93,7 +102,6 @@ export class HomeComponent {
     for (var i = 0; i < data.length; i++) {
       if (hr >= data[i][0]) {
         const text = data[i][1];
-        console.log(text);
         this.greeting = text;
         break;
       }

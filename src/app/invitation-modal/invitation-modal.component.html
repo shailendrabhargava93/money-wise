@@ -8,9 +8,9 @@
 >
   <ng-container *nzDrawerContent>
     <form nz-form class="w-full max-w-7xl" [formGroup]="form">
-      <div class="mb-2">
-        <span class="text-xs mr-2">Send Notification</span>
-        <nz-switch formControlName="notify"></nz-switch>
+      <div class="mb-2 flow-root">
+        <span class="text-xs mr-2 float-left mt-2">Notify user with email</span>
+        <nz-switch class="float-right" formControlName="notify"></nz-switch>
       </div>
       <div class="flex border-b border-indigo-500">
         <nz-form-item class="w-full">
@@ -18,7 +18,7 @@
             <nz-input-group>
               <input
                 nz-input
-                placeholder="Enter email"
+                placeholder="Enter user email"
                 formControlName="email"
                 name="email"
                 email

@@ -5,10 +5,10 @@
   bottom: 1px;
 }
 
-::ng-deep.ant-segmented-item{
+/* ::ng-deep.ant-segmented-item{
   border-radius: 9999px;
-}
+} */
 
-::ng-deep.ant-segmented:not(.ant-segmented-disabled):focus, .ant-segmented:not(.ant-segmented-disabled):hover {
+/* ::ng-deep.ant-segmented:not(.ant-segmented-disabled):focus, .ant-segmented:not(.ant-segmented-disabled):hover {
   background-color: rgb(224 231 255 / 1)
-}
+} */

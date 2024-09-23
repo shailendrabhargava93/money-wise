@@ -56,6 +56,7 @@ export class MoreComponent implements OnInit {
   }
 
   sendFeeback() {
-    this.message.success(`Feeback send successfully !`);
+    this.message.success(`Thankyou! We have recieved your feedback`);
+    this.openQuery();
   }
 }

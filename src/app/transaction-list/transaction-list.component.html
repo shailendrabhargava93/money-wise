@@ -48,5 +48,5 @@
   class="h-[16rem]"
   *ngIf="enableEmpty && allTransactions && allTransactions.length === 0"
   nzNotFoundImage="assets/No-data-pana.svg"
-  [nzNotFoundContent]="'You have no transactions'"
+  [nzNotFoundContent]="emptyMessage"
 ></nz-empty>
