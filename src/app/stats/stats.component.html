@@ -1,12 +1,10 @@
-<div class="container py-2 mx-auto flex justify-center items-center">
+<div class="flex flex-wrap items-center justify-between mb-1 p-2">
+</div>
+<div class="py-3 p-2 inline">
+  <span class="text-md font-semibold text-gray-600">Top Categories</span>
+</div>
+<div class="container py-2 mx-auto">
   <div class="p-4 border bg-white rounded-md shadow-dashboard">
-    <div class="flex flex-wrap items-center justify-between mb-1 -m-2">
-      <div class="w-auto p-2">
-        <h2 class="text-md font-semibold text-gray-600">
-          Top Expenditure Category
-        </h2>
-      </div>
-    </div>
     <div class="flex flex-wrap">
       <canvas
         baseChart
@@ -20,19 +18,19 @@
   </div>
 </div>
 
-<div class="container py-2 mx-auto flex justify-center items-center">
+<div class="py-3 p-2 inline">
+  <span class="text-md font-semibold text-gray-600">Weekly Expenditure</span>
+</div>
+<div class="container py-2 mx-auto">
   <div class="p-4 border bg-white rounded-md shadow-dashboard">
     <div class="flex flex-wrap items-center justify-between mb-1 -m-2">
       <div class="w-auto p-2">
-        <h2 class="text-md font-semibold text-gray-600">Weekly Expenditure</h2>
-        <span>
           <nz-tabset [nzSize]="'small'">
             <nz-tab nzTitle="Week 1" (nzClick)="onClick('Week 1')"></nz-tab>
             <nz-tab nzTitle="Week 2" (nzClick)="onClick('Week 2')"></nz-tab>
             <nz-tab nzTitle="Week 3" (nzClick)="onClick('Week 3')"></nz-tab>
             <nz-tab nzTitle="Week 4" (nzClick)="onClick('Week 4')"></nz-tab>
           </nz-tabset>
-        </span>
       </div>
     </div>
     <div class="flex flex-wrap">

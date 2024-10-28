@@ -1,7 +1,7 @@
 <nz-list>
   <div class="mx-auto flex flex-col px-1 justify-center w-full">
     <ul class="flex flex-col">
-      <li class="flex flex-row mb-2" *ngFor="let txn of allTransactions">
+      <li class="flex flex-row mb-2 bg-white" *ngFor="let txn of allTransactions">
         <div
           class="cursor-pointer rounded-md shadow-md flex flex-1 p-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
           (click)="onTxn(txn.id)"

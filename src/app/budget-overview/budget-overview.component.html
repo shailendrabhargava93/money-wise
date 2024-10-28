@@ -31,32 +31,56 @@
   class="mx-auto flex flex-col justify-center p-2 mt-4 w-full"
   *ngIf="budgetData"
 >
-  <div class="flex flow-root">
-    <div class="mt-1">
-      <span class="text-gray-500 float-left">Budget Amount</span>
-      <span class="float-right"
-        >{{ (currency | async)?.symbol }}
-        {{ budgetData.totalBudget | number }}</span
-      >
+<div class="flex flex-row gap-4 max-md:w-22rem max-md:overflow-x-auto">
+      <div
+      class="card bg-white rounded-lg shadow-md p-4 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+    >
+      <div class="title flex items-center mb-4">
+        <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
+        <p class="title-text text-lg font-medium">Budget Amount</p>
+      </div>
+      <div class="data text-center text-2xl">
+        <p>
+          {{ (currency | async)?.symbol }}&nbsp;{{
+            budgetData.totalBudget | number
+          }}
+        </p>
+      </div>
     </div>
-    <br />
-    <div class="mt-1">
-      <span class="text-gray-500 float-left">Expenditure Amount</span>
-      <span class="float-right"
-        >{{ (currency | async)?.symbol }}
-        {{ budgetData.spentAmount | number }}</span
-      >
+
+    <div
+      class="card bg-white rounded-lg shadow-md p-4 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+    >
+      <div class="title flex items-center mb-4">
+        <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
+        <p class="title-text text-lg font-medium">Expenditure Amount</p>
+      </div>
+      <div class="data text-center text-2xl">
+        <p>
+          {{ (currency | async)?.symbol }}&nbsp;{{
+            budgetData.spentAmount | number
+          }}
+        </p>
+      </div>
     </div>
-    <br />
-    <hr />
-    <div class="mt-1">
-      <span class="text-gray-500 float-left">Remaining Amount</span>
-      <span class="float-right"
-        >{{ (currency | async)?.symbol }}
-        {{ budgetData.totalBudget - budgetData.spentAmount | number }}</span
-      >
+
+    <div
+      class="card bg-white rounded-lg shadow-md p-4 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+    >
+      <div class="title flex items-center mb-4">
+        <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
+        <p class="title-text text-lg font-medium">Remaining Amount</p>
+      </div>
+      <div class="data text-center text-2xl">
+        <p>
+          {{ (currency | async)?.symbol }}&nbsp;{{
+            budgetData.totalBudget - budgetData.spentAmount | number
+          }}
+        </p>
+      </div>
     </div>
-    <br /><br />
+  </div>
+  <div>
     <div *ngIf="!budgetData.overspent">
       <nz-alert nzType="success" [nzDescription]="descTemp"></nz-alert>
       <ng-template #descTemp>

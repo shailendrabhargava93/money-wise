@@ -1,16 +1,15 @@
-<div class="container py-2 mx-auto flex justify-center items-center">
-  <div class="p-2 border bg-white rounded-md shadow-dashboard">
-    <div class="flex flex-wrap items-center justify-between mb-1">
-      <div class="w-auto p-0.5">
-        <h2 class="text-md font-semibold text-gray-600">
-          All Category Analysis
-        </h2>
-      </div>
-    </div>
-    <div class="flex flex-wrap mb-2">
+<div class="py-3 p-2 inline">
+  <span class="float-left text-md font-semibold text-gray-600"
+    >All Category Analysis</span
+  >
+</div>
+<br />
+<div class="container py-2 mx-auto flex">
+  <div class="w-full p-2 border bg-white rounded-md shadow-dashboard mb-4">
+    <div class="flex flex-wrap">
       <div
-        *ngFor="let cat of categoryData;"
-        class="w-full flex flex-wrap items-center justify-between py-2 border-b border-coolGray-100"
+        *ngFor="let cat of categoryData; let i = index"
+        class="w-full flex flex-wrap items-center justify-between py-2"
       >
         <div class="w-auto p-0.5">
           <div class="flex flex-wrap items-center">
@@ -39,6 +38,10 @@
             {{ (currency | async)?.symbol }} {{ cat.sum }}
           </p>
         </div>
+        <div
+          *ngIf="i < categoryData.length - 1"
+          class="w-full border-b border-gray-200 my-2"
+        ></div>
       </div>
     </div>
   </div>

@@ -39,34 +39,23 @@
 
 <!-- if budget exists -->
 
-<div class="py-3 p-1" *ngIf="isBudgetAvailable | async">
-  <div class="flow-root">
-    <span class="text-xl text-black-600 float-left flex"
-      >{{ greeting }}, {{ username$ | async }}
-      <picture class="ml-2">
-        <picture>
-          <source
-            srcset="
-              https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.webp
-            "
-            type="image/webp"
-          />
-          <img
-            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60e/512.gif"
-            alt="😎"
-            width="25"
-            height="25"
-          />
-        </picture>
-      </picture>
+<div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+  <div class="flex flex-col">
+    <span class="text-lg text-black-600 float-left flex"
+      >Welcome Back! {{ username$ | async }}
+    </span>
+    <span class="text-sm text-black-600 float-left flex mt-0.5">
+      Continue tracking your daily expenses
     </span>
   </div>
 </div>
 
-<div class="py-3 p-1" *ngIf="isBudgetAvailable | async">
+<div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
+  <span class="float-left text-md font-semibold text-gray-600">Spending</span>
+</div>
+<br>
+<div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
-    <span class="text-black float-left font-semibold">Spending</span>
-    <br />
     <nz-segmented
       class="w-40 float-left py-1 px-1 mt-1 rounded-md"
       [nzOptions]="options"
@@ -106,32 +95,46 @@
   </div>
 </div>
 
-<div class="py-2 p-1">
-  <div class="flow-root">
-    <span class="text-black float-left font-semibold">Recent transactions</span>
-    <span class="text-indigo-500 float-right"
-      ><a [routerLink]="['/transactions']" class="text-xs">See all</a>
-    </span>
-  </div>
+<!-- Recommendations -->
+<div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
+  <span class="float-left text-md font-semibold text-gray-600">Just For You</span>
+</div>
+<br>
+<div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+    <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
+      <div *ngFor="let el of array" nz-carousel-content>
+        <div class="flex justify-start items-center gap-4 max-w-lg rounded-lg overflow-hidden">
+          <div class="w-4/5 p-3">
+            <p class="text-sm text-gray-600">{{ el.subheading }}</p>
+          </div>
+          <div class="relative w-1/5 h-full overflow-hidden">
+            <img
+              [src]="el.icon"
+              alt="Image"
+              class="object-cover w-full h-full object-top"
+            >
+          </div>
+        </div>
+      </div>
+    </nz-carousel>
+</div>
+
+
+<!-- Recent Txns -->
+<div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
+  <span class="float-left text-md font-semibold text-gray-600">Recent transactions</span>
+  <span class="float-right"
+    ><a [routerLink]="['/transactions']" class="text-xs">See all</a>
+  </span>
+</div>
+<br>
+<div class="py-3 p-2 mb-1 bg-white rounded-md">
   <div class="mx-auto flex flex-col">
     <div
       class="mb-4 text-md flex items-center justify-center text-center px-6 py-10 rounded-lg border-[1px] border-Gray-200"
       *ngIf="!(isBudgetAvailable | async)"
     >
       <p class="text-gray-500">Your latest transactions will appear here</p>
-      &nbsp;
-      <picture>
-        <source
-          srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64c/512.webp"
-          type="image/webp"
-        />
-        <img
-          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64c/512.gif"
-          alt="🙌"
-          width="20"
-          height="20"
-        />
-      </picture>
     </div>
     <div class="" *ngIf="isBudgetAvailable | async">
       <app-transaction-list
@@ -140,27 +143,6 @@
         [enableEmpty]="false"
       ></app-transaction-list>
     </div>
-  </div>
-</div>
-
-<div class="py-2 p-1 mb-1" *ngIf="isBudgetAvailable | async">
-  <div class="flow-root">
-    <span class="text-black float-left font-semibold">Recommendations</span>
-    <br />
-    <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
-      <div *ngFor="let el of array" nz-carousel-content>
-        <div
-          class="flex flex-col h-[10vh] p-0.5 justify-center items-center bg-gray-100 rounded-md"
-        >
-          <span class="flex justify-center">
-            <img class="ml-1" width="32px" height="32px" [src]="el.icon" />
-            <h3 class="mt-1 ml-1 text-sm text-center text-black-500">
-              {{ el.subheading }}
-            </h3>
-          </span>
-        </div>
-      </div>
-    </nz-carousel>
   </div>
 </div>
 
