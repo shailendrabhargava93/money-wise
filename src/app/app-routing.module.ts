@@ -23,7 +23,7 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'add',
+    path: 'new-transaction',
     component: AddTransactionComponent,
     canActivate: [authGuard, isBudgetAvailable],
   },
@@ -38,17 +38,17 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'completed-budget',
+    path: 'archived',
     component: CompleteBudgetComponent,
     canActivate: [authGuard],
   },
   {
-    path: 'add-budget',
+    path: 'new-budget',
     component: AddBudgetComponent,
     canActivate: [authGuard],
   },
   {
-    path: 'view-budget/:id',
+    path: 'summary/:id',
     component: BudgetOverviewComponent,
     canActivate: [authGuard],
   },

@@ -1,14 +1,8 @@
 <!-- header -->
 <div class="mx-auto flex flow-root p-1 w-full">
-  <div class="relative inline-block">
-    <span class="text-xl md:text-2xl font-semibold"> Budgets </span>
-    <span
-      class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-500 rounded-full"
-    ></span>
-  </div>
   <button
     type="button"
-    [routerLink]="['/completed-budget']"
+    [routerLink]="['/archived']"
     class="float-right bg-white mt-1 ml-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <span class="capitalize lg:inline leading-5">Archived</span> &nbsp;
@@ -16,7 +10,7 @@
   </button>
   <button
     type="button"
-    [routerLink]="['/add-budget']"
+    [routerLink]="['/new-budget']"
     class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
   >
     <span class="capitalize lg:inline leading-5">New</span> &nbsp;

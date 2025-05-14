@@ -100,3 +100,7 @@ button.active > span{
 ::ng-deep.ant-drawer-body{
   padding-top: 8px;
 }
+
+::ng-deep.head-primary{
+  color: #5e56ec !important;
+}

@@ -2,7 +2,7 @@
   <nz-layout>
     <nz-header class="sticky left-0 top-0 right-0 z-50 shadow-md">
       <div class="logo flow-root">
-        <span class="float-left">
+        <span class="float-left" *ngIf="!showMenu()">
           <svg
             width="140"
             height="18"
@@ -36,6 +36,11 @@
               ></path>
             </g>
           </svg>
+        </span>
+        <span class="float-left" *ngIf="showMenu()">
+          <div class="relative inline-block">
+            <span class="ml-2 text-xl md:text-2xl font-semibold head-primary"> {{currentRoute | titlecase}} </span>
+          </div>
         </span>
         <span class="float-right mr-4">
           <span
@@ -124,7 +129,7 @@
 
           <div class="flex items-center justify-center">
             <button
-              [routerLink]="['add']"
+              [routerLink]="['new-transaction']"
               type="button"
               class="inline-flex items-center justify-center w-10 h-10 font-medium bg-indigo-600 rounded-full hover:bg-indigo-700 group focus:ring-4 focus:ring-indigo-300 focus:outline-none dark:focus:ring-indigo-800"
             >

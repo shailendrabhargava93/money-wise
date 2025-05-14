@@ -1,17 +1,8 @@
-<!-- header -->
-<div class="mx-auto flex flow-root p-1 w-full">
-  <!-- <div class="relative inline-block">
-    <span class="text-xl md:text-2xl font-semibold"> Home </span>
-    <span
-      class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-500 rounded-full"
-    ></span>
-  </div> -->
-</div>
 <!-- component -->
 
 <div
   *ngIf="!(isBudgetAvailable | async)"
-  class="flex flex-col h-[55vh] justify-center items-center"
+  class="flex flex-col h-[60vh] justify-center items-center bg-white p-1"
 >
   <h1 class="mt-1 text-2xl text-bold text-center text-indigo-500 inline-flex">
     Get • Set • Budget
@@ -29,9 +20,9 @@
     </picture>
   </h1>
   <img class="h-[18rem]" src="assets/strategy-pana.svg" />
-  <h3 class="mt-1 text-sm text-center text-gray-500 text-semibold">
+  <h3 class="text-sm text-center text-gray-500 text-semibold">
     Create your first budget and start tracking all expenses
-    <a class="text-indigo-400" [routerLink]="['/add-budget']"
+    <a class="text-indigo-400" [routerLink]="['/new-budget']"
       >Create Your Budget</a
     >
   </h3>
@@ -42,7 +33,7 @@
 <div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
   <div class="flex flex-col">
     <span class="text-lg text-black-600 float-left flex"
-      >Welcome Back! {{ username$ | async }}
+      >{{greeting}} ! {{ username$ | async }}
     </span>
     <span class="text-sm text-black-600 float-left flex mt-0.5">
       Continue tracking your daily expenses
@@ -53,7 +44,7 @@
 <div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
   <span class="float-left text-md font-semibold text-gray-600">Spending</span>
 </div>
-<br>
+<span *ngIf="isBudgetAvailable | async" class="mb-1"></span>
 <div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
   <div class="flow-root">
     <nz-segmented
@@ -97,9 +88,9 @@
 
 <!-- Recommendations -->
 <div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
-  <span class="float-left text-md font-semibold text-gray-600">Just For You</span>
+  <span class="float-left text-md font-semibold text-gray-600">Tips For You</span>
 </div>
-<br>
+<span *ngIf="isBudgetAvailable | async" class="mb-1"></span>
 <div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
     <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
       <div *ngFor="let el of array" nz-carousel-content>
@@ -121,9 +112,9 @@
 
 
 <!-- Recent Txns -->
-<div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
+<div class="py-3 p-2 inline" >
   <span class="float-left text-md font-semibold text-gray-600">Recent transactions</span>
-  <span class="float-right"
+  <span class="float-right" *ngIf="isBudgetAvailable | async"
     ><a [routerLink]="['/transactions']" class="text-xs">See all</a>
   </span>
 </div>
