@@ -9,12 +9,23 @@ import { Component, Input } from '@angular/core';
 })
 export class CategoryListComponent {
   @Input() categoryData!: any;
+  @Input() labelListData!: any;
   currency = this.app.currency$;
 
-  constructor(private app: AppService) {}
+  constructor(private app: AppService) {
+    console.log(this.labelListData);
+  }
   getIcon(category: string): string {
     if (category in CAT_ICON) {
       const icon = CAT_ICON[category as keyof typeof CAT_ICON];
+      return `/assets/icons/${icon}.png`;
+    }
+    return `/assets/icons/list.png`;
+  }
+
+  getLabelIcon(label: string): string {
+    if (label in CAT_ICON) {
+      const icon = CAT_ICON[label as keyof typeof CAT_ICON];
       return `/assets/icons/${icon}.png`;
     }
     return `/assets/icons/list.png`;

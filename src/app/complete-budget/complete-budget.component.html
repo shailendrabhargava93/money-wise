@@ -7,10 +7,10 @@
     <li nz-list-item nzNoFlex *ngFor="let item of data">
       <ul nz-list-item-actions>
         <nz-list-item-action>
-          <a (click)="openOverview(item.id)">view</a>
+          <a  class="text-sm" (click)="openOverview(item.id)">view</a>
         </nz-list-item-action>
       </ul>
-      {{ item.data.name }}
+      <span class="text-sm">{{ item.data.name }}</span>
     </li>
   </ul>
 

@@ -14,4 +14,6 @@ export enum CAT_ICON {
   'Fitness' = 'gym',
   'Other' = 'list',
   'Utilities' = 'utilities',
+  'Shailendra' = 'user-male',
+  'Tanya' = 'user-female',
 }

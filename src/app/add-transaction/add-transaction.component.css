@@ -19,3 +19,11 @@ nz-date-picker {
   width: 42px !important;
   background-color: white !important;
 }
+
+::ng-deep.ant-radio-wrapper-in-form-item {
+  width: 50%  !important;
+}
+
+::ng-deep.ant-radio-group{
+  display: block;
+}

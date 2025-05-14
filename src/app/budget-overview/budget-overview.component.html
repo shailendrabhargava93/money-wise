@@ -31,7 +31,7 @@
     >
       <div class="title flex items-center mb-4">
         <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
-        <p class="title-text text-lg font-medium">Budget Amount</p>
+        <p class="title-text text-lg font-medium">Total</p>
       </div>
       <div class="data text-center text-2xl">
         <p>
@@ -47,7 +47,7 @@
     >
       <div class="title flex items-center mb-4">
         <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
-        <p class="title-text text-lg font-medium">Expenditure Amount</p>
+        <p class="title-text text-lg font-medium">Expenditure</p>
       </div>
       <div class="data text-center text-2xl">
         <p>
@@ -63,7 +63,7 @@
     >
       <div class="title flex items-center mb-4">
         <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
-        <p class="title-text text-lg font-medium">Remaining Amount</p>
+        <p class="title-text text-lg font-medium">Remaining</p>
       </div>
       <div class="data text-center text-2xl">
         <p>
@@ -103,7 +103,7 @@
           from you total budget amount.
         </div>
         <div *ngIf="budgetData.status === 'active'">
-          <span class="inline-flex">
+          <span class="inline-flex mt-1">
             Great Going! &nbsp;
             <picture>
               <source
@@ -120,7 +120,7 @@
               />
             </picture>
           </span>
-          You are under your budget limit.
+          You are within your budget
         </div>
       </ng-template>
     </div>
@@ -145,11 +145,11 @@
               />
             </picture>
           </span>
-          You have exceeded {{ (currency | async)?.symbol }}
+          You've overspent {{ (currency | async)?.symbol }}
           <span class="font-semibold">{{
             budgetData.totalBudget - budgetData.spentAmount | number
           }}</span>
-          from you total budget amount.
+          from your total budget
         </div>
         <div *ngIf="budgetData.status === 'active'">
           <span class="inline-flex">
@@ -169,7 +169,7 @@
               />
             </picture>
           </span>
-          At this rate you'll exhaust your budget early.
+          you'll exhaust your budget
         </div>
       </ng-template>
     </div>

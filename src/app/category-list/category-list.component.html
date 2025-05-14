@@ -1,3 +1,55 @@
+<!-- LABELS -->
+<div class="py-3 p-2 inline">
+  <span class="float-left text-md font-semibold text-gray-600"
+    >Labels</span
+  >
+</div>
+<br />
+<div class="container py-2 mx-auto flex">
+  <div class="w-full p-2 border bg-white rounded-md shadow-dashboard mb-4">
+    <div class="flex flex-wrap">
+      <div
+        *ngFor="let lb of labelListData; let i = index"
+        class="w-full flex flex-wrap items-center justify-between py-2"
+      >
+        <div class="w-auto p-0.5">
+          <div class="flex flex-wrap items-center">
+            <div class="w-auto p-0.5">
+              <div
+                class="flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md"
+              >
+                <img
+                  [src]="getLabelIcon(lb.label)"
+                  class="object-cover w-12 h-12"
+                />
+              </div>
+            </div>
+            <div class="w-auto p-0.5">
+              <h2 class="text-sm font-medium text-coolGray-900">
+                {{ lb.label }}
+              </h2>
+              <h3 class="text-xs text-coolGray-400">
+                {{ lb.count }} transactions
+              </h3>
+            </div>
+          </div>
+        </div>
+        <div class="w-auto p-0.5">
+          <p class="text-sm text-coolGray-500 font-medium">
+            {{ (currency | async)?.symbol }} {{ lb.sum }}
+          </p>
+        </div>
+        <div
+          *ngIf="i < categoryData.length - 1"
+          class="w-full border-b border-gray-200 my-2"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- CATEGORIES -->
 <div class="py-3 p-2 inline">
   <span class="float-left text-md font-semibold text-gray-600"
     >All Category Analysis</span

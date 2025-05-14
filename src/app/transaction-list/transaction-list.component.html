@@ -19,11 +19,18 @@
               {{ txn.data.title }}
             </div>
             <div class="text-gray-500 text-xs mt-1">
-              {{ txn.data.date | date }}
+              <span>{{ txn.data.date | date }}</span>
             </div>
           </div>
-          <div class="text-md text-indigo-600 font-semibold">
-            {{ (currency | async)?.symbol }} {{ txn.data.amount | number }}
+          <div class="float-right">
+            <div class="text-md text-indigo-600 font-semibold float-right">
+              {{ (currency | async)?.symbol }} {{ txn.data.amount | number }}
+            </div>
+            <div class="text-gray-500 text-xs mt-1">
+              <span *ngIf="txn.data.label">
+                <nz-tag  [nzColor]="txn.data.label =='Tanya' ? 'pink' :'purple'">{{ txn.data.label }}</nz-tag>
+              </span>
+            </div>
           </div>
         </div>
       </li>

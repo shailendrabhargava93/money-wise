@@ -14,7 +14,10 @@ export class WeeklyData {
 export class StatsComponent implements OnInit {
   @Input() budgetId!: string;
   categoryListData: { category: string; sum: number; count: number }[] = [];
-  selectedWeek = 'Week 1';
+  labelListData: { label: string; sum: number; count: number }[] = [];
+  selectedWeek = '';
+  index = 0;
+  allWeeks: string[] = [];
   weeklyData: any;
 
   // Doughnut
@@ -54,10 +57,20 @@ export class StatsComponent implements OnInit {
         this.formatDataForCharts(data);
       }
     });
+    // Get current year
+    const currentYear = new Date().getFullYear();
+    const month = new Date().getMonth() + 1;
+    const weekCount = this.getTotalWeeksInMonth(currentYear, month);
+    if (weekCount > 0) {
+      for (let i = 1; i <= weekCount; i++) {
+        this.allWeeks.push(`Week ${i}`);
+      }
+    }
   }
 
   formatDataForCharts(data: any) {
     const categorySum = data.categoryTxnCount;
+    const labelsSumData = data.labelTxnCount;
     const dateSum = data.datesData;
 
     const categories: string[] = [];
@@ -74,6 +87,17 @@ export class StatsComponent implements OnInit {
         amounts.push(categorySum[category].sumAmount);
       }
     }
+
+    for (const label in labelsSumData) {
+      if (labelsSumData.hasOwnProperty(label)) {
+        this.labelListData.push({
+          label: label,
+          sum: labelsSumData[label].sumAmount,
+          count: labelsSumData[label].count,
+        });
+      }
+    }
+
     this.doughnutChartLabels = categories;
     this.doughnutChartDatasets = [
       {
@@ -87,13 +111,16 @@ export class StatsComponent implements OnInit {
     ];
 
     const weeklyData = this.groupDataByWeek(dateSum);
-    console.log(weeklyData);
     this.weeklyData = weeklyData;
-
+    this.selectedWeek = this.getWeekNumber(new Date());
     this.onClick(this.selectedWeek);
   }
 
   onClick(week: string) {
+    const index: number = this.selectedWeek.split(
+      'Week '
+    )[1] as unknown as number;
+    this.index = index - 1;
     this.selectedWeek = week;
     const selectedWeekData = this.weeklyData[this.selectedWeek];
     this.onWeekSelect(selectedWeekData);
@@ -136,7 +163,6 @@ export class StatsComponent implements OnInit {
       }
       weeklyData[week][date] = data[date];
     }
-
     return weeklyData;
   }
 
@@ -145,6 +171,20 @@ export class StatsComponent implements OnInit {
     const weekOfMonth =
       Math.floor((d.getDate() + startOfMonth.getDay() - 1) / 7) + 1;
     return `Week ${weekOfMonth}`;
+  }
+
+  getTotalWeeksInMonth(year: number, month: number): number {
+    const firstDay = new Date(year, month - 1, 1);
+    const lastDay = new Date(year, month, 0);
+    const firstDayOfWeek = firstDay.getDay();
+    const lastDate = lastDay.getDate();
+
+    let totalDays = lastDate + firstDayOfWeek;
+    if (totalDays % 7 === 0) {
+      return totalDays / 7;
+    } else {
+      return Math.ceil(totalDays / 7);
+    }
   }
 
   colorScheme = [

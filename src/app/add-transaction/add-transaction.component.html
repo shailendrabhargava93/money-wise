@@ -105,6 +105,25 @@
   </nz-form-item>
 
   <nz-form-item class="txn-item">
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Label</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="40" nzErrorTip="This is required">
+      <nz-input-group [nzAddOnBefore]="tagtemp">
+        <nz-radio-group  formControlName="label" nzButtonStyle="solid">
+          <label nz-radio-button *ngFor="let la of labels" [nzValue]="la">{{la}}</label>
+        </nz-radio-group>
+      </nz-input-group>
+      <ng-template #tagtemp>
+        <span
+        nz-icon
+        nzType="tag"
+        nzTheme="outline"
+      ></span>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item class="txn-item">
     <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>Date</nz-form-label>
     <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="This is required">
       <nz-input-group [nzAddOnBefore]="datetemp">

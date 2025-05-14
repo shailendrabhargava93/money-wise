@@ -25,11 +25,8 @@
   <div class="p-4 border bg-white rounded-md shadow-dashboard">
     <div class="flex flex-wrap items-center justify-between mb-1 -m-2">
       <div class="w-auto p-2">
-          <nz-tabset [nzSize]="'small'">
-            <nz-tab nzTitle="Week 1" (nzClick)="onClick('Week 1')"></nz-tab>
-            <nz-tab nzTitle="Week 2" (nzClick)="onClick('Week 2')"></nz-tab>
-            <nz-tab nzTitle="Week 3" (nzClick)="onClick('Week 3')"></nz-tab>
-            <nz-tab nzTitle="Week 4" (nzClick)="onClick('Week 4')"></nz-tab>
+          <nz-tabset [nzSize]="'small'" [nzSelectedIndex]="index">
+            <nz-tab *ngFor="let week of allWeeks" [nzTitle]="week" (nzClick)="onClick(week)"></nz-tab>
           </nz-tabset>
       </div>
     </div>
@@ -45,4 +42,4 @@
   </div>
 </div>
 
-<app-category-list [categoryData]="categoryListData"></app-category-list>
+<app-category-list [categoryData]="categoryListData" [labelListData]="labelListData"></app-category-list>

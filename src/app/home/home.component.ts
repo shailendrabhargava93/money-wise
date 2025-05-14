@@ -65,20 +65,20 @@ export class HomeComponent {
             localStorage.setItem('isBudgetAvailable', String(budgetsExist));
             this.app.isBudgetAvailableSub.next(budgetsExist);
           } else {
-            const currency = localStorage.getItem('currency');
-            if (!currency) {
-              const ref = this.message.success(
-                'Select the main currency for all your transactions.',
-                {
-                  nzDuration: 3000,
-                }
-              );
-              ref.onClose.subscribe((d) => {
-                this.enableCurrencyModal = true;
-              });
-            } else {
-              this.enableCurrencyModal = false;
-            }
+            // const currency = localStorage.getItem('currency');
+            // if (!currency) {
+            //   const ref = this.message.success(
+            //     'Select the main currency for all your transactions.',
+            //     {
+            //       nzDuration: 3000,
+            //     }
+            //   );
+            //   ref.onClose.subscribe((d) => {
+            //     this.enableCurrencyModal = true;
+            //   });
+            // } else {
+            //   this.enableCurrencyModal = false;
+            // }
           }
         }),
         catchError((error) => {

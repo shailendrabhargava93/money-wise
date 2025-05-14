@@ -53,7 +53,15 @@ export class AppService {
 
     this.currentUserSubject.next(JSON.parse(token as string));
     this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
-    this.currencySub.next(JSON.parse(currency as any));
+    console.log('currrr' + JSON.parse(currency as any));
+    this.currencySub.next(
+      JSON.parse(currency as any) != null
+        ? JSON.parse(currency as any)
+        : {
+            name: 'Indian Rupee',
+            symbol: '₹',
+          }
+    );
 
     this.isSpinning$ = this.isSpinningSub.asObservable();
     this.currentUser = this.currentUserSubject.asObservable();
@@ -91,6 +99,10 @@ export class AppService {
 
   getBudgets(email: string, status: string) {
     return this.http.get(this.BASE_URL + `budget/all/${email}/${status}`);
+  }
+
+  getLabels(email: string) {
+    return this.http.get(this.BASE_URL + `label/all/${email}`);
   }
 
   createBudget(data: any) {

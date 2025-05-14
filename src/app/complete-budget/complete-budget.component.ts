@@ -37,6 +37,6 @@ export class CompleteBudgetComponent {
   }
 
   openOverview(budgetId: any) {
-    this.router.navigate(['view-budget', budgetId]);
+    this.router.navigate(['summary', budgetId]);
   }
 }

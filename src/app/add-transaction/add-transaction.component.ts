@@ -18,6 +18,7 @@ export class AddTransactionComponent implements OnInit {
   userEmail$ = this.app.userEmail;
   currency = this.app.currency$;
   budgets!: any[];
+  labels!: any[];
   txnId: string | null = null;
   isUpdate = false;
   dateSuggestions!: string[];
@@ -36,6 +37,7 @@ export class AddTransactionComponent implements OnInit {
       category: [null, [Validators.required]],
       date: [null, [Validators.required]],
       user: [null],
+      label: [null, [Validators.required]],
       budgetId: [null, [Validators.required]],
     });
   }
@@ -65,6 +67,24 @@ export class AddTransactionComponent implements OnInit {
           if (this.budgets?.length === 1) {
             this.form.controls['budgetId'].setValue(this.budgets[0].id);
           }
+        }
+      });
+
+    this.app.userEmail
+      .pipe(
+        switchMap((user) => this.app.getLabels(user as string)),
+        catchError((error) => {
+          console.error('Error occurred getLabels:', error);
+          this.app.hideSpinner();
+          return of([]);
+        })
+      )
+      .subscribe((data) => {
+        const labels = data as any[];
+        if (labels.length > 0) {
+          this.labels = data as string[];
+        }else{
+          this.labels = ["Not available"]
         }
       });
 
