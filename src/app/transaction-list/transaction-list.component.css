@@ -4,8 +4,8 @@
   margin-bottom: 30px;
 }
 
-::ng-deep.ant-tag{
-  margin: 2px 0 0px 0px;
-  font-size: 10px;
-  border: none;
+.ant-tag{
+  margin: 2px 0 0px 0px !important;
+  font-size: 10px !important;
+  border: none  !important;
 }

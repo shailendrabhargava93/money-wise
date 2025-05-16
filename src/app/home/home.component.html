@@ -30,14 +30,20 @@
 
 <!-- if budget exists -->
 
-<div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
-  <div class="flex flex-col">
-    <span class="text-lg text-black-600 float-left flex"
-      >{{greeting}} ! {{ username$ | async }}
-    </span>
-    <span class="text-sm text-black-600 float-left flex mt-0.5">
-      Continue tracking your daily expenses
-    </span>
+<div class="py-3 p-2 mb-1 mt-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+  <div class="flex">
+    <img
+      src="assets/ninja.png"
+      class="object-cover w-10 h-10"
+    />
+    <div class="ml-2 flex flex-col">
+      <span class="text-md text-black-600">
+        Save Like a Ninja!
+      </span>
+      <span class="text-xs text-black-600">
+        Keep tabs on what you're spending each day
+      </span>
+    </div>
   </div>
 </div>
 
@@ -54,8 +60,9 @@
     ></nz-segmented>
     <div class="w-32 flex float-right bg-gray-100 rounded-md py-1 px-1 mt-1">
       <div class="flow-root w-full">
-        <div class="float-left mt-1 pl-1 fill-current">
-          <svg
+        <div class="float-left pl-1 fill-current">
+          <img width="25" height="25" src="https://img.icons8.com/parakeet-line/48/cost.png" alt="cost"/>
+          <!-- <svg
             class="w-5 h-5 text-gray-800 dark:text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
@@ -70,15 +77,16 @@
               stroke-width="1.5"
               d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
             />
-          </svg>
-        </div>
 
+          </svg>-->
+        </div>
         <div class="float-right text-xl pr-2">
+          {{ (currency | async)?.symbol }}
           <span class="" *ngIf="selectedIndex === 0"
-            >{{ (currency | async)?.symbol }} {{ todaySpending | number }}
+            > {{ todaySpending | number }}
           </span>
           <span class="" *ngIf="selectedIndex === 1"
-            >{{ (currency | async)?.symbol }} {{ weekSpening | number }}
+            >{{ weekSpening | number }}
           </span>
         </div>
       </div>
@@ -88,7 +96,7 @@
 
 <!-- Recommendations -->
 <div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
-  <span class="float-left text-md font-semibold text-gray-600">Tips For You</span>
+  <span class="float-left text-md font-semibold text-gray-600">Personalized Tips</span>
 </div>
 <span *ngIf="isBudgetAvailable | async" class="mb-1"></span>
 <div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
@@ -114,8 +122,8 @@
 <!-- Recent Txns -->
 <div class="py-3 p-2 inline" >
   <span class="float-left text-md font-semibold text-gray-600">Recent transactions</span>
-  <span class="float-right" *ngIf="isBudgetAvailable | async"
-    ><a [routerLink]="['/transactions']" class="text-xs">See all</a>
+  <span class="float-right mr-1" *ngIf="isBudgetAvailable | async"
+    ><a [routerLink]="['/transactions']" class="text-xs">see all</a>
   </span>
 </div>
 <br>

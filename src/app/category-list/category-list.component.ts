@@ -1,4 +1,4 @@
-import { CAT_ICON } from './../category-icons';
+import { CAT_ICON, LABEL_ICON } from './../category-icons';
 import { AppService } from './../app.service';
 import { Component, Input } from '@angular/core';
 
@@ -24,8 +24,8 @@ export class CategoryListComponent {
   }
 
   getLabelIcon(label: string): string {
-    if (label in CAT_ICON) {
-      const icon = CAT_ICON[label as keyof typeof CAT_ICON];
+    if (label in LABEL_ICON) {
+      const icon = LABEL_ICON[label as keyof typeof LABEL_ICON];
       return `/assets/icons/${icon}.png`;
     }
     return `/assets/icons/list.png`;

@@ -76,16 +76,29 @@ export class StatsComponent implements OnInit {
     const categories: string[] = [];
     const amounts: number[] = [];
 
+    // Create an array of category objects
+    const categoryArray = [];
     for (const category in categorySum) {
       if (categorySum.hasOwnProperty(category)) {
-        this.categoryListData.push({
+        categoryArray.push({
           category: category,
           sum: categorySum[category].sumAmount,
           count: categorySum[category].count,
         });
-        categories.push(category);
-        amounts.push(categorySum[category].sumAmount);
       }
+    }
+
+    // Sort categories by sumAmount in descending order
+    categoryArray.sort((a, b) => b.sum - a.sum);
+
+    // Get top 5 categories
+    const topCategories = categoryArray.slice(0, 5);
+
+    // Loop through top categories
+    for (const category of topCategories) {
+      this.categoryListData.push(category);
+      categories.push(category.category);
+      amounts.push(category.sum);
     }
 
     for (const label in labelsSumData) {

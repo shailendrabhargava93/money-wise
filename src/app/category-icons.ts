@@ -13,7 +13,10 @@ export enum CAT_ICON {
   'Transportation' = 'taxi',
   'Fitness' = 'gym',
   'Other' = 'list',
-  'Utilities' = 'utilities',
+  'Utilities' = 'utilities'
+}
+
+export enum LABEL_ICON {
   'Shailendra' = 'user-male',
   'Tanya' = 'user-female',
 }
