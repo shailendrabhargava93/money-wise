@@ -28,7 +28,7 @@ const routes: Routes = [
     canActivate: [authGuard, isBudgetAvailable],
   },
   {
-    path: 'edit/:id',
+    path: 'edit-transaction/:id',
     component: AddTransactionComponent,
     canActivate: [authGuard],
   },
@@ -48,7 +48,12 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'summary/:id',
+    path: 'edit-budget/:id',
+    component: AddBudgetComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'overview/:id',
     component: BudgetOverviewComponent,
     canActivate: [authGuard],
   },

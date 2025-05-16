@@ -1,5 +1,5 @@
 import { STATUS } from './../status.enum';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,12 +18,14 @@ export class AddBudgetComponent {
   budgetNameSuggestions!: string[];
   budgetAmountSuggestions!: number[];
   dateFormat = 'dd-MMM-yyyy';
+  budgetId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private app: AppService,
     private message: NzMessageService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
       startDate: [null, [Validators.required]],
@@ -57,6 +59,10 @@ export class AddBudgetComponent {
     ];
 
     this.budgetAmountSuggestions = [10000, 20000, 25000, 30000];
+    this.budgetId = this.route.snapshot.paramMap.get('id');
+    if (this.budgetId) {
+      this.getBudget(this.budgetId);
+    }
   }
   createBudget(): void {
     if (this.form.valid) {
@@ -91,5 +97,36 @@ export class AddBudgetComponent {
 
   onAmountClick(amount: number) {
     this.form.get('totalBudget')?.setValue(amount);
+  }
+
+  getBudget(txnId: string) {
+    this.app.showSpinner();
+    this.app.getBudgetById(txnId).subscribe((data) => {
+      if (data) {
+        this.app.hideSpinner();
+        this.form.patchValue(data);
+        this.isUpdate = true;
+      }
+    });
+  }
+
+  updateBudget() {
+    if (this.form.valid) {
+      this.app.showSpinner();
+      this.app.update(this.budgetId, this.form.value).subscribe(
+        (res) => {
+          if (res) {
+            this.app.hideSpinner();
+            this.message.success(`Budget updated !`);
+            this.router.navigate(['budgets']);
+          }
+        },
+        (err) => {
+          this.app.hideSpinner();
+          console.error(err);
+          this.message.error(`An error occurred: ${err.message}`);
+        }
+      );
+    }
   }
 }

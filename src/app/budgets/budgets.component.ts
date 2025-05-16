@@ -74,6 +74,10 @@ export class BudgetsComponent implements OnInit {
   }
 
   openOverview(budgetId: any) {
-    this.router.navigate(['summary', budgetId]);
+    this.router.navigate(['overview', budgetId]);
+  }
+
+  editBudget(budgetId: any) {
+    this.router.navigate(['edit-budget', budgetId]);
   }
 }

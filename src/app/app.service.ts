@@ -109,7 +109,7 @@ export class AppService {
     return this.http.post(this.BASE_URL + `budget/create`, data);
   }
 
-  update(id: string, data: any) {
+  update(id: any, data: any) {
     return this.http.put(this.BASE_URL + `budget/update/${id}`, data);
   }
 

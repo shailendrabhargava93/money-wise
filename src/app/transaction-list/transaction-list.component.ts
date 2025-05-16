@@ -28,7 +28,7 @@ export class TransactionListComponent {
   }
 
   onTxn(txnId: string) {
-    this.router.navigate(['edit', txnId]);
+    this.router.navigate(['edit-transaction', txnId]);
   }
 
   onLoadMore() {

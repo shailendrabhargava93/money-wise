@@ -152,5 +152,14 @@
     >
       Add Budget
     </button>
+    <button
+      *ngIf="isUpdate"
+      nz-button
+      class="primary rounded-full w-full"
+      (click)="updateBudget()"
+    >
+      Update Budget
+    </button>
+
   </nz-form-item>
 </form>

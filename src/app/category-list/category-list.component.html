@@ -6,7 +6,7 @@
 </div>
 <br />
 <div class="container py-2 mx-auto flex">
-  <div class="w-full p-2 border bg-white rounded-md shadow-dashboard mb-4">
+  <div class="w-full p-2 border bg-white rounded-md shadow-dashboard mb-2">
     <div class="flex flex-wrap">
       <div
         *ngFor="let lb of labelListData; let i = index"
@@ -40,7 +40,7 @@
           </p>
         </div>
         <div
-          *ngIf="i < categoryData.length - 1"
+          *ngIf="i < labelListData.length - 1"
           class="w-full border-b border-gray-200 my-2"
         ></div>
       </div>
