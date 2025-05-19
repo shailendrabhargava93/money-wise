@@ -85,12 +85,10 @@ export class InvitationModalComponent implements OnChanges {
         modifiedUsers = this.users
           .filter((e) => e.email != form.email)
           .map((b) => b.email);
-        console.log('removed');
       } else {
         this.isConfirmLoading = true;
         modifiedUsers = this.users.map((e) => e.email);
         modifiedUsers.push(form.email);
-        console.log('added');
       }
       const data = { users: modifiedUsers };
       this.app.update(budgetId, data).subscribe(
@@ -110,7 +108,7 @@ export class InvitationModalComponent implements OnChanges {
                   this.budget.name
                 );
               } else {
-                console.log('budget not selected or email is invalid');
+                console.info('budget not selected or email is invalid');
               }
             }
             this.form.reset();
@@ -159,10 +157,10 @@ export class InvitationModalComponent implements OnChanges {
       })
       .then(
         (response: any) => {
-          console.log('EMAIL SUCCESS!', response.status, response.text);
+          console.info('EMAIL SUCCESS!', response.status, response.text);
         },
         (err: any) => {
-          console.log('EMAIL FAILED...', err);
+          console.info('EMAIL FAILED...', err);
         }
       );
   }

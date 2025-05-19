@@ -1,5 +1,29 @@
 <!-- header -->
-<div class="mx-auto flex flow-root p-1 w-full">
+<div class="mx-auto flex items-center justify-between gap-1 p-1 w-full">
+  <button
+    type="button"
+    [routerLink]="['/new-budget']"
+    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+  >
+    <span class="capitalize lg:inline leading-5">New</span> &nbsp;
+    <svg
+      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.2"
+        d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+      />
+    </svg>
+  </button>
   <button
     type="button"
     [routerLink]="['/archived']"
@@ -26,33 +50,9 @@
       </g>
     </svg>
   </button>
-  <button
-    type="button"
-    [routerLink]="['/new-budget']"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
-  >
-    <span class="capitalize lg:inline leading-5">New</span> &nbsp;
-    <svg
-      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.2"
-        d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-      />
-    </svg>
-  </button>
 </div>
 
-<div class="p-1 mt-2">
+<div class="mt-2">
   <div
     *ngFor="let budget of budgets"
     class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4"

@@ -54,31 +54,28 @@ export class HomeComponent {
         switchMap((user) => this.app.getTransactions(user as string, 1, 4)),
         tap((data: any) => {
           this.app.hideSpinner();
-
           if (data && data.txns && data.txns.length > 0) {
             const budgetsExist = data.txns && data.txns.length > 0;
             this.recentTxns = data.txns;
-            this.todaySpending = this.getTodaysTotalSpending(this.recentTxns);
-            this.weekSpening = this.getCurrentWeeksTotalSpending(
-              this.recentTxns
-            );
             localStorage.setItem('isBudgetAvailable', String(budgetsExist));
             this.app.isBudgetAvailableSub.next(budgetsExist);
-          } else {
-            // const currency = localStorage.getItem('currency');
-            // if (!currency) {
-            //   const ref = this.message.success(
-            //     'Select the main currency for all your transactions.',
-            //     {
-            //       nzDuration: 3000,
-            //     }
-            //   );
-            //   ref.onClose.subscribe((d) => {
-            //     this.enableCurrencyModal = true;
-            //   });
-            // } else {
-            //   this.enableCurrencyModal = false;
-            // }
+          }
+        }),
+        catchError((error) => {
+          this.app.hideSpinner();
+          console.error(error);
+          return of(EMPTY);
+        })
+      )
+      .subscribe();
+
+      this.app.userEmail
+      .pipe(
+        switchMap((user) => this.app.getSpentByUser(user as string)),
+        tap((data: any) => {
+          if (data) {
+            this.todaySpending = data.totalAmountToday;
+            this.weekSpening = data.totalAmountThisWeek;
           }
         }),
         catchError((error) => {
@@ -106,42 +103,5 @@ export class HomeComponent {
         break;
       }
     }
-  }
-
-  getTodaysTotalSpending(transactions: any[]): number {
-    const today = new Date().toISOString().split('T')[0];
-
-    const filteredTransactions = transactions.filter((transaction) => {
-      const transactionDate = new Date(transaction.data.date)
-        .toISOString()
-        .split('T')[0];
-      return transactionDate === today;
-    });
-
-    const totalAmount = filteredTransactions.reduce(
-      (total, transaction) => total + transaction.data.amount,
-      0
-    );
-
-    return totalAmount;
-  }
-
-  getCurrentWeeksTotalSpending(transactions: any[]): number {
-    const today = new Date();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - today.getDay());
-    startOfWeek.setHours(0, 0, 0, 0);
-
-    const total = transactions
-      .filter((transaction) => {
-        const transactionDate = new Date(transaction.data.date);
-        return transactionDate >= startOfWeek && transactionDate <= today;
-      })
-      .reduce((total, transaction) => total + transaction.data.amount, 0);
-
-    return total;
-  }
-  onclose() {
-    this.enableCurrencyModal = false;
   }
 }

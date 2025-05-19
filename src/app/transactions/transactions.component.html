@@ -1,5 +1,30 @@
 <!-- header -->
-<div class="mx-auto flex flow-root p-1 w-full">
+<div class="mx-auto flex items-center justify-between gap-1 p-1 w-full">
+  <button
+    type="button"
+    (click)="openSort()"
+    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+  >
+    <span class="capitalize lg:inline">Sort</span>
+    &nbsp;
+    <svg
+      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        d="M8 20V10m0 10-3-3m3 3 3-3m5-13v10m0-10 3 3m-3-3-3 3"
+      />
+    </svg>
+  </button>
   <button
     type="button"
     (click)="openFilters()"
@@ -26,32 +51,6 @@
       />
     </svg>
   </button>
-
-  <button
-    type="button"
-    (click)="openSort()"
-    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
-  >
-    <span class="capitalize lg:inline">Sort</span>
-    &nbsp;
-    <svg
-      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.5"
-        d="M8 20V10m0 10-3-3m3 3 3-3m5-13v10m0-10 3 3m-3-3-3 3"
-      />
-    </svg>
-  </button>
 </div>
 
 <!-- component -->
@@ -73,7 +72,7 @@
   (nzOnClose)="closeFilters()"
 >
   <ng-container *nzDrawerContent>
-    <p class="text-bold">Select Category</p>
+    <span class="text-md font-semibold text-gray-600">Select Category</span>
     <div class="flex flex-wrap items-center mt-1">
       <button
         type="button"
@@ -96,7 +95,7 @@
         </span>
       </button>
     </div>
-    <p class="text-bold">Amount</p>
+    <span class="text-md font-semibold text-gray-600">Amount</span>
     <nz-slider
       nzRange
       [(ngModel)]="amountRange"

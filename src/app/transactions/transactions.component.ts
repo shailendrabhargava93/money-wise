@@ -1,4 +1,3 @@
-import { Router } from '@angular/router';
 import { catchError, switchMap } from 'rxjs/operators';
 import { CAT_ICON } from './../category-icons';
 import { AppService } from './../app.service';
@@ -53,7 +52,6 @@ export class TransactionsComponent implements OnInit {
       .subscribe((data: any) => {
         if (data && data.txns) {
           this.app.hideSpinner();
-          this.loadingMore = true;
           if (this.pageNumber > 1) {
             this.allTransactions = this.allTransactions.concat(data.txns);
           } else {
@@ -63,6 +61,7 @@ export class TransactionsComponent implements OnInit {
             this.sort();
             this.highestAmount = data.max;
           }
+          this.loadingMore = data.count > this.allTransactions.length;
         } else {
           this.allTransactions = data;
         }
@@ -112,7 +111,7 @@ export class TransactionsComponent implements OnInit {
         this.app.hideSpinner();
         this.allTransactions = data as any[];
         this.showDot = true;
-        this.message = 'No matching data found'
+        this.message = 'No matching data found';
       }
     });
   }

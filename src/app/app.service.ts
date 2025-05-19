@@ -53,7 +53,6 @@ export class AppService {
 
     this.currentUserSubject.next(JSON.parse(token as string));
     this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
-    console.log('currrr' + JSON.parse(currency as any));
     this.currencySub.next(
       JSON.parse(currency as any) != null
         ? JSON.parse(currency as any)
@@ -91,6 +90,10 @@ export class AppService {
 
   getTxnById(id: string) {
     return this.http.get(this.BASE_URL + `txn/${id}`);
+  }
+
+  getSpentByUser(user: string) {
+    return this.http.get(this.BASE_URL + `txn/spent/${user}`);
   }
 
   getBudgetById(id: string) {

@@ -34,7 +34,6 @@ export class AppComponent implements AfterContentChecked {
     if (this.currentRoute.includes('-')) {
       this.currentRoute = this.currentRoute.replace("-", " ");
     }
-    console.log(this.currentRoute);
     this.cdref.detectChanges();
   }
 

@@ -13,7 +13,6 @@ export class CategoryListComponent {
   currency = this.app.currency$;
 
   constructor(private app: AppService) {
-    console.log(this.labelListData);
   }
   getIcon(category: string): string {
     if (category in CAT_ICON) {

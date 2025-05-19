@@ -1,92 +1,78 @@
 <!-- component -->
-
-<div
-  *ngIf="!(isBudgetAvailable | async)"
-  class="flex flex-col h-[60vh] justify-center items-center bg-white p-1"
->
-  <h1 class="mt-1 text-2xl text-bold text-center text-indigo-500 inline-flex">
-    Get • Set • Budget
-    <picture class="mt-1 ml-2">
-      <source
-        srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.webp"
-        type="image/webp"
-      />
-      <img
-        src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif"
-        alt="🚀"
-        width="25"
-        height="25"
-      />
-    </picture>
-  </h1>
-  <img class="h-[18rem]" src="assets/strategy-pana.svg" />
-  <h3 class="text-sm text-center text-gray-500 text-semibold">
-    Create your first budget and start tracking all expenses
-    <a class="text-indigo-400" [routerLink]="['/new-budget']"
-      >Create Your Budget</a
-    >
-  </h3>
+<div class="container mx-auto px-2 md:px-4 lg:px-6">
+  <div
+    class="py-3 mb-1 bg-white rounded-md flex flex-col justify-center items-center"
+    *ngIf="!(isBudgetAvailable | async)"
+  >
+    <h1 class="text-2xl text-bold text-center text-indigo-500 inline-flex">
+      Get • Set • Budget
+      <picture class="ml-2">
+        <source
+          srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.webp"
+          type="image/webp"
+        />
+        <img
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif"
+          alt="🚀"
+          width="25"
+          height="25"
+        />
+      </picture>
+    </h1>
+    <img class="h-[18rem] mx-auto" src="assets/strategy-pana.svg" />
+    <h3 class="text-sm text-center text-gray-500">
+        Make your first budget and track your spending
+      <a class="text-indigo-400" [routerLink]="['/new-budget']"
+        >Create Budget</a
+      >
+    </h3>
+  </div>
 </div>
 
-<!-- if budget exists -->
-
-<div class="py-3 p-2 mb-1 mt-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
-  <div class="flex">
-    <img
-      src="assets/ninja.png"
-      class="object-cover w-10 h-10"
-    />
-    <div class="ml-2 flex flex-col">
-      <span class="text-md text-black-600">
-        Save Like a Ninja!
-      </span>
-      <span class="text-xs text-black-600">
-        Keep tabs on what you're spending each day
-      </span>
+<!-- welcome text -->
+<div class="container mx-auto px-2 md:px-4 lg:px-6">
+  <div class="py-3 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+    <div class="flex p-2">
+      <img src="assets/ninja.png" class="object-cover w-10 h-10" />
+      <div class="ml-2 flex flex-col">
+        <span class="text-md text-gray-600"> Save Like a Ninja! </span>
+        <span class="text-xs text-gray-600">
+          Keep tabs on what you're spending each day
+        </span>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
-  <span class="float-left text-md font-semibold text-gray-600">Spending</span>
-</div>
-<span *ngIf="isBudgetAvailable | async" class="mb-1"></span>
-<div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
-  <div class="flow-root">
-    <nz-segmented
-      class="w-40 float-left py-1 px-1 mt-1 rounded-md"
-      [nzOptions]="options"
-      [(ngModel)]="selectedIndex"
-    ></nz-segmented>
-    <div class="w-32 flex float-right bg-gray-100 rounded-md py-1 px-1 mt-1">
-      <div class="flow-root w-full">
-        <div class="float-left pl-1 fill-current">
-          <img width="25" height="25" src="https://img.icons8.com/parakeet-line/48/cost.png" alt="cost"/>
-          <!-- <svg
-            class="w-5 h-5 text-gray-800 dark:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-width="1.5"
-              d="M8 7V6a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-1M3 18v-7a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-            />
-
-          </svg>-->
-        </div>
-        <div class="float-right text-xl pr-2">
-          {{ (currency | async)?.symbol }}
-          <span class="" *ngIf="selectedIndex === 0"
-            > {{ todaySpending | number }}
-          </span>
-          <span class="" *ngIf="selectedIndex === 1"
-            >{{ weekSpening | number }}
+<!-- spending -->
+<div class="container mx-auto px-2 md:px-4 lg:px-6">
+  <div class="py-3 inline" *ngIf="isBudgetAvailable | async">
+    <span class="text-md font-semibold text-gray-600">Spending</span>
+  </div>
+  <div class="py-3 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+    <div class="flow-root px-1">
+      <nz-segmented
+        class="w-40 float-left py-1 px-1 mt-1 rounded-md"
+        [nzOptions]="options"
+        [(ngModel)]="selectedIndex"
+      ></nz-segmented>
+      <div class="w-32 flex float-right bg-gray-100 rounded-md py-1 px-1 mt-1">
+        <div class="flex items-center w-full">
+          <img
+            width="25"
+            height="25"
+            src="https://img.icons8.com/parakeet-line/48/cost.png"
+            alt="cost"
+            class="mr-2"
+          />
+          <span class="text-xl">
+            {{ (currency | async)?.symbol }}
+            <ng-container *ngIf="selectedIndex === 0">
+              {{ todaySpending | number }}
+            </ng-container>
+            <ng-container *ngIf="selectedIndex === 1">
+              {{ weekSpening | number }}
+            </ng-container>
           </span>
         </div>
       </div>
@@ -95,14 +81,16 @@
 </div>
 
 <!-- Recommendations -->
-<div class="py-3 p-2 inline" *ngIf="isBudgetAvailable | async">
-  <span class="float-left text-md font-semibold text-gray-600">Personalized Tips</span>
-</div>
-<span *ngIf="isBudgetAvailable | async" class="mb-1"></span>
-<div class="py-3 p-2 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+<div class="container mx-auto px-2 md:px-4 lg:px-6">
+  <div class="py-3 inline" *ngIf="isBudgetAvailable | async">
+    <span class="text-md font-semibold text-gray-600">Personalized Tips</span>
+  </div>
+  <div class="py-3 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
     <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
       <div *ngFor="let el of array" nz-carousel-content>
-        <div class="flex justify-start items-center gap-4 max-w-lg rounded-lg overflow-hidden">
+        <div
+          class="flex justify-start items-center gap-4 max-w-lg rounded-lg overflow-hidden mx-auto"
+        >
           <div class="w-4/5 p-3">
             <p class="text-sm text-gray-600">{{ el.subheading }}</p>
           </div>
@@ -111,46 +99,49 @@
               [src]="el.icon"
               alt="Image"
               class="object-cover w-full h-full object-top"
-            >
+            />
           </div>
         </div>
       </div>
     </nz-carousel>
-</div>
-
-
-<!-- Recent Txns -->
-<div class="py-3 p-2 inline" >
-  <span class="float-left text-md font-semibold text-gray-600">Recent transactions</span>
-  <span class="float-right mr-1" *ngIf="isBudgetAvailable | async">
-    <a
-      [routerLink]="['/transactions']"
-      class="text-xs text-black bg-white border border-gray-200 rounded-full px-1 hover:bg-gray"
-    >
-      see all
-    </a>
-  </span>
-</div>
-<br>
-<div class="py-3 p-2 mb-1 bg-white rounded-md">
-  <div class="mx-auto flex flex-col">
-    <div
-      class="mb-4 text-md flex items-center justify-center text-center px-6 py-10 rounded-lg border-[1px] border-Gray-200"
-      *ngIf="!(isBudgetAvailable | async)"
-    >
-      <p class="text-gray-500">Your latest transactions will appear here</p>
-    </div>
-    <div class="mb-2" *ngIf="isBudgetAvailable | async">
-      <app-transaction-list
-        [allTransactions]="recentTxns"
-        [loadMore]="false"
-        [enableEmpty]="false"
-      ></app-transaction-list>
-    </div>
   </div>
 </div>
 
-<app-currency-modal
-  [visible]="enableCurrencyModal"
-  (closeModal)="onclose()"
-></app-currency-modal>
+<!-- Recent Txns -->
+<div class="container mx-auto px-2 md:px-4 lg:px-6">
+  <div class="py-1 inline">
+    <span class="text-md font-semibold text-gray-600">Recent transactions</span>
+    <span class="float-right" *ngIf="isBudgetAvailable | async">
+      <a
+        [routerLink]="['/transactions']"
+        class="text-xs text-gray-600 border border-gray-200 rounded-full px-1 flex items-center justify-center gap-1 hover:bg-gray"
+      >
+        See all
+        <span
+          style="font-size: 10px"
+          nz-icon
+          class="icon-sz"
+          nzType="arrow-right"
+          nzTheme="outline"
+        ></span>
+      </a>
+    </span>
+  </div>
+  <div class="mb-1 rounded-md">
+    <div class="mx-auto flex flex-col">
+      <div
+        class="h-40 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-lg border-[1px] border-gray-200"
+        *ngIf="!(isBudgetAvailable | async)"
+      >
+        <p class="text-gray-500">Your latest transactions will appear here</p>
+      </div>
+      <div *ngIf="isBudgetAvailable | async">
+        <app-transaction-list
+          [allTransactions]="recentTxns"
+          [loadMore]="false"
+          [enableEmpty]="false"
+        ></app-transaction-list>
+      </div>
+    </div>
+  </div>
+</div>
