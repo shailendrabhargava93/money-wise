@@ -1,7 +1,7 @@
 <!-- component -->
 <div class="container mx-auto px-2 md:px-4 lg:px-6">
   <div
-    class="py-3 mb-1 bg-white rounded-md flex flex-col justify-center items-center"
+    class="py-3 mb-1 bg-white rounded-md border-[1px] border-gray-200 flex flex-col justify-center items-center"
     *ngIf="!(isBudgetAvailable | async)"
   >
     <h1 class="text-2xl text-bold text-center text-indigo-500 inline-flex">
@@ -111,7 +111,7 @@
 <div class="container mx-auto px-2 md:px-4 lg:px-6">
   <div class="py-1 inline">
     <span class="text-md font-semibold text-gray-600">Recent transactions</span>
-    <span class="float-right" *ngIf="isBudgetAvailable | async">
+    <span class="float-right" *ngIf="recentTxns.length > 0">
       <a
         [routerLink]="['/transactions']"
         class="text-xs text-gray-600 border border-gray-200 rounded-full px-1 flex items-center justify-center gap-1 hover:bg-gray"
@@ -130,12 +130,12 @@
   <div class="mb-1 rounded-md">
     <div class="mx-auto flex flex-col">
       <div
-        class="h-40 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-lg border-[1px] border-gray-200"
-        *ngIf="!(isBudgetAvailable | async)"
+        class="h-40 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md border-[1px] border-gray-200"
+        *ngIf="recentTxns.length == 0"
       >
         <p class="text-gray-500">Your latest transactions will appear here</p>
       </div>
-      <div *ngIf="isBudgetAvailable | async">
+      <div *ngIf="recentTxns.length > 0">
         <app-transaction-list
           [allTransactions]="recentTxns"
           [loadMore]="false"

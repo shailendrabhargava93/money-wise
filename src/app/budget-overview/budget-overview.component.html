@@ -22,7 +22,7 @@
 </div>
 
 <div
-  class="mx-auto flex flex-col justify-center p-2 mt-4 w-full"
+  class="mx-auto flex flex-col justify-center p-1 w-full"
   *ngIf="budgetData"
 >
 <div class="flex flex-row gap-4 max-md:w-22rem max-md:overflow-x-auto">
@@ -33,7 +33,7 @@
         <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
         <p class="title-text text-lg font-medium">Total</p>
       </div>
-      <div class="data text-center text-2xl">
+      <div class="data text-lg font-medium">
         <p>
           {{ (currency | async)?.symbol }}&nbsp;{{
             budgetData.totalBudget | number

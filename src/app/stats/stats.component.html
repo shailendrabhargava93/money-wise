@@ -5,7 +5,7 @@
 </div>
 <div class="container py-2 mx-auto">
   <div class="p-4 border bg-white rounded-md shadow-dashboard">
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap" *ngIf="doughnutChartLabels.length > 0">
       <canvas
         baseChart
         [type]="'doughnut'"
@@ -15,6 +15,12 @@
       >
       </canvas>
     </div>
+    <div
+        class="h-10 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md"
+        *ngIf="doughnutChartLabels.length == 0"
+      >
+        <p class="text-gray-500">No Data found</p>
+      </div>
   </div>
 </div>
 
@@ -30,7 +36,7 @@
           </nz-tabset>
       </div>
     </div>
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap"  *ngIf="barChartLabels.length > 0">
       <canvas
         baseChart
         [datasets]="barChartData"
@@ -39,6 +45,12 @@
         chartType="bar"
       ></canvas>
     </div>
+    <div
+        class="h-10 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md"
+        *ngIf="doughnutChartLabels.length == 0"
+      >
+        <p class="text-gray-500">No Data found</p>
+      </div>
   </div>
 </div>
 

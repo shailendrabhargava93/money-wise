@@ -33,3 +33,10 @@ nz-date-picker {
   font-size: 12px !important;
   border-radius: 2px  !important;
 }
+
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
+  background-color: #5e56ec;
+  border-color: #5e56ec;
+  color:white;
+}

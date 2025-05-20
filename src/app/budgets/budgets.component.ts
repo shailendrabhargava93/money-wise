@@ -1,8 +1,9 @@
+import { tap } from 'rxjs/operators';
 import { STATUS } from './../status.enum';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
-import { catchError, of, switchMap } from 'rxjs';
+import { catchError, of, switchMap, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-budgets',
@@ -19,26 +20,27 @@ export class BudgetsComponent implements OnInit {
 
   constructor(private app: AppService, private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.app.showSpinner();
+
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getBudgets(user as string, STATUS.ACTIVE)),
         catchError((error) => {
           console.error('Error occurred getBudgets:', error);
           this.app.hideSpinner();
-          return of([]);
-        })
+          return EMPTY;
+        }),
+        tap(() => this.app.hideSpinner())
       )
-      .subscribe((data) => {
-        if (data) {
-          this.app.hideSpinner();
-          this.budgets = data as any;
-          const budgetsExist = this.budgets && this.budgets.length > 0;
-          if (budgetsExist) {
-            localStorage.setItem('isBudgetAvailable', String(budgetsExist));
-            this.app.isBudgetAvailableSub.next(budgetsExist);
-          }
+      .subscribe((data: any) => {
+        if (data && data.length > 0) {
+          localStorage.setItem('isBudgetAvailable', 'true');
+          this.app.isBudgetAvailableSub.next(true);
+          this.budgets = data;
+        } else {
+          localStorage.setItem('isBudgetAvailable', 'false');
+          this.app.isBudgetAvailableSub.next(false);
         }
       });
   }

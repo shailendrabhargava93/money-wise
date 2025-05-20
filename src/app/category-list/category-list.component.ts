@@ -8,12 +8,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./category-list.component.css'],
 })
 export class CategoryListComponent {
-  @Input() categoryData!: any;
-  @Input() labelListData!: any;
+  @Input() categoryData: any[] = [];
+  @Input() labelListData: any[] = [];
   currency = this.app.currency$;
 
-  constructor(private app: AppService) {
-  }
+  constructor(private app: AppService) {}
   getIcon(category: string): string {
     if (category in CAT_ICON) {
       const icon = CAT_ICON[category as keyof typeof CAT_ICON];

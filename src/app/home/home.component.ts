@@ -1,16 +1,17 @@
+import { STATUS } from './../status.enum';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
-import { Component } from '@angular/core';
-import { switchMap, tap, catchError } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { switchMap, tap, catchError, take } from 'rxjs/operators';
+import { forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
-  recentTxns!: any[];
+export class HomeComponent implements OnInit {
+  recentTxns: any[] = [];
   username$ = this.app.userName;
   isBudgetAvailable = this.app.isBudgetAvailableObs$;
   todaySpending!: number;
@@ -48,43 +49,45 @@ export class HomeComponent {
 
   constructor(private app: AppService, private message: NzMessageService) {
     this.getGreeting();
-    this.app.showSpinner();
+  }
+
+  ngOnInit(): void {
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getTransactions(user as string, 1, 4)),
-        tap((data: any) => {
-          this.app.hideSpinner();
-          if (data && data.txns && data.txns.length > 0) {
-            const budgetsExist = data.txns && data.txns.length > 0;
-            this.recentTxns = data.txns;
-            localStorage.setItem('isBudgetAvailable', String(budgetsExist));
-            this.app.isBudgetAvailableSub.next(budgetsExist);
-          }
-        }),
+        switchMap((user) =>
+          forkJoin([
+            this.app.getBudgets(user as string, STATUS.ACTIVE),
+            this.app.getTransactions(user as string, 1, 4),
+            this.app.getSpentByUser(user as string),
+          ])
+        ),
+        take(1),
+        tap(() => this.app.hideSpinner()),
         catchError((error) => {
+          console.error('Error occurred:', error);
           this.app.hideSpinner();
-          console.error(error);
-          return of(EMPTY);
+          return of([]);
         })
       )
-      .subscribe();
+      .subscribe(([buds, txns, data]) => {
+        const budgets = buds as any[];
+        const transactions = txns as any;
+        const spentData = data as any;
+        if (budgets && budgets.length > 0) {
+          const budgetsExist = budgets.length > 0;
+          localStorage.setItem('isBudgetAvailable', String(budgetsExist));
+          this.app.isBudgetAvailableSub.next(budgetsExist);
+        }
 
-      this.app.userEmail
-      .pipe(
-        switchMap((user) => this.app.getSpentByUser(user as string)),
-        tap((data: any) => {
-          if (data) {
-            this.todaySpending = data.totalAmountToday;
-            this.weekSpening = data.totalAmountThisWeek;
-          }
-        }),
-        catchError((error) => {
-          this.app.hideSpinner();
-          console.error(error);
-          return of(EMPTY);
-        })
-      )
-      .subscribe();
+        if (transactions && transactions.txns && transactions.txns.length > 0) {
+          this.recentTxns = transactions.txns;
+        }
+
+        if (spentData) {
+          this.todaySpending = spentData.totalAmountToday;
+          this.weekSpening = spentData.totalAmountThisWeek;
+        }
+      });
   }
 
   getGreeting() {
