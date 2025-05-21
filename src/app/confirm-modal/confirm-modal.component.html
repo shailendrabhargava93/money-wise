@@ -32,6 +32,7 @@
       >
         Are you sure, you want to delete the budget ?
       </h3>
+      <span *ngIf="action === 'delete'" class="text-xs text-red-400">All the transactions of the budget will be deleted</span>
     </div>
   </ng-container>
 </nz-drawer>

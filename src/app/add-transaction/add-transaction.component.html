@@ -162,7 +162,7 @@
         [nzColor]="'geekblue'"
         (click)="onDateClick(date)"
       >
-        {{ date }}
+        {{ date | titlecase }}
       </nz-tag>
     </span>
   </nz-form-item>
@@ -232,6 +232,14 @@
       (click)="updateTxn()"
     >
       Update Transaction
+    </button>
+    <button
+      *ngIf="isUpdate"
+      nz-button
+      class="btn-delete rounded-full mt-1 w-full"
+      (click)="deleteTxn()"
+    >
+      Delete Transaction
     </button>
   </nz-form-item>
 </form>

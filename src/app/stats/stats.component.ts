@@ -158,9 +158,9 @@ export class StatsComponent implements OnInit {
       {
         data: dateAmounts.map((el) => el),
         label: 'Amount',
-        backgroundColor: this.colorScheme.slice(0, dateAmounts.length),
+        backgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
         borderColor: 'white',
-        hoverBackgroundColor: this.colorScheme.slice(0, dateAmounts.length),
+        hoverBackgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
         hoverBorderColor: 'white',
       },
     ];
@@ -201,14 +201,18 @@ export class StatsComponent implements OnInit {
   }
 
   colorScheme = [
-    '#665191',
-    '#a05195',
-    '#f95d6a',
-    '#ffa600',
-    '#003f5c',
-    '#de425b',
-    '#2f4b7c',
-    '#ff7c43',
-    '#d45087',
+    '#74bdcb',
+    '#ffa384',
+    '#efe7bc',
+    '#a888a0',
+    '#cd6858'
+  ];
+
+  colorScheme2 = [
+    '#145da0',
+    '#75e6da',
+    '#167d7f',
+    '#98d7c2',
+    '#a3ebb1'
   ];
 }

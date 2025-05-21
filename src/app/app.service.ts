@@ -88,6 +88,10 @@ export class AppService {
     return this.http.put(this.BASE_URL + `txn/update/${id}`, data);
   }
 
+  deleteTransaction(id: any) {
+    return this.http.delete(this.BASE_URL + `txn/${id}`);
+  }
+
   getTxnById(id: string) {
     return this.http.get(this.BASE_URL + `txn/${id}`);
   }

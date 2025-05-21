@@ -40,3 +40,9 @@ nz-date-picker {
   border-color: #5e56ec;
   color:white;
 }
+
+.btn-delete{
+  background-color: red;
+  color: white;
+  border: none;
+}

@@ -52,11 +52,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const isBudgetAvailable = localStorage.getItem('isBudgetAvailable') === 'true';
+
     this.app.userEmail
       .pipe(
         switchMap((user) =>
           forkJoin([
-            this.app.getBudgets(user as string, STATUS.ACTIVE),
+            isBudgetAvailable
+              ? of([])
+              : this.app.getBudgets(user as string, STATUS.ACTIVE),
             this.app.getTransactions(user as string, 1, 4),
             this.app.getSpentByUser(user as string),
           ])
@@ -73,6 +77,7 @@ export class HomeComponent implements OnInit {
         const budgets = buds as any[];
         const transactions = txns as any;
         const spentData = data as any;
+
         if (budgets && budgets.length > 0) {
           const budgetsExist = budgets.length > 0;
           localStorage.setItem('isBudgetAvailable', String(budgetsExist));

@@ -83,8 +83,8 @@ export class AddTransactionComponent implements OnInit {
         const labels = data as any[];
         if (labels.length > 0) {
           this.labels = data as string[];
-        }else{
-          this.labels = ["Not available"]
+        } else {
+          this.labels = ['Not available'];
         }
       });
 
@@ -100,14 +100,7 @@ export class AddTransactionComponent implements OnInit {
 
     this.form.controls['category'].setValue('Other');
 
-    const yesterday = this.formatDate(
-      new Date(new Date().setDate(date.getDate() - 1))
-    );
-    const tommorrow = this.formatDate(
-      new Date(new Date().setDate(date.getDate() + 1))
-    );
-
-    this.dateSuggestions = [yesterday, tommorrow];
+    this.dateSuggestions = ['yesterday', 'tommorrow'];
 
     this.app.getJSON().subscribe((data) => {
       this.form.get('category')?.valueChanges.subscribe((value) => {
@@ -210,7 +203,32 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
+  deleteTxn() {
+    this.app.deleteTransaction(this.txnId).subscribe(
+      (res) => {
+        if (res) {
+          this.app.hideSpinner();
+          this.message.success(`Transaction Deleted !`);
+          this.router.navigate(['transactions']);
+        }
+      },
+      (err) => {
+        this.app.hideSpinner();
+        console.error(err);
+        this.message.error(`An error occurred: ${err.message}`);
+      }
+    );
+  }
+
   onDateClick(date: string) {
-    this.form.controls['date'].setValue(date);
+    const today = new Date();
+    const yesterday = new Date(new Date().setDate(today.getDate() - 1));
+    const tommorrow = new Date(new Date().setDate(today.getDate() + 1));
+    if (date === 'yesterday') {
+      this.form.controls['date'].setValue(yesterday);
+    }
+    if (date === 'tommorrow') {
+      this.form.controls['date'].setValue(tommorrow);
+    }
   }
 }
