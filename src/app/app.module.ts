@@ -1,7 +1,7 @@
 import { environment } from './../environments/environment.development';
 import { HttpClientModule } from '@angular/common/http';
 import { NgZorroAntdModule } from './ng-zorro-antd.module';
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +34,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { CompleteBudgetComponent } from './complete-budget/complete-budget.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 registerLocaleData(en);
 
@@ -76,6 +77,12 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     NgChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },
