@@ -12,7 +12,7 @@
       "short_name": "Add Expense",
       "description": "Adding new expenses",
       "url": "/new-transaction",
-      "icons": [{ "src": "/icons/icon-add.png", "sizes": "192x192" }]
+      "icons": [{ "src": "assets/icons/icon-add.png", "sizes": "192x192" }]
     }
   ],
   "icons": [
