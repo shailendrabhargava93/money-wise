@@ -1,6 +1,5 @@
 import { AppService } from './../app.service';
 import { Router } from '@angular/router';
-import { CAT_ICON } from './../category-icons';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -18,14 +17,6 @@ export class TransactionListComponent {
   currency = this.app.currency$;
 
   constructor(private router: Router, private app: AppService) {}
-
-  getIcon(category: string): string {
-    if (category in CAT_ICON) {
-      const icon = CAT_ICON[category as keyof typeof CAT_ICON];
-      return `/assets/icons/${icon}.png`;
-    }
-    return `/assets/icons/list.png`;
-  }
 
   onTxn(txnId: string) {
     this.router.navigate(['edit-transaction', txnId]);

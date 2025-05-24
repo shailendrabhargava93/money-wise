@@ -11,7 +11,7 @@ import { catchError, of, switchMap, EMPTY } from 'rxjs';
   styleUrls: ['./budgets.component.css'],
 })
 export class BudgetsComponent implements OnInit {
-  budgets!: any[];
+  budgets: any[] = [];
   currency = this.app.currency$;
 
   isVisible = false;

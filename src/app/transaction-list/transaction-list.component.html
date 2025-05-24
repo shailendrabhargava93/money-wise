@@ -10,14 +10,7 @@
             class="cursor-pointer rounded-md shadow-md flex flex-1 p-4 transition duration-500 ease-in-out transform hover:-translate-y-1 hover:shadow-lg"
             (click)="onTxn(txn.id)"
           >
-            <div
-              class="flex flex-col rounded-md w-10 h-10 bg-gray-100 justify-center items-center mr-4"
-            >
-              <img
-                [src]="getIcon(txn.data.category)"
-                class="object-cover w-8 h-8"
-              />
-            </div>
+            <app-category-icon [category]="txn.data.category"></app-category-icon>
             <div class="flex-1 mr-6">
               <div class="font-medium overflow-hidden truncate w-32">
                 {{ txn.data.title }}
