@@ -35,6 +35,7 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
 import { CompleteBudgetComponent } from './complete-budget/complete-budget.component';
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CategoryIconComponent } from './category-icon/category-icon.component';
 
 registerLocaleData(en);
 
@@ -65,6 +66,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     TransactionListComponent,
     CompleteBudgetComponent,
     ConfirmModalComponent,
+    CategoryIconComponent,
   ],
   imports: [
     BrowserModule,
