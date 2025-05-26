@@ -45,7 +45,8 @@ export class AppComponent implements AfterContentChecked {
     return (
       this.currentRoute &&
       this.currentRoute !== 'main' &&
-      this.currentRoute !== 'login'
+      this.currentRoute !== 'login' &&
+      this.currentRoute !== 'home'
     );
   }
 }

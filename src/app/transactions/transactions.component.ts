@@ -68,6 +68,21 @@ export class TransactionsComponent implements OnInit {
       });
   }
 
+  searchQuery = '';
+
+  onSearchChange(query: string): void {
+    // You can call a service or filter the transactions here
+    this.allTransactions.filter(txn =>
+      txn.data.title.toLowerCase().includes(query.toLowerCase())
+    );
+  }
+
+  clearSearch(): void {
+    this.searchQuery = '';
+    this.onSearchChange('');
+  }
+
+
   openFilters(): void {
     this.app.currency.subscribe((m) => (this.currency = m?.symbol));
     this.visibleFilters = true;

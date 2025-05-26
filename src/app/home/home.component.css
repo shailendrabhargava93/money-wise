@@ -1,14 +1,60 @@
-::ng-deep.ant-segmented-item-icon > .anticon{
-  vertical-align: 2px;
-}
-::ng-deep.ant-carousel .slick-dots-bottom {
-  bottom: 1px;
+/* Enhanced segmented control styling */
+::ng-deep .ant-segmented {
+  background-color: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 4px !important;
 }
 
-/* ::ng-deep.ant-segmented-item{
-  border-radius: 9999px;
-} */
+::ng-deep .ant-segmented-item-selected {
+  background-color: #4f46e5 !important;
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;
+  font-weight: 600 !important;
+}
 
-/* ::ng-deep.ant-segmented:not(.ant-segmented-disabled):focus, .ant-segmented:not(.ant-segmented-disabled):hover {
-  background-color: rgb(224 231 255 / 1)
-} */
+::ng-deep .ant-segmented-item {
+  padding: 8px 16px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+::ng-deep .ant-segmented-item:hover:not(.ant-segmented-item-selected) {
+  background-color: #f1f5f9 !important;
+}
+
+/* Enhanced carousel styling */
+::ng-deep .ant-carousel .slick-dots {
+  bottom: -40px !important;
+}
+
+::ng-deep .ant-carousel .slick-dots li button {
+  background-color: #d1d5db !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+}
+
+::ng-deep .ant-carousel .slick-dots li.slick-active button {
+  background-color: #f59e0b !important;
+  width: 24px !important;
+  border-radius: 12px !important;
+}
+
+/* Hover effects for interactive elements */
+.hover\:shadow-sm:hover {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.transition-all {
+  transition-property: all !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.duration-200 {
+  transition-duration: 200ms !important;
+}
+
+/* Better button hover states */
+a:hover {
+  transform: translateY(-1px);
+}

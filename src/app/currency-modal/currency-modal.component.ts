@@ -7,20 +7,39 @@ import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
   styleUrls: ['./currency-modal.component.css'],
 })
 export class CurrencyModalComponent implements OnInit {
-  @Input() visible: boolean = false;
+  private _visible: boolean = false;
+
+  @Input()
+  set visible(value: boolean) {
+    this._visible = value;
+    // Load data only when modal becomes visible and data hasn't been loaded yet
+    if (value && !this.dataLoaded) {
+      this.loadCurrencyData();
+    }
+  }
+
+  get visible(): boolean {
+    return this._visible;
+  }
+
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
 
   selectedCurrency!: string;
   searchCurrency!: string;
   globalCurrencyData: any[] = [];
   currencyData: any[] = [];
+  private dataLoaded: boolean = false;
 
   constructor(private app: AppService) {}
 
   ngOnInit() {
+    // Only subscribe to currency changes
     this.app.currency.subscribe(
       (c) => (this.selectedCurrency = c?.name as string)
     );
+  }
+
+  private loadCurrencyData() {
     this.app.getCountryWithCurrency().subscribe((data: any) => {
       if (data) {
         data = data.sort((a: any, b: any) => {
@@ -30,6 +49,7 @@ export class CurrencyModalComponent implements OnInit {
         });
         this.currencyData = this.extractInfo(data);
         this.globalCurrencyData = this.currencyData;
+        this.dataLoaded = true;
       }
     });
   }
