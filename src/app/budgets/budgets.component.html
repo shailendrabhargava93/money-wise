@@ -1,25 +1,23 @@
 <!-- header -->
-<div class="mx-auto flex items-center justify-between gap-1 p-1 w-full">
+<div class="mx-auto flex items-center justify-between gap-4 p-4 max-w-2xl">
   <button
     type="button"
     [routerLink]="['/new-budget']"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="bg-white inline-flex text-gray-700 py-1.5 px-4 items-center justify-center text-md capitalize border border-gray-300 rounded-2xl shadow-sm transition hover:-translate-y-1 hover:shadow-md"
   >
-    <span class="capitalize lg:inline leading-5">New</span> &nbsp;
+    <span class="capitalize leading-5">New</span>&nbsp;
     <svg
-      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      class="w-5 h-5 text-gray-800 dark:text-white"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
       fill="none"
       viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
     >
       <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="1.2"
         d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
       />
     </svg>
@@ -27,11 +25,11 @@
   <button
     type="button"
     [routerLink]="['/archived']"
-    class="float-right bg-white mt-1 ml-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    class="bg-white inline-flex text-gray-700 py-1.5 px-4 items-center justify-center text-md capitalize border border-gray-300 rounded-2xl shadow-sm transition hover:-translate-y-1 hover:shadow-md"
   >
-    <span class="capitalize lg:inline leading-5">Archived</span> &nbsp;
+    <span class="capitalize leading-5">Archived</span>&nbsp;
     <svg
-      class="w-[18px] h-[18px] text-gray-800 dark:text-white"
+      class="w-5 h-5 text-gray-800 dark:text-white"
       fill="#000000"
       viewBox="0 0 256 256"
       id="Flat"
@@ -52,51 +50,49 @@
   </button>
 </div>
 
-<div class="mt-2">
+<div class="mt-2 mx-auto max-w-2xl px-4">
   <div
     *ngFor="let budget of budgets"
-    class="bg-white max-w-xs shadow-lg mx-auto border-b-4 border-indigo-500 rounded-2xl overflow-hidden mb-4"
+    class="bg-white shadow-sm rounded-2xl border-b-4 border-indigo-500 overflow-hidden mb-6"
   >
     <div
-      class="flex flex-col justify-start bg-gradient-to-r from-indigo-400 to-indigo-500 h-20 p-3 flow-root"
+      class="flex flex-col justify-start bg-gradient-to-r from-indigo-400 to-indigo-500 h-20 p-4 rounded-t-2xl"
     >
-      <span class="float-left">
-        <p class="text-white text-lg font-semibold">
-          {{ budget.data.name }}
-        </p>
-        <p class="text-white text-sm">
-          <span class="font-bold"
-            >{{ (currency | async)?.symbol }}
-            {{
-              budget.data.totalBudget - budget.data.spentAmount | number
-            }}</span
-          >&nbsp;
-          <span *ngIf="isOverspent(budget)">overspent of</span>
-          <span *ngIf="!isOverspent(budget)">left of</span>
-          {{ budget.data.totalBudget | number }}
-        </p>
-      </span>
+      <p class="text-white text-lg font-semibold leading-tight">
+        {{ budget.data.name }}
+      </p>
+      <p class="text-white text-sm leading-snug mt-1">
+        <span class="font-bold">
+          {{ (currency | async)?.symbol }}
+          {{
+            budget.data.totalBudget - budget.data.spentAmount | number
+          }} </span
+        >&nbsp;
+        <span *ngIf="isOverspent(budget)">overspent of</span>
+        <span *ngIf="!isOverspent(budget)">left of</span>
+        {{ budget.data.totalBudget | number }}
+      </p>
     </div>
-    <p class="py-3 px-3 tracking-wide flow-root">
-      <span class="float-left text-sm">{{
-        budget.data.startDate | date : "dd MMM"
-      }}</span>
-      <span class="float-right text-sm">{{
-        budget.data.endDate | date : "dd MMM"
-      }}</span>
+    <p class="py-4 px-4 tracking-wide">
+      <span class="text-sm float-left">
+        {{ budget.data.startDate | date : "dd MMM" }}
+      </span>
+      <span class="text-sm float-right">
+        {{ budget.data.endDate | date : "dd MMM" }}
+      </span>
       <nz-progress
         [nzPercent]="getSpentPerc(budget)"
-        [nzShowInfo]="isOverspent(budget) ? false : true"
+        [nzShowInfo]="!isOverspent(budget)"
         [nzStatus]="isOverspent(budget) ? 'exception' : 'active'"
         [nzStrokeWidth]="10"
+        class="mt-2 clear-both"
       ></nz-progress>
     </p>
 
-    <div class="flex justify-center p-3">
+    <div class="flex justify-center p-4">
       <div class="flex gap-4">
-        <span> </span>
         <span
-          class="text-xs cursor-pointer text-white bg-gradient-to-r from-indigo-400 to-indigo-500 border border-indigo-300 rounded-full px-2 py-1 hover:bg-[#4b47d1]"
+          class="text-xs cursor-pointer text-white bg-gradient-to-r from-indigo-400 to-indigo-500 border border-indigo-300 rounded-full px-3 py-1 hover:bg-indigo-600"
           nz-icon
           nzType="edit"
           nzTheme="outline"
@@ -105,7 +101,7 @@
           Edit
         </span>
         <span
-          class="text-xs cursor-pointer text-white bg-gradient-to-r from-indigo-400 to-indigo-500 border border-indigo-300 rounded-full px-2 py-1 hover:bg-[#4b47d1]"
+          class="text-xs cursor-pointer text-white bg-gradient-to-r from-indigo-400 to-indigo-500 border border-indigo-300 rounded-full px-3 py-1 hover:bg-indigo-600"
           nz-icon
           nzType="right"
           nzTheme="outline"
@@ -115,56 +111,6 @@
         </span>
       </div>
     </div>
-
-    <!-- <div class="flex flow-root p-4">
-      <div class="">
-        <span class="float-left">
-          <nz-avatar-group>
-            <span
-              class="-mr-1"
-              *ngFor="let user of budget.data.users; let i = index"
-            >
-              <nz-avatar
-                *ngIf="i < 2"
-                nz-tooltip [nzTooltipTitle]="user"
-                style="background-color: #9197f8"
-                nzIcon="user"
-              ></nz-avatar>
-            </span>
-          </nz-avatar-group>
-          <nz-avatar
-            *ngIf="budget.data.users.length > 2"
-            style="background-color: #9197f8; color: #c2c2c2"
-            [nzText]="'+' + (budget.data.users.length - 2)"
-          ></nz-avatar>
-          <span
-            class="text-white cursor-pointer ml-1"
-            (click)="onShare(budget)"
-            nz-tooltip nzTooltipTitle="Add user to budget"
-            nz-icon
-            style="
-              font-size: 20px;
-              border-radius: 50%;
-              padding: 6px;
-              background: #9197f8;
-            "
-            nzType="usergroup-add"
-            nzTheme="outline"
-          ></span>
-        </span>
-        <span class="text-gray-500 float-right">
-          <span
-            class="text-xs cursor-pointer text-gray-600 bg-gray-100 border border-gray-300 rounded-full px-2 py-1 hover:bg-gray-200"
-            nz-icon
-            nzType="right"
-            nzTheme="outline"
-            (click)="openOverview(budget.id)"
-          >
-            Overview
-          </span>
-        </span>
-      </div>
-    </div> -->
   </div>
 </div>
 

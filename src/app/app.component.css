@@ -102,5 +102,6 @@ button.active > span{
 }
 
 ::ng-deep.head-primary{
-  color: #5e56ec !important;
+  color: #0f0f23 !important;
+  font-weight: 700
 }

@@ -1,10 +1,10 @@
 <!-- component -->
-<div class="container mx-auto px-2 md:px-4 lg:px-6">
+<div class="container mx-auto px-4 md:px-6 lg:px-8">
   <div
-    class="py-3 mb-1 bg-white rounded-md border-[1px] border-gray-200 flex flex-col justify-center items-center"
+    class="py-4 mb-6 bg-white rounded-2xl shadow-sm flex flex-col items-center"
     *ngIf="!(isBudgetAvailable | async)"
   >
-    <h1 class="text-2xl text-bold text-center text-indigo-500 inline-flex">
+    <h1 class="text-2xl font-semibold text-indigo-500 flex items-center justify-center">
       Get • Set • Budget
       <picture class="ml-2">
         <source
@@ -19,24 +19,29 @@
         />
       </picture>
     </h1>
-    <img class="h-[18rem] mx-auto" src="assets/strategy-pana.svg" />
-    <h3 class="text-sm text-center text-gray-500">
-        Make your first budget and track your spending
-      <a class="text-indigo-400" [routerLink]="['/new-budget']"
-        >Create Budget</a
-      >
+
+    <img class="h-72 mt-4" src="assets/strategy-pana.svg" alt="Strategy illustration" />
+
+    <h3 class="text-sm text-center text-gray-500 mt-3 px-4">
+      Make your first budget and track your spending.
+      <a class="text-indigo-500 font-medium ml-1" [routerLink]="['/new-budget']">
+        Create Budget
+      </a>
     </h3>
   </div>
 </div>
 
-<!-- welcome text -->
-<div class="container mx-auto px-2 md:px-4 lg:px-6">
-  <div class="py-3 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
-    <div class="flex p-2">
-      <img src="assets/home/ninja.png" class="object-cover w-10 h-10" />
-      <div class="ml-2 flex flex-col">
-        <span class="text-md text-gray-600"> Save Like a Ninja! </span>
-        <span class="text-xs text-gray-600">
+
+<!-- update code here -->
+
+<div class="container mx-auto px-4 md:px-6 lg:px-8">
+  <!-- Ninja Tip with sleek shadow and better spacing -->
+  <div class="py-4 mb-4 bg-white rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
+    <div class="flex p-4 items-center">
+      <img src="assets/ninja.png" class="object-cover w-12 h-12 rounded-xl" />
+      <div class="ml-4 flex flex-col">
+        <span class="text-base font-semibold text-gray-800"> Save Like a Ninja! </span>
+        <span class="text-sm text-gray-500 mt-1">
           Keep tabs on what you're spending each day
         </span>
       </div>
@@ -44,62 +49,79 @@
   </div>
 </div>
 
-<!-- spending -->
-<div class="container mx-auto px-2 md:px-4 lg:px-6">
-  <div class="py-3 inline" *ngIf="isBudgetAvailable | async">
-    <span class="text-md font-semibold text-gray-600">Spending</span>
+<!-- Spending Section with vertical layout for better alignment -->
+<div class="container mx-auto px-4 md:px-6 lg:px-8">
+  <div class="py-2 mb-4" *ngIf="isBudgetAvailable | async">
+    <span class="text-xl font-bold text-gray-800 tracking-tight">Spending</span>
   </div>
-  <div class="py-3 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
-    <div class="flow-root px-1">
-      <nz-segmented
-        class="w-40 float-left py-1 px-1 mt-1 rounded-md"
-        [nzOptions]="options"
-        [(ngModel)]="selectedIndex"
-      ></nz-segmented>
-      <div class="w-32 flex float-right bg-gray-100 rounded-md py-1 px-1 mt-1">
-        <div class="flex items-center w-full">
-          <img
-            width="25"
-            height="25"
-            src="https://img.icons8.com/parakeet-line/48/cost.png"
-            alt="cost"
-            class="mr-2"
-          />
-          <span class="text-xl">
-            {{ (currency | async)?.symbol }}
-            <ng-container *ngIf="selectedIndex === 0">
-              {{ todaySpending | number }}
-            </ng-container>
-            <ng-container *ngIf="selectedIndex === 1">
-              {{ weekSpening | number }}
-            </ng-container>
-          </span>
+  <div class="py-6 mb-4 bg-white rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
+    <div class="px-6 space-y-6">
+      <!-- Segmented control centered at top -->
+      <div class="flex justify-center">
+        <nz-segmented
+          class="py-2 px-2 rounded-xl shadow-sm bg-gray-50"
+          [nzOptions]="options"
+          [(ngModel)]="selectedIndex"
+        ></nz-segmented>
+      </div>
+
+      <!-- Amount display centered below -->
+      <div class="text-center">
+        <div class="inline-flex items-center justify-center bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl py-6 px-8 shadow-sm">
+          <div class="w-10 h-10 bg-[#4f46e5] rounded-xl flex items-center justify-center mr-4">
+            <img
+              width="20"
+              height="20"
+              src="https://img.icons8.com/parakeet-line/48/cost.png"
+              alt="cost"
+              class="filter brightness-0 invert"
+            />
+          </div>
+          <div class="text-left">
+            <div class="text-3xl font-bold text-gray-800">
+              {{ (currency | async)?.symbol }}
+              <ng-container *ngIf="selectedIndex === 0">
+                {{ todaySpending | number }}
+              </ng-container>
+              <ng-container *ngIf="selectedIndex === 1">
+                {{ weekSpening | number }}
+              </ng-container>
+            </div>
+            <div class="text-sm text-gray-500 font-medium mt-1">
+              <ng-container *ngIf="selectedIndex === 0">
+                Today's Spending
+              </ng-container>
+              <ng-container *ngIf="selectedIndex === 1">
+                Week's Spending
+              </ng-container>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Recommendations -->
-<div class="container mx-auto px-2 md:px-4 lg:px-6">
-  <div class="py-3 inline" *ngIf="isBudgetAvailable | async">
-    <span class="text-md font-semibold text-gray-600">Personalized Tips</span>
+<!-- Personalized Tips with enhanced carousel styling -->
+<div class="container mx-auto px-4 md:px-6 lg:px-8">
+  <div class="py-2 mb-4" *ngIf="isBudgetAvailable | async">
+    <span class="text-xl font-bold text-gray-800 tracking-tight">Personalized Tips</span>
   </div>
-  <div class="py-3 mb-1 bg-white rounded-md" *ngIf="isBudgetAvailable | async">
+  <div class="py-6 mb-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
     <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
-      <div *ngFor="let el of array" nz-carousel-content>
-        <div
-          class="flex justify-start items-center gap-4 max-w-lg rounded-lg overflow-hidden mx-auto"
-        >
-          <div class="w-4/5 p-3">
-            <p class="text-sm text-gray-600">{{ el.subheading }}</p>
+      <div *ngFor="let el of tips" nz-carousel-content>
+        <div class="flex justify-start items-center gap-6 max-w-lg rounded-xl overflow-hidden mx-auto">
+          <div class="w-4/5 p-4">
+            <div class="flex items-center mb-2">
+              <div class="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                <span class="text-white text-xs">💡</span>
+              </div>
+              <span class="text-xs font-semibold text-orange-600 uppercase tracking-wide">TIP</span>
+            </div>
+            <p class="text-sm text-gray-700 font-medium leading-relaxed">{{ el.subheading }}</p>
           </div>
-          <div class="relative w-1/5 h-full overflow-hidden">
-            <img
-              [src]="el.icon"
-              alt="Image"
-              class="object-cover w-full h-full object-top"
-            />
+          <div class="w-1/5 flex justify-center items-center text-3xl">
+            <span>{{ el.icon }}</span>
           </div>
         </div>
       </div>
@@ -107,18 +129,19 @@
   </div>
 </div>
 
-<!-- Recent Txns -->
-<div class="container mx-auto px-2 md:px-4 lg:px-6">
-  <div class="py-1 inline">
-    <span class="text-md font-semibold text-gray-600">Recent transactions</span>
-    <span class="float-right" *ngIf="recentTxns.length > 0">
+<!-- Recent Transactions with modern card design -->
+<div class="container mx-auto px-4 md:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="py-2 mb-4 flex items-center justify-between">
+    <span class="text-xl font-bold text-gray-800 tracking-tight">Recent transactions</span>
+    <span *ngIf="recentTxns.length > 0">
       <a
         [routerLink]="['/transactions']"
-        class="text-xs text-gray-600 border border-gray-200 rounded-full px-1 flex items-center justify-center gap-1 hover:bg-gray"
+        class="text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 border-0 rounded-full px-4 py-2 flex items-center justify-center gap-2 transition-all duration-200 hover:shadow-sm"
       >
         See all
         <span
-          style="font-size: 10px"
+          style="font-size: 12px"
           nz-icon
           class="icon-sz"
           nzType="arrow-right"
@@ -127,21 +150,28 @@
       </a>
     </span>
   </div>
-  <div class="mb-1 rounded-md">
-    <div class="mx-auto flex flex-col">
-      <div
-        class="h-40 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md border-[1px] border-gray-200"
-        *ngIf="recentTxns.length == 0"
-      >
-        <p class="text-gray-500">Your latest transactions will appear here</p>
-      </div>
-      <div *ngIf="recentTxns.length > 0">
-        <app-transaction-list
-          [allTransactions]="recentTxns"
-          [loadMore]="false"
-          [enableEmpty]="false"
-        ></app-transaction-list>
+
+  <!-- Empty State -->
+  <div *ngIf="recentTxns.length === 0" class="mb-6">
+    <div
+      class="h-48 bg-white text-base flex items-center justify-center text-center px-8 py-12 rounded-2xl shadow-sm border-0"
+    >
+      <div class="flex flex-col items-center">
+        <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+          <span class="text-2xl">📊</span>
+        </div>
+        <p class="text-gray-600 font-medium">Your latest transactions will appear here</p>
+        <p class="text-gray-400 text-sm mt-1">Start tracking your expenses today</p>
       </div>
     </div>
+  </div>
+
+  <!-- Transaction List -->
+  <div *ngIf="recentTxns.length > 0" class="mb-6">
+      <app-transaction-list
+        [allTransactions]="recentTxns"
+        [loadMore]="false"
+        [enableEmpty]="false"
+      ></app-transaction-list>
   </div>
 </div>

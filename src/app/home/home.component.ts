@@ -2,7 +2,7 @@ import { STATUS } from './../status.enum';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
-import { switchMap, tap, catchError, take } from 'rxjs/operators';
+import { switchMap, tap, catchError, take, map } from 'rxjs/operators';
 import { forkJoin, of } from 'rxjs';
 
 @Component({
@@ -26,26 +26,25 @@ export class HomeComponent implements OnInit {
     { label: 'Week', value: 'week', icon: 'calendar' },
   ];
 
-  array = [
+  tips = [
     {
-      icon: 'assets/home/digital_1.png',
+      icon: '💳', // credit card
       subheading: 'Limit your use of credit cards to avoid overspending',
     },
     {
-      icon: 'assets/home/digital_2.png',
+      icon: '🔕', // bell off or cancellation
       subheading: 'Cancel any unused or unnecessary subscriptions',
     },
     {
-      icon: 'assets/home/digital_3.png',
-      subheading:
-        'Allocate a specific amount for non-essential spending each month',
+      icon: '💰', // money bag
+      subheading: 'Allocate a specific amount for non-essential spending each month',
     },
     {
-      icon: 'assets/home/digital_4.png',
-      subheading:
-        'Regularly check your bank and credit card statements for any discrepancies',
+      icon: '📄', // document or statement
+      subheading: 'Regularly check your bank and credit card statements for any discrepancies',
     },
   ];
+
 
   constructor(private app: AppService, private message: NzMessageService) {
     this.getGreeting();
@@ -56,21 +55,35 @@ export class HomeComponent implements OnInit {
 
     this.app.userEmail
       .pipe(
-        switchMap((user) =>
-          forkJoin([
-            isBudgetAvailable
-              ? of([])
-              : this.app.getBudgets(user as string, STATUS.ACTIVE),
+        switchMap((user) => {
+          // Always call transactions and spent data APIs
+          const transactionsAndSpent$ = forkJoin([
             this.app.getTransactions(user as string, 1, 4),
             this.app.getSpentByUser(user as string),
-          ])
-        ),
+          ]);
+
+          // Conditionally call budgets API only if not available in localStorage
+          if (isBudgetAvailable) {
+            // Skip budget API call, return only transactions and spent data
+            return transactionsAndSpent$.pipe(
+              map(([txns, data]) => [[], txns, data]) // Empty array for budgets
+            );
+          } else {
+            // Call all three APIs including budgets
+            return forkJoin([
+              this.app.getBudgets(user as string, STATUS.ACTIVE),
+              transactionsAndSpent$
+            ]).pipe(
+              map(([buds, [txns, data]]) => [buds, txns, data])
+            );
+          }
+        }),
         take(1),
         tap(() => this.app.hideSpinner()),
         catchError((error) => {
           console.error('Error occurred:', error);
           this.app.hideSpinner();
-          return of([]);
+          return of([[], null, null]); // Return default structure
         })
       )
       .subscribe(([buds, txns, data]) => {
@@ -78,16 +91,19 @@ export class HomeComponent implements OnInit {
         const transactions = txns as any;
         const spentData = data as any;
 
-        if (budgets && budgets.length > 0) {
+        // Only process budgets if we actually fetched them (when isBudgetAvailable was false)
+        if (!isBudgetAvailable && budgets && budgets.length > 0) {
           const budgetsExist = budgets.length > 0;
           localStorage.setItem('isBudgetAvailable', String(budgetsExist));
           this.app.isBudgetAvailableSub.next(budgetsExist);
         }
 
+        // Process transactions
         if (transactions && transactions.txns && transactions.txns.length > 0) {
           this.recentTxns = transactions.txns;
         }
 
+        // Process spent data
         if (spentData) {
           this.todaySpending = spentData.totalAmountToday;
           this.weekSpening = spentData.totalAmountThisWeek;
