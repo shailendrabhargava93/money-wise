@@ -1,182 +1,160 @@
-<div class="mx-auto flex flow-root p-1 w-full">
-  &nbsp;&nbsp;
+<div class="mx-auto flex flex-wrap justify-end gap-3 p-4 max-w-2xl sm:flex-nowrap">
+  <!-- Complete Button -->
   <button
-    *ngIf="budgetData && budgetData.status === 'active'"
-    class="float-right bg-white mt-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    *ngIf="budgetData?.status === 'active'"
     type="button"
     (click)="onAction('complete')"
+    class="flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 text-sm sm:text-base font-medium border border-green-300 rounded-full shadow-sm transition-all duration-200 hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-400"
   >
-    <span class="capitalize lg:inline mr-1">Complete</span>
-    <span nz-icon nzType="check-circle"></span></button
-  >&nbsp;&nbsp;
+    <span class="leading-5">Complete</span>
+    <span nz-icon nzType="check-circle" class="w-5 h-5"></span>
+  </button>
+
+  <!-- Delete Button -->
   <button
-    *ngIf="budgetData && budgetData.status === 'active'"
-    class="float-right bg-white mt-1 mr-1 inline-flex text-primary py-0.5 px-1.5 items-center justify-between text-md capitalize border border-gray-400 rounded-full"
+    *ngIf="budgetData?.status === 'active'"
     type="button"
     (click)="onAction('delete')"
+    class="flex items-center gap-2 px-4 py-2 bg-red-100 text-red-800 text-sm sm:text-base font-medium border border-red-300 rounded-full shadow-sm transition-all duration-200 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-400"
   >
-    <span class="capitalize lg:inline mr-1">Delete</span>
-
-    <span nz-icon nzType="delete"> </span>
+    <span class="leading-5">Delete</span>
+    <span nz-icon nzType="delete" class="w-5 h-5"></span>
   </button>
 </div>
 
-<div
-  class="mx-auto flex flex-col justify-center p-1 w-full"
-  *ngIf="budgetData"
->
-<div class="flex flex-row gap-4 max-md:w-22rem max-md:overflow-x-auto">
-      <div
-      class="card bg-white rounded-lg shadow-md p-2 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-    >
-      <div class="title flex items-center mb-2">
-        <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
-        <p class="title-text text-lg font-medium">Total</p>
-      </div>
-      <div class="data text-lg font-medium">
-        <p>
-          {{ (currency | async)?.symbol }}&nbsp;{{
-            budgetData.totalBudget | number
-          }}
-        </p>
-      </div>
-    </div>
 
-    <div
-      class="card bg-white rounded-lg shadow-md p-2 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-    >
-      <div class="title flex items-center mb-2">
-        <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
-        <p class="title-text text-lg font-medium">Spent</p>
-      </div>
-      <div class="data text-center text-2xl">
-        <p>
-          {{ (currency | async)?.symbol }}&nbsp;{{
-            budgetData.spentAmount | number
-          }}
-        </p>
-      </div>
-    </div>
+<div class="mx-auto flex flex-col justify-center px-4 py-6 w-full max-w-7xl" *ngIf="budgetData">
 
-    <div
-      class="card bg-white rounded-lg shadow-md p-2 max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-    >
-      <div class="title flex items-center mb-2">
-        <span class="w-4 h-4 mr-2 bg-gray-200 rounded-full"></span>
-        <p class="title-text text-lg font-medium">Remaining</p>
-      </div>
-      <div class="data text-center text-2xl">
-        <p>
-          {{ (currency | async)?.symbol }}&nbsp;{{
-            budgetData.totalBudget - budgetData.spentAmount | number
-          }}
-        </p>
-      </div>
+  <!-- Budget Summary Cards: Responsive layout with scrollable row on small screens -->
+<div class="flex overflow-x-auto gap-4 pb-2">
+  <div
+    class="bg-white rounded-xl shadow-md min-w-[12rem] sm:min-w-[14rem] md:min-w-[16rem] p-4 flex-shrink-0"
+  >
+    <div class="flex items-center mb-2">
+      <span class="w-4 h-4 mr-2 bg-indigo-300 rounded-full"></span>
+      <p class="text-base sm:text-lg font-semibold text-gray-800">Total</p>
     </div>
-  </div>
-  <div>
-    <div *ngIf="!budgetData.overspent">
-      <nz-alert nzType="success" [nzDescription]="descTemp"></nz-alert>
-      <ng-template #descTemp>
-        <div *ngIf="budgetData.status === 'completed'">
-          <span class="inline-flex">
-            Congratulations! &nbsp;
-            <picture>
-              <source
-                srcset="
-                  https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.webp
-                "
-                type="image/webp"
-              />
-              <img
-                src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif"
-                alt="🥳"
-                width="20"
-                height="20"
-              />
-            </picture>
-          </span>
-          You have saved {{ (currency | async)?.symbol }}
-          <span class="font-semibold">{{
-            budgetData.totalBudget - budgetData.spentAmount | number
-          }}</span>
-          from you total budget amount.
-        </div>
-        <div *ngIf="budgetData.status === 'active'">
-          <span class="inline-flex mt-1">
-            Great Going! &nbsp;
-            <picture>
-              <source
-                srcset="
-                  https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.webp
-                "
-                type="image/webp"
-              />
-              <img
-                src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif"
-                alt="👍"
-                width="20"
-                height="20"
-              />
-            </picture>
-          </span>
-          You are within your budget
-        </div>
-      </ng-template>
-    </div>
-    <div *ngIf="budgetData.overspent">
-      <nz-alert nzType="error" [nzDescription]="descTemp"></nz-alert>
-      <ng-template #descTemp>
-        <div *ngIf="budgetData.status === 'completed'">
-          <span class="inline-flex">
-            Oops! &nbsp;
-            <picture>
-              <source
-                srcset="
-                  https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.webp
-                "
-                type="image/webp"
-              />
-              <img
-                src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif"
-                alt="❗"
-                width="20"
-                height="20"
-              />
-            </picture>
-          </span>
-          You've overspent {{ (currency | async)?.symbol }}
-          <span class="font-semibold">{{
-            budgetData.totalBudget - budgetData.spentAmount | number
-          }}</span>
-          from your total budget
-        </div>
-        <div *ngIf="budgetData.status === 'active'">
-          <span class="inline-flex">
-            Slow Down ! &nbsp;
-            <picture>
-              <source
-                srcset="
-                  https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.webp
-                "
-                type="image/webp"
-              />
-              <img
-                src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif"
-                alt="😥"
-                width="20"
-                height="20"
-              />
-            </picture>
-          </span>
-          you'll exhaust your budget
-        </div>
-      </ng-template>
-    </div>
+    <p class="text-lg font-medium text-gray-700 whitespace-nowrap">
+      {{ (currency | async)?.symbol }}&nbsp;{{ budgetData.totalBudget | number }}
+    </p>
   </div>
 
-  <app-stats [budgetId]="budgetId"></app-stats>
+  <div
+    class="bg-white rounded-xl shadow-md min-w-[12rem] sm:min-w-[14rem] md:min-w-[16rem] p-4 flex-shrink-0"
+  >
+    <div class="flex items-center mb-2">
+      <span class="w-4 h-4 mr-2 bg-indigo-300 rounded-full"></span>
+      <p class="text-base sm:text-lg font-semibold text-gray-800">Spent</p>
+    </div>
+    <p class="text-lg font-medium text-gray-700 whitespace-nowrap">
+      {{ (currency | async)?.symbol }}&nbsp;{{ budgetData.spentAmount | number }}
+    </p>
+  </div>
+
+  <div
+    class="bg-white rounded-xl shadow-md min-w-[12rem] sm:min-w-[14rem] md:min-w-[16rem] p-4 flex-shrink-0"
+  >
+    <div class="flex items-center mb-2">
+      <span class="w-4 h-4 mr-2 bg-indigo-300 rounded-full"></span>
+      <p class="text-base sm:text-lg font-semibold text-gray-800">Remaining</p>
+    </div>
+    <p class="text-lg font-medium text-gray-700 whitespace-nowrap">
+      {{ (currency | async)?.symbol }}&nbsp;{{ (budgetData.totalBudget - budgetData.spentAmount) | number }}
+    </p>
+  </div>
 </div>
+
+  <!-- Status Notification Box -->
+  <div
+    class="mt-6 bg-white border-l-4 p-4 shadow rounded-xl"
+    [ngClass]="{
+      'border-green-400': !budgetData.overspent,
+      'border-red-400': budgetData.overspent
+    }"
+  >
+    <div class="flex items-start gap-3">
+      <div>
+        <img
+          *ngIf="budgetData.status === 'completed' && !budgetData.overspent"
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif"
+          alt="🥳"
+          width="24"
+          height="24"
+          class="mt-1"
+        />
+        <img
+          *ngIf="budgetData.status === 'active' && !budgetData.overspent"
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif"
+          alt="👍"
+          width="24"
+          height="24"
+          class="mt-1"
+        />
+        <img
+          *ngIf="budgetData.status === 'completed' && budgetData.overspent"
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif"
+          alt="❗"
+          width="24"
+          height="24"
+          class="mt-1"
+        />
+        <img
+          *ngIf="budgetData.status === 'active' && budgetData.overspent"
+          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif"
+          alt="😥"
+          width="24"
+          height="24"
+          class="mt-1"
+        />
+      </div>
+      <div class="text-sm sm:text-base">
+        <!-- Completed & Not Overspent -->
+        <div *ngIf="budgetData.status === 'completed' && !budgetData.overspent">
+          <p class="font-semibold text-green-700">Congratulations!</p>
+          <p class="text-gray-700">
+            You have saved
+            <span class="font-bold">
+              {{ (currency | async)?.symbol }}
+              {{ (budgetData.totalBudget - budgetData.spentAmount) | number }}
+            </span>
+            from your total budget.
+          </p>
+        </div>
+
+        <!-- Active & Not Overspent -->
+        <div *ngIf="budgetData.status === 'active' && !budgetData.overspent">
+          <p class="font-semibold text-green-700">Great Going!</p>
+          <p class="text-gray-700">You are within your budget.</p>
+        </div>
+
+        <!-- Completed & Overspent -->
+        <div *ngIf="budgetData.status === 'completed' && budgetData.overspent">
+          <p class="font-semibold text-red-700">Oops!</p>
+          <p class="text-gray-700">
+            You’ve overspent
+            <span class="font-bold">
+              {{ (currency | async)?.symbol }}
+              {{ (budgetData.totalBudget - budgetData.spentAmount) | number }}
+            </span>
+            from your total budget.
+          </p>
+        </div>
+
+        <!-- Active & Overspent -->
+        <div *ngIf="budgetData.status === 'active' && budgetData.overspent">
+          <p class="font-semibold text-red-700">Slow Down!</p>
+          <p class="text-gray-700">You're on track to exhaust your budget.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Component -->
+  <div class="mt-6">
+    <app-stats [budgetId]="budgetId"></app-stats>
+  </div>
+</div>
+
 
 <app-confirm-modal
   [action]="action"

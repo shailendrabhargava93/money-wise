@@ -37,16 +37,39 @@ export class StatsComponent implements OnInit {
   public doughnutChartLabels: any[] = [];
   public doughnutChartDatasets: any[] = [];
 
-  //bar
   public barChartOptions = {
     responsive: true,
     aspectRatio: 1,
     scales: {
+      x: {
+        grid: {
+          display: false, // ❌ removes vertical grid lines
+        },
+        ticks: {
+          maxRotation: 0,
+          minRotation: 0,
+        },
+        // Adjust bar thickness
+        barPercentage: 0.4, // controls individual bar width
+        categoryPercentage: 0.5, // controls category (group) width
+      },
       y: {
         beginAtZero: true,
+        grid: {
+          display: false, // ❌ removes horizontal grid lines
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        enabled: true,
       },
     },
   };
+
   public barChartLabels: string[] = [];
   public barChartData: any[] = [];
 
@@ -157,11 +180,12 @@ export class StatsComponent implements OnInit {
     this.barChartData = [
       {
         data: dateAmounts.map((el) => el),
-        label: 'Amount',
+        label: 'Expenditure',
         backgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
         borderColor: 'white',
         hoverBackgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
         hoverBorderColor: 'white',
+        barThickness: 15,
       },
     ];
   }
@@ -200,19 +224,7 @@ export class StatsComponent implements OnInit {
     }
   }
 
-  colorScheme = [
-    '#74bdcb',
-    '#ffa384',
-    '#efe7bc',
-    '#a888a0',
-    '#cd6858'
-  ];
+  colorScheme = ['#74bdcb', '#ffa384', '#efe7bc', '#a888a0', '#cd6858'];
 
-  colorScheme2 = [
-    '#145da0',
-    '#75e6da',
-    '#167d7f',
-    '#98d7c2',
-    '#a3ebb1'
-  ];
+  colorScheme2 = ['#145da0', '#75e6da', '#167d7f', '#98d7c2', '#a3ebb1'];
 }

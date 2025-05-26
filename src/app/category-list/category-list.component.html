@@ -1,101 +1,81 @@
-<!-- LABELS -->
-<div class="py-3 p-2 inline">
-  <span class="float-left text-md font-semibold text-gray-600">Labels</span>
+<!-- LABELS SECTION -->
+<div class="py-2">
+  <h2 class="text-base sm:text-lg font-semibold text-gray-700">Labels</h2>
 </div>
-<div class="container py-2 mx-auto flex">
-  <div class="w-full p-2 border bg-white rounded-md shadow-dashboard mb-2">
-    <div class="flex flex-wrap" *ngIf="labelListData.length > 0">
-      <div
-        *ngFor="let lb of labelListData; let i = index"
-        class="w-full flex flex-wrap items-center justify-between py-2"
-      >
-        <div class="w-auto p-0.5">
-          <div class="flex flex-wrap items-center">
-            <div class="w-auto p-0.5">
-              <div
-                class="flex items-center justify-center w-12 h-12 bg-gray-50 rounded-md"
-              >
-                <img
-                  [src]="getLabelIcon(lb.label)"
-                  class="object-cover w-12 h-12"
-                />
-              </div>
+
+<div class="container mx-auto py-2">
+  <div class="bg-white border rounded-xl shadow-md p-4">
+    <ng-container *ngIf="labelListData.length > 0; else noLabels">
+      <div class="flex flex-col divide-y divide-gray-200">
+        <div
+          *ngFor="let lb of labelListData"
+          class="flex items-center justify-between py-3"
+        >
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 bg-gray-50 rounded-md flex items-center justify-center">
+              <img
+                [src]="getLabelIcon(lb.label)"
+                class="w-10 h-10 object-contain"
+                alt="label icon"
+              />
             </div>
-            <div class="w-auto p-0.5">
-              <h2 class="text-sm font-medium text-coolGray-900">
-                {{ lb.label }}
-              </h2>
-              <h3 class="text-xs text-coolGray-400">
-                {{ lb.count }} transactions
-              </h3>
+            <div>
+              <h3 class="text-sm font-medium text-gray-800">{{ lb.label }}</h3>
+              <p class="text-xs text-gray-500">{{ lb.count }} transactions</p>
             </div>
           </div>
-        </div>
-        <div class="w-auto p-0.5">
-          <p class="text-sm text-coolGray-500 font-medium">
+          <div class="text-sm font-medium text-gray-600">
             {{ (currency | async)?.symbol }} {{ lb.sum }}
-          </p>
+          </div>
         </div>
-        <div
-          *ngIf="i < labelListData.length - 1"
-          class="w-full border-b border-gray-200 my-2"
-        ></div>
       </div>
-    </div>
-    <div
-      class="h-10 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md"
-      *ngIf="labelListData.length == 0"
-    >
-      <p class="text-gray-500">No Data found</p>
-    </div>
+    </ng-container>
+
+    <!-- No Data State -->
+    <ng-template #noLabels>
+      <div class="flex flex-col items-center justify-center py-8 text-gray-500 text-center">
+        <div class="text-3xl mb-2">🏷️</div>
+        <p class="text-sm font-medium">No label data available</p>
+      </div>
+    </ng-template>
   </div>
 </div>
 
-<!-- CATEGORIES -->
-<div class="py-3 p-2 inline">
-  <span class="float-left text-md font-semibold text-gray-600"
-    >Category breakdown</span
-  >
+<!-- CATEGORIES SECTION -->
+<div class="py-2">
+  <h2 class="text-base sm:text-lg font-semibold text-gray-700">Category Breakdown</h2>
 </div>
-<br />
-<div class="container py-2 mx-auto flex">
-  <div class="w-full p-2 border bg-white rounded-md shadow-dashboard mb-4">
-    <div class="flex flex-wrap" *ngIf="categoryData.length > 0">
-      <div
-        *ngFor="let cat of categoryData; let i = index"
-        class="w-full flex flex-wrap items-center justify-between py-2"
-      >
-        <div class="w-auto p-0.5">
-          <div class="flex flex-wrap items-center">
-            <div class="w-auto p-0.5">
+
+<div class="container mx-auto py-2">
+  <div class="bg-white border rounded-xl shadow-md p-4">
+    <ng-container *ngIf="categoryData.length > 0; else noCategories">
+      <div class="flex flex-col divide-y divide-gray-200">
+        <div
+          *ngFor="let cat of categoryData"
+          class="flex items-center justify-between py-3"
+        >
+          <div class="flex items-center space-x-3">
+            <div>
               <app-category-icon [category]="cat.category"></app-category-icon>
             </div>
-            <div class="w-auto p-0.5">
-              <h2 class="text-sm font-medium text-coolGray-900">
-                {{ cat.category }}
-              </h2>
-              <h3 class="text-xs text-coolGray-400">
-                {{ cat.count }} transactions
-              </h3>
+            <div>
+              <h3 class="text-sm font-medium text-gray-800">{{ cat.category }}</h3>
+              <p class="text-xs text-gray-500">{{ cat.count }} transactions</p>
             </div>
           </div>
-        </div>
-        <div class="w-auto p-0.5">
-          <p class="text-sm text-coolGray-500 font-medium">
+          <div class="text-sm font-medium text-gray-600">
             {{ (currency | async)?.symbol }} {{ cat.sum }}
-          </p>
+          </div>
         </div>
-        <div
-          *ngIf="i < categoryData.length - 1"
-          class="w-full border-b border-gray-200 my-2"
-        ></div>
       </div>
-    </div>
-    <div
-      class="h-10 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md"
-      *ngIf="labelListData.length == 0"
-    >
-      <p class="text-gray-500">No Data found</p>
-    </div>
+    </ng-container>
+
+    <!-- No Data State -->
+    <ng-template #noCategories>
+      <div class="flex flex-col items-center justify-center py-8 text-gray-500 text-center">
+        <div class="text-3xl mb-2">📂</div>
+        <p class="text-sm font-medium">No category data available</p>
+      </div>
+    </ng-template>
   </div>
 </div>

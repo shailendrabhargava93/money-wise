@@ -1,42 +1,62 @@
-<div class="flex flex-wrap items-center justify-between mb-1 p-2">
+<!-- Top 5 Categories Header -->
+<div class="py-2">
+  <h2 class="text-base sm:text-lg font-semibold text-gray-700">
+    Top 5 Categories
+  </h2>
 </div>
-<div class="py-3 p-2 inline">
-  <span class="text-md font-semibold text-gray-600">Top 5 Categories</span>
-</div>
-<div class="container py-2 mx-auto">
-  <div class="p-4 border bg-white rounded-md shadow-dashboard">
-    <div class="flex flex-wrap" *ngIf="doughnutChartLabels.length > 0">
+
+<!-- Doughnut Chart Card -->
+<div class="container mx-auto py-2">
+  <div class="p-4 bg-white border rounded-xl shadow-md">
+    <div
+      *ngIf="doughnutChartLabels.length > 0"
+      class="flex justify-center items-center"
+    >
       <canvas
         baseChart
         [type]="'doughnut'"
         [datasets]="doughnutChartDatasets"
         [labels]="doughnutChartLabels"
         [options]="doughnutChartOptions"
-      >
-      </canvas>
+      ></canvas>
     </div>
+
+    <!-- No Category Data -->
     <div
-        class="h-10 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md"
-        *ngIf="doughnutChartLabels.length == 0"
-      >
-        <p class="text-gray-500">No Data found</p>
-      </div>
+      *ngIf="doughnutChartLabels.length === 0"
+      class="flex flex-col items-center justify-center text-center text-gray-500 py-8"
+    >
+      <div class="text-3xl mb-2">📊</div>
+      <p class="text-sm font-medium">No category data available</p>
+    </div>
   </div>
 </div>
 
-<div class="py-3 p-2 inline">
-  <span class="text-md font-semibold text-gray-600">Weekly Expenditure</span>
+<!-- Weekly Expenditure Header -->
+<div class="py-2">
+  <h2 class="text-base sm:text-lg font-semibold text-gray-700">
+    Weekly Expenditure
+  </h2>
 </div>
-<div class="container py-2 mx-auto">
-  <div class="p-4 border bg-white rounded-md shadow-dashboard">
-    <div class="flex flex-wrap items-center justify-between mb-1 -m-2">
-      <div class="w-auto p-2">
-          <nz-tabset [nzSize]="'small'" [nzSelectedIndex]="index">
-            <nz-tab *ngFor="let week of allWeeks" [nzTitle]="week" (nzClick)="onClick(week)"></nz-tab>
-          </nz-tabset>
-      </div>
+
+<!-- Bar Chart Card -->
+<div class="container mx-auto py-2">
+  <div class="p-4 bg-white border rounded-xl shadow-md">
+    <div class="mb-4">
+      <nz-tabset [nzSize]="'small'" [nzSelectedIndex]="index">
+        <nz-tab
+          *ngFor="let week of allWeeks"
+          [nzTitle]="week"
+          (nzClick)="onClick(week)"
+        ></nz-tab>
+      </nz-tabset>
     </div>
-    <div class="flex flex-wrap"  *ngIf="barChartLabels.length > 0">
+
+    <!-- Bar Chart -->
+    <div
+      *ngIf="barChartLabels.length > 0"
+      class="flex justify-center items-center"
+    >
       <canvas
         baseChart
         [datasets]="barChartData"
@@ -45,13 +65,21 @@
         chartType="bar"
       ></canvas>
     </div>
+
+    <!-- No Bar Chart Data -->
     <div
-        class="h-10 bg-white text-md flex items-center justify-center text-center px-6 py-10 rounded-md"
-        *ngIf="doughnutChartLabels.length == 0"
-      >
-        <p class="text-gray-500">No Data found</p>
-      </div>
+      *ngIf="barChartLabels.length === 0"
+      class="flex flex-col items-center justify-center text-center text-gray-500 py-8"
+    >
+      <div class="text-3xl mb-2">📉</div>
+      <p class="text-sm font-medium">No weekly expenditure data</p>
+    </div>
   </div>
 </div>
 
-<app-category-list [categoryData]="categoryListData" [labelListData]="labelListData"></app-category-list>
+<!-- Category List -->
+<app-category-list
+  [categoryData]="categoryListData"
+  [labelListData]="labelListData"
+>
+</app-category-list>
