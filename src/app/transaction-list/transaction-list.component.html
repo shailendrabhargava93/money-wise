@@ -1,6 +1,5 @@
-<div class="py-4 mb-6 rounded-2xl">
   <nz-list>
-    <div class="mx-auto flex flex-col w-full px-4 max-w-2xl">
+    <div class="mx-auto flex flex-col w-full max-w-2xl" [ngClass]="{ 'px-4': padded }">
       <ul class="flex flex-col">
         <li
           class="flex mb-3"
@@ -54,7 +53,6 @@
       </button>
     </div>
   </nz-list>
-</div>
 
 <!-- Empty State -->
 <nz-empty

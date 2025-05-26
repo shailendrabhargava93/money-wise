@@ -3,7 +3,7 @@ import { STATUS } from './../status.enum';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
-import { catchError, of, switchMap, EMPTY } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-budgets',
@@ -11,7 +11,7 @@ import { catchError, of, switchMap, EMPTY } from 'rxjs';
   styleUrls: ['./budgets.component.css'],
 })
 export class BudgetsComponent implements OnInit {
-  budgets: any[] = [];
+  budgets!: any[];
   currency = this.app.currency$;
 
   isVisible = false;
@@ -29,7 +29,7 @@ export class BudgetsComponent implements OnInit {
         catchError((error) => {
           console.error('Error occurred getBudgets:', error);
           this.app.hideSpinner();
-          return EMPTY;
+          return of([]);
         }),
         tap(() => this.app.hideSpinner())
       )
@@ -41,6 +41,7 @@ export class BudgetsComponent implements OnInit {
         } else {
           localStorage.setItem('isBudgetAvailable', 'false');
           this.app.isBudgetAvailableSub.next(false);
+          this.budgets = data;
         }
       });
   }
