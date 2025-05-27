@@ -88,9 +88,9 @@ export class AddTransactionComponent implements OnInit {
         }
       });
 
-    for (var n in CAT_ICON) {
-      const icon = CAT_ICON[n as keyof typeof CAT_ICON];
-      this.categories.push({ name: n, icon: `/assets/icons/${icon}.png` });
+    for (var cat in CAT_ICON) {
+      const icon = CAT_ICON[cat as keyof typeof CAT_ICON];
+      this.categories.push({ name: cat, icon: icon });
     }
     this.categories.sort((a, b) =>
       a.name > b.name ? 1 : b.name > a.name ? -1 : 0
@@ -138,7 +138,7 @@ export class AddTransactionComponent implements OnInit {
   get selectedCatIcon() {
     const icon =
       CAT_ICON[this.form.get('category')?.value as keyof typeof CAT_ICON];
-    return `/assets/icons/${icon}.png`;
+    return icon;
   }
 
   submitForm(): void {

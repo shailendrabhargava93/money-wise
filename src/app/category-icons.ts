@@ -1,19 +1,19 @@
 export enum CAT_ICON {
-  'Shopping' = 'shopping',
-  'Bills' = 'bills',
-  'Housing' = 'house',
-  'Food' = 'eating',
-  'Fuel' = 'gas',
-  'Groceries' = 'groceries',
-  'Healthcare' = 'health',
-  'Internet' = 'internet',
-  'Entertainment' = 'movies',
-  'Travel' = 'plane',
-  'Subscriptions' = 'stream',
-  'Transportation' = 'taxi',
-  'Fitness' = 'gym',
-  'Other' = 'other',
-  'Utilities' = 'utilities'
+  'Shopping' = '🛍️',
+  'Bills' = '📄',
+  'Housing' = '🏠',
+  'Food' = '🍽️',
+  'Fuel' = '⛽',
+  'Groceries' = '🛒',
+  'Healthcare' = '🏥',
+  'Internet' = '🌐',
+  'Entertainment' = '🎬',
+  'Travel' = '✈️',
+  'Subscriptions' = '📺',
+  'Transportation' = '🚗',
+  'Fitness' = '🏋️',
+  'Other' = '📦',
+  'Utilities' = '💡'
 }
 
 export enum LABEL_ICON {

@@ -108,17 +108,15 @@
           type="button"
           *ngFor="let cat of categories"
           (click)="onSelect(cat.name)"
+          class="cursor-pointer"
         >
           <span
             [class.active]="selectedCategories.includes(cat.name)"
-            class="inline-flex items-center px-3 py-1 text-xs text-indigo-600 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-50 transition"
+            class="inline-flex items-center px-3 py-2 text-sm text-indigo-600 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-50 transition"
+            [class.bg-indigo-100]="selectedCategories.includes(cat.name)"
+            [class.border-indigo-400]="selectedCategories.includes(cat.name)"
           >
-            <img
-              [src]="cat.icon"
-              class="w-4 h-4 mr-1 object-cover"
-              alt="{{ cat.name }}"
-              loading="lazy"
-            />
+            <span class="text-md w-5 h-5 mr-2 object-cover flex items-center justify-center">{{ cat.icon }}</span>
             <span class="capitalize">{{ cat.name }}</span>
           </span>
         </button>

@@ -72,7 +72,7 @@ export class TransactionsComponent implements OnInit {
 
   onSearchChange(query: string): void {
     // You can call a service or filter the transactions here
-    this.allTransactions.filter(txn =>
+    this.allTransactions.filter((txn) =>
       txn.data.title.toLowerCase().includes(query.toLowerCase())
     );
   }
@@ -82,17 +82,12 @@ export class TransactionsComponent implements OnInit {
     this.onSearchChange('');
   }
 
-
   openFilters(): void {
     this.app.currency.subscribe((m) => (this.currency = m?.symbol));
     this.visibleFilters = true;
-    for (var n in CAT_ICON) {
-      const icon = CAT_ICON[n as keyof typeof CAT_ICON];
-      this.categories.push({ name: n, icon: `/assets/icons/${icon}.png` });
-    }
-    this.categories.sort((a, b) =>
-      a.name > b.name ? 1 : b.name > a.name ? -1 : 0
-    );
+    this.categories = Object.entries(CAT_ICON)
+      .map(([name, icon]) => ({ name, icon }))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }
 
   closeFilters(): void {
