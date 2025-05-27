@@ -1,13 +1,32 @@
 import { AppService } from './../app.service';
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+
+interface Currency {
+  currency: string;
+  symbol: string;
+  flag: string;
+  name?: string;
+}
 
 @Component({
   selector: 'app-currency-modal',
   templateUrl: './currency-modal.component.html',
   styleUrls: ['./currency-modal.component.css'],
 })
-export class CurrencyModalComponent implements OnInit {
+export class CurrencyModalComponent implements OnInit, OnDestroy {
   private _visible: boolean = false;
+  private dataLoaded: boolean = false;
+  private searchSubject = new Subject<string>();
+  private destroy$ = new Subject<void>();
 
   @Input()
   set visible(value: boolean) {
@@ -25,18 +44,30 @@ export class CurrencyModalComponent implements OnInit {
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
 
   selectedCurrency!: string;
-  searchCurrency!: string;
-  globalCurrencyData: any[] = [];
-  currencyData: any[] = [];
-  private dataLoaded: boolean = false;
+  searchCurrency: string = '';
+  globalCurrencyData: Currency[] = [];
+  currencyData: Currency[] = [];
+  filteredCurrencies: Currency[] = [];
 
   constructor(private app: AppService) {}
 
   ngOnInit() {
-    // Only subscribe to currency changes
+    // Subscribe to currency changes
     this.app.currency.subscribe(
       (c) => (this.selectedCurrency = c?.name as string)
     );
+
+    // Setup debounced search
+    this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe((searchTerm) => {
+        this.performSearch(searchTerm);
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private loadCurrencyData() {
@@ -48,14 +79,15 @@ export class CurrencyModalComponent implements OnInit {
             : -1;
         });
         this.currencyData = this.extractInfo(data);
-        this.globalCurrencyData = this.currencyData;
+        this.globalCurrencyData = [...this.currencyData];
+        this.filteredCurrencies = [...this.currencyData];
         this.dataLoaded = true;
       }
     });
   }
 
-  extractInfo(data: any[]): any[] {
-    let modifiedObjects: any[] = [];
+  extractInfo(data: any[]): Currency[] {
+    let modifiedObjects: Currency[] = [];
 
     for (let obj of data) {
       if (Object.keys(obj.currencies).length > 0) {
@@ -64,7 +96,7 @@ export class CurrencyModalComponent implements OnInit {
         let currencySymbol = obj.currencies[currencyCode].symbol;
         let flag = obj.flags.svg;
 
-        let newObject = {
+        let newObject: Currency = {
           currency: currencyName,
           symbol: currencySymbol,
           flag: flag,
@@ -75,28 +107,60 @@ export class CurrencyModalComponent implements OnInit {
     return modifiedObjects;
   }
 
-  update() {
-    const obj = this.currencyData.find(
-      (c) => c.currency == this.selectedCurrency
-    );
-    const updated = { name: obj.currency, symbol: obj.symbol };
-    localStorage.setItem('currency', JSON.stringify(updated));
-    this.app.currencySub.next(updated);
-    this.close();
+  onSearchInput(event: Event) {
+    const target = event.target as HTMLInputElement;
+    this.searchCurrency = target.value;
+    this.searchSubject.next(this.searchCurrency);
   }
 
   search() {
-    if (this.searchCurrency && this.searchCurrency.length > 1) {
-      this.currencyData = this.currencyData.filter((c) =>
-        c.currency.toLowerCase().includes(this.searchCurrency.toLowerCase())
-      );
-    } else {
-      this.currencyData = this.globalCurrencyData;
+    this.performSearch(this.searchCurrency);
+  }
+
+  private performSearch(searchTerm: string) {
+    if (!searchTerm || searchTerm.trim() === '') {
+      this.filteredCurrencies = [...this.globalCurrencyData];
+      return;
     }
+
+    const term = searchTerm.toLowerCase().trim();
+    this.filteredCurrencies = this.globalCurrencyData.filter(
+      (currency) =>
+        currency.currency.toLowerCase().includes(term) ||
+        currency.symbol.toLowerCase().includes(term)
+    );
+  }
+
+  clearSearch(): void {
+    this.searchCurrency = '';
+    this.filteredCurrencies = [...this.globalCurrencyData];
+    this.searchSubject.next('');
+  }
+
+  update() {
+    const obj = this.filteredCurrencies.find(
+      (c) => c.currency == this.selectedCurrency
+    );
+    if (obj) {
+      const updated = { name: obj.currency, symbol: obj.symbol };
+      localStorage.setItem('currency', JSON.stringify(updated));
+      this.app.currencySub.next(updated);
+    }
+    this.close();
   }
 
   close() {
-    this.visible = false;
-    this.closeModal.emit(this.visible);
+    this._visible = false;
+    this.closeModal.emit(this._visible);
+  }
+
+  trackByCurrency(index: number, currency: Currency): string {
+    return currency.currency;
+  }
+
+  onImageError(event: Event) {
+    const img = event.target as HTMLImageElement;
+    // Set a fallback image or hide the image
+    img.style.display = 'none';
   }
 }
