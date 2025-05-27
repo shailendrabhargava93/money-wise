@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-transaction.component.css'],
 })
 export class AddTransactionComponent implements OnInit {
-  form: FormGroup;
+  txnForm: FormGroup;
   categories: any[] = [];
   userEmail$ = this.app.userEmail;
   currency = this.app.currency$;
@@ -31,7 +31,7 @@ export class AddTransactionComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.form = this.fb.group({
+    this.txnForm = this.fb.group({
       title: [null, [Validators.required]],
       amount: [null, [Validators.required]],
       category: [null, [Validators.required]],
@@ -44,7 +44,7 @@ export class AddTransactionComponent implements OnInit {
 
   ngOnInit() {
     this.userEmail$.subscribe((user) =>
-      this.form.controls['user'].setValue(user)
+      this.txnForm.controls['user'].setValue(user)
     );
 
     this.app.userEmail
@@ -65,7 +65,7 @@ export class AddTransactionComponent implements OnInit {
             };
           });
           if (this.budgets?.length === 1) {
-            this.form.controls['budgetId'].setValue(this.budgets[0].id);
+            this.txnForm.controls['budgetId'].setValue(this.budgets[0].id);
           }
         }
       });
@@ -88,22 +88,22 @@ export class AddTransactionComponent implements OnInit {
         }
       });
 
-    for (var n in CAT_ICON) {
-      const icon = CAT_ICON[n as keyof typeof CAT_ICON];
-      this.categories.push({ name: n, icon: `/assets/icons/${icon}.png` });
+    for (var cat in CAT_ICON) {
+      const icon = CAT_ICON[cat as keyof typeof CAT_ICON];
+      this.categories.push({ name: cat, icon: icon });
     }
     this.categories.sort((a, b) =>
       a.name > b.name ? 1 : b.name > a.name ? -1 : 0
     );
     const date = new Date();
-    this.form.controls['date'].setValue(date);
+    this.txnForm.controls['date'].setValue(date);
 
-    this.form.controls['category'].setValue('Other');
+    this.txnForm.controls['category'].setValue('Other');
 
     this.dateSuggestions = ['yesterday', 'tommorrow'];
 
     this.app.getJSON().subscribe((data) => {
-      this.form.get('category')?.valueChanges.subscribe((value) => {
+      this.txnForm.get('category')?.valueChanges.subscribe((value) => {
         if (value) {
           const filtered = data.filter((el: any) => el.key === value);
           this.expesneSuggestions =
@@ -137,14 +137,14 @@ export class AddTransactionComponent implements OnInit {
 
   get selectedCatIcon() {
     const icon =
-      CAT_ICON[this.form.get('category')?.value as keyof typeof CAT_ICON];
-    return `/assets/icons/${icon}.png`;
+      CAT_ICON[this.txnForm.get('category')?.value as keyof typeof CAT_ICON];
+    return icon;
   }
 
   submitForm(): void {
-    if (this.form.valid) {
+    if (this.txnForm.valid) {
       this.app.showSpinner();
-      this.app.createTransaction(this.form.value).subscribe(
+      this.app.createTransaction(this.txnForm.value).subscribe(
         (res) => {
           if (res) {
             this.app.hideSpinner();
@@ -159,7 +159,7 @@ export class AddTransactionComponent implements OnInit {
         }
       );
     } else {
-      Object.values(this.form.controls).forEach((control) => {
+      Object.values(this.txnForm.controls).forEach((control) => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
@@ -169,7 +169,7 @@ export class AddTransactionComponent implements OnInit {
   }
 
   onClick(exp: string) {
-    this.form.controls['title'].setValue(exp);
+    this.txnForm.controls['title'].setValue(exp);
   }
 
   getTxn(txnId: string) {
@@ -177,16 +177,16 @@ export class AddTransactionComponent implements OnInit {
     this.app.getTxnById(txnId).subscribe((data) => {
       if (data) {
         this.app.hideSpinner();
-        this.form.patchValue(data);
+        this.txnForm.patchValue(data);
         this.isUpdate = true;
       }
     });
   }
 
   updateTxn() {
-    if (this.form.valid) {
+    if (this.txnForm.valid) {
       this.app.showSpinner();
-      this.app.updateTransaction(this.txnId, this.form.value).subscribe(
+      this.app.updateTransaction(this.txnId, this.txnForm.value).subscribe(
         (res) => {
           if (res) {
             this.app.hideSpinner();
@@ -225,10 +225,10 @@ export class AddTransactionComponent implements OnInit {
     const yesterday = new Date(new Date().setDate(today.getDate() - 1));
     const tommorrow = new Date(new Date().setDate(today.getDate() + 1));
     if (date === 'yesterday') {
-      this.form.controls['date'].setValue(yesterday);
+      this.txnForm.controls['date'].setValue(yesterday);
     }
     if (date === 'tommorrow') {
-      this.form.controls['date'].setValue(tommorrow);
+      this.txnForm.controls['date'].setValue(tommorrow);
     }
   }
 }

@@ -10,3 +10,10 @@ nz-date-picker {
   width: 42px !important;
   background-color: white !important;
 }
+
+.ant-btn[disabled]{
+  background-color: #5e56ec !important;
+  border-color: #5e56ec !important;
+  color:white !important;
+  opacity: 0.5;
+}

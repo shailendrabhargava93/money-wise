@@ -10,10 +10,6 @@
   margin-top: 3px;
 }
 
-[nz-icon]{
-  font-size: 16px;
-}
-
 ::ng-deep.ant-drawer-content{
   border-top-left-radius: 1.2rem;
   border-top-right-radius: 1.2rem;
