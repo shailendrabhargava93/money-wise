@@ -36,6 +36,7 @@ import { CompleteBudgetComponent } from './complete-budget/complete-budget.compo
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CategoryIconComponent } from './category-icon/category-icon.component';
+import { TxnDetailsComponent } from './txn-details/txn-details.component';
 
 registerLocaleData(en);
 
@@ -67,6 +68,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     CompleteBudgetComponent,
     ConfirmModalComponent,
     CategoryIconComponent,
+    TxnDetailsComponent,
   ],
   imports: [
     BrowserModule,

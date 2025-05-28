@@ -102,33 +102,6 @@
   </div>
 </div>
 
-<!-- Personalized Tips with enhanced carousel styling -->
-<div class="container mx-auto px-4 md:px-6 lg:px-8">
-  <div class="py-2 mb-4" *ngIf="isBudgetAvailable | async">
-    <span class="text-xl font-bold text-gray-800 tracking-tight">Personalized Tips</span>
-  </div>
-  <div class="py-6 mb-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
-    <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
-      <div *ngFor="let el of tips" nz-carousel-content>
-        <div class="flex justify-start items-center gap-6 max-w-lg rounded-xl overflow-hidden mx-auto">
-          <div class="w-4/5 p-4">
-            <div class="flex items-center mb-2">
-              <div class="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
-                <span class="text-white text-xs">💡</span>
-              </div>
-              <span class="text-xs font-semibold text-orange-600 uppercase tracking-wide">TIP</span>
-            </div>
-            <p class="text-sm text-gray-700 font-medium leading-relaxed">{{ el.subheading }}</p>
-          </div>
-          <div class="w-1/5 flex justify-center items-center text-3xl">
-            <span>{{ el.icon }}</span>
-          </div>
-        </div>
-      </div>
-    </nz-carousel>
-  </div>
-</div>
-
 <!-- Recent Transactions with modern card design -->
 <div class="container mx-auto px-4 md:px-6 lg:px-8">
   <!-- Header -->
@@ -174,5 +147,32 @@
         [enableEmpty]="false"
         [padded]="false"
       ></app-transaction-list>
+  </div>
+</div>
+
+<!-- Personalized Tips with enhanced carousel styling -->
+<div class="container mx-auto px-4 md:px-6 lg:px-8">
+  <div class="py-2 mb-4" *ngIf="isBudgetAvailable | async">
+    <span class="text-xl font-bold text-gray-800 tracking-tight">Personalized Tips</span>
+  </div>
+  <div class="py-6 mb-4 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
+    <nz-carousel [nzEffect]="'fade'" [nzAutoPlay]="true">
+      <div *ngFor="let el of tips" nz-carousel-content>
+        <div class="flex justify-start items-center gap-6 max-w-lg rounded-xl overflow-hidden mx-auto">
+          <div class="w-4/5 p-4">
+            <div class="flex items-center mb-2">
+              <div class="w-6 h-6 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                <span class="text-white text-xs">💡</span>
+              </div>
+              <span class="text-xs font-semibold text-orange-600 uppercase tracking-wide">TIP</span>
+            </div>
+            <p class="text-sm text-gray-700 font-medium leading-relaxed">{{ el.subheading }}</p>
+          </div>
+          <div class="w-1/5 flex justify-center items-center text-3xl">
+            <span>{{ el.icon }}</span>
+          </div>
+        </div>
+      </div>
+    </nz-carousel>
   </div>
 </div>
