@@ -1,5 +1,4 @@
 import { AppService } from './../app.service';
-import { Router } from '@angular/router';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -15,15 +14,22 @@ export class TransactionListComponent {
   @Input() emptyMessage: string = 'You have no transactions';
   @Output() loadMoreRecords: EventEmitter<any> = new EventEmitter<any>();
 
+  visibleDetails = false;
+  selectedTxnId!: string;
   currency = this.app.currency$;
 
-  constructor(private router: Router, private app: AppService) {}
+  constructor(private app: AppService) {}
 
-  onTxn(txnId: string) {
-    this.router.navigate(['edit-transaction', txnId]);
+  openDetails(txnId: string) {
+    this.selectedTxnId = txnId;
+    this.visibleDetails = true;
   }
 
   onLoadMore() {
     this.loadMoreRecords.emit();
+  }
+
+  closeDetails() {
+    this.visibleDetails = false;
   }
 }
