@@ -1,9 +1,9 @@
-import { tap } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import { STATUS } from './../status.enum';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
-import { catchError, of, switchMap } from 'rxjs';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-budgets',
@@ -26,6 +26,16 @@ export class BudgetsComponent implements OnInit {
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getBudgets(user as string, STATUS.ACTIVE)),
+        map((response: any) => {
+          const budgets = response?.data || response || [];
+          const budgetArray = Array.isArray(budgets) ? budgets : [];
+
+          return budgetArray.sort((a, b) => {
+            const createdDateA = new Date(a.createdDate);
+            const createdDateB = new Date(b.createdDate);
+            return createdDateB.getTime() - createdDateA.getTime();
+          });
+        }),
         catchError((error) => {
           console.error('Error occurred getBudgets:', error);
           this.app.hideSpinner();

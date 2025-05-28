@@ -32,6 +32,4 @@ export class TransactionListComponent {
   closeDetails() {
     this.visibleDetails = false;
   }
-
-
 }
