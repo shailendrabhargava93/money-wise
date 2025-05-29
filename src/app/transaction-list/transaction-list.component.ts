@@ -1,17 +1,17 @@
 import { AppService } from './../app.service';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-transaction-list',
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.css'],
 })
-export class TransactionListComponent {
+export class TransactionListComponent implements OnInit{
   @Input() allTransactions!: any[];
   @Input() loadMore: boolean = false;
   @Input() enableEmpty: boolean = true;
   @Input() padded: boolean = true;
-  @Input() emptyMessage: string = 'You have no transactions';
+  @Input() emptyMessage!: string;
   @Output() loadMoreRecords: EventEmitter<any> = new EventEmitter<any>();
 
   visibleDetails = false;
@@ -19,6 +19,11 @@ export class TransactionListComponent {
   currency = this.app.currency$;
 
   constructor(private app: AppService) {}
+  ngOnInit(): void {
+    this.app.getMessage().subscribe(message => {
+      this.emptyMessage = message;
+    });
+  }
 
   openDetails(txnId: string) {
     this.selectedTxnId = txnId;

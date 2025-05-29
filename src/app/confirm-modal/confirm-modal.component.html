@@ -8,7 +8,7 @@
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>
-    <div class="flex flex-col h-[35vh] justify-center items-center">
+    <div class="flex flex-col h-[30vh] justify-center items-center">
       <img
         *ngIf="action === 'complete'"
         class="h-[12rem]"
@@ -28,11 +28,11 @@
       </h3>
       <h3
         *ngIf="action === 'delete'"
-        class="mt-1 text-sm text-center text-gray-500 text-semibold"
+        class="mt-1 text-sm text-center text-red-500 text-semibold"
       >
         Are you sure, you want to delete the budget ?
       </h3>
-      <span *ngIf="action === 'delete'" class="text-xs text-red-400">All the transactions of the budget will be deleted</span>
+      <span *ngIf="action === 'delete'" class="text-xs text-gray-400">All the transactions of the budget will be deleted</span>
     </div>
   </ng-container>
 </nz-drawer>

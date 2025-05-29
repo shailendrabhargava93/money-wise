@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
@@ -10,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./more.component.css'],
 })
 export class MoreComponent implements OnInit {
+  appVersion = environment.appVersion;
   enableCurrencyModal = false;
   enableOtherModal = false;
   enableAbout = false;

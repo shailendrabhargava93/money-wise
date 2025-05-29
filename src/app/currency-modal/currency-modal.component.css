@@ -29,9 +29,8 @@
 }
 
 .currency-list-container {
-  max-height: 60vh;
+  max-height: 75vh;
   overflow-y: auto;
-  padding-bottom: 20px;
 }
 
 .currency-list-container::-webkit-scrollbar {
@@ -55,7 +54,7 @@
 .currency-option {
   display: block !important;
   width: 100%;
-  padding: 12px 16px;
+  padding: 5px 16px;
   background: white;
   border-radius: 12px;
   border: 2px solid transparent;

@@ -45,6 +45,7 @@ export class AppService {
     }
   );
   public currency$: Observable<Currency>;
+  private messageSubject = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
@@ -71,6 +72,14 @@ export class AppService {
 
   public getJSON(): Observable<any> {
     return this.http.get('./assets/category-expense-suggestions.json');
+  }
+
+  getMessage(): Observable<string> {
+    return this.messageSubject.asObservable();
+  }
+
+  updateMessage(message: string) {
+    this.messageSubject.next(message);
   }
 
   getTransactions(email: string, pageNumber: number, count?: number) {

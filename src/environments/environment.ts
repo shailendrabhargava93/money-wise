@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  appVersion : require('package.json').version + '-dev',
   apiUrl: 'http://localhost:8000/',
   firebase :{
     apiKey: "AIzaSyAi1PE68D-0MaaOwmyTTJPSy1p6sLXGE58",
