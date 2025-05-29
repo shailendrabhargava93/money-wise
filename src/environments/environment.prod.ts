@@ -1,5 +1,6 @@
 export const environment = {
-  production: false,
+  production: true,
+  appVersion : require('package.json').version,
   apiUrl: 'https://budget-app-backend-ten.vercel.app/',
   firebase: {
     apiKey: 'AIzaSyAi1PE68D-0MaaOwmyTTJPSy1p6sLXGE58',

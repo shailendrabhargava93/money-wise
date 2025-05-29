@@ -12,7 +12,7 @@ export enum CAT_ICON {
   'Subscriptions' = '📺',
   'Transportation' = '🚗',
   'Fitness' = '🏋️',
-  'Other' = '📦',
+  'Other' = '🗃️',
   'Utilities' = '💡'
 }
 

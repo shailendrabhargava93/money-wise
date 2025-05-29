@@ -150,6 +150,7 @@ export class CurrencyModalComponent implements OnInit, OnDestroy {
   }
 
   close() {
+    this.clearSearch();
     this._visible = false;
     this.closeModal.emit(this._visible);
   }

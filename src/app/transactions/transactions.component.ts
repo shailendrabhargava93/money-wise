@@ -1,85 +1,110 @@
-import { catchError, switchMap } from 'rxjs/operators';
-import { CAT_ICON } from './../category-icons';
-import { AppService } from './../app.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AppService } from '../app.service';
+import { CAT_ICON } from '../category-icons';
+
+interface Transaction {
+  data: {
+    title: string;
+    date: string;
+    amount: number;
+  };
+}
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.css'],
 })
-export class TransactionsComponent implements OnInit {
-  allTransactions!: any[];
+export class TransactionsComponent implements OnInit, OnDestroy {
+  allTransactions!: Transaction[];
   categories: any[] = [];
   sortingType = 'date-asc';
   visibleFilters = false;
   visibleSorting = false;
   showDot = false;
   selectedCategories: string[] = [];
-  amountRange!: any[];
+  amountRange: number[] = [];
   highestAmount!: number;
-
+  searchQuery = '';
   message!: string;
-  pageNumber: number = 1;
+  pageNumber = 1;
   loadingMore = false;
   currency!: string | undefined;
+  private subscriptions: Subscription[] = [];
+
   constructor(private app: AppService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getTransactions();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   onLoadMore(): void {
-    this.pageNumber = this.pageNumber + 1;
+    this.pageNumber++;
     this.getTransactions();
   }
 
-  private getTransactions() {
+  private getTransactions(): void {
     this.app.showSpinner();
-    this.app.userEmail
+    const subscription = this.app.userEmail
       .pipe(
         switchMap((user) =>
           this.app.getTransactions(user as string, this.pageNumber)
         ),
         catchError((error) => {
-          console.error('Error occurred getTransactions:', error);
-          this.app.hideSpinner();
-          this.loadingMore = false;
+          this.getTransactionsError(error);
           return of([]);
         })
       )
-      .subscribe((data: any) => {
-        if (data && data.txns) {
-          this.app.hideSpinner();
-          if (this.pageNumber > 1) {
-            this.allTransactions = this.allTransactions.concat(data.txns);
-          } else {
-            this.allTransactions = data.txns as any[];
-          }
-          if (this.allTransactions && this.allTransactions.length > 0) {
-            this.sort();
-            this.highestAmount = data.max;
-          }
-          this.loadingMore = data.count > this.allTransactions.length;
-        } else {
-          this.allTransactions = data;
-        }
+      .subscribe((data) => {
+        this.getTransactionsSuccess(data);
       });
+    this.subscriptions.push(subscription);
   }
 
-  searchQuery = '';
+  private getTransactionsSuccess(data: any): void {
+    this.app.hideSpinner();
+    if (this.pageNumber > 1) {
+      this.allTransactions = this.allTransactions.concat(data.txns);
+    } else {
+      this.allTransactions = data.txns;
+    }
+    if (this.allTransactions && this.allTransactions.length > 0) {
+      this.sort();
+      this.highestAmount = data.max;
+    }
+    if (this.allTransactions.length == 0) {
+      this.app.updateMessage('You have no transactions');
+    }
+    this.loadingMore = data.count > this.allTransactions.length;
+  }
+
+  private getTransactionsError(error: any): void {
+    this.app.hideSpinner();
+    this.loadingMore = false;
+    console.error('error orrurced in getTransactions');
+  }
 
   onSearchChange(query: string): void {
-    // You can call a service or filter the transactions here
-    this.allTransactions.filter((txn) =>
-      txn.data.title.toLowerCase().includes(query.toLowerCase())
-    );
+    if (query.trim() === '') {
+      this.getTransactions();
+    } else {
+      // const subscription = this.app.getTransactionsBySearch(query).subscribe((data) => {
+      //   this.allTransactions = data;
+      // });
+      // this.subscriptions.push(subscription);
+    }
   }
 
   clearSearch(): void {
     this.searchQuery = '';
-    this.onSearchChange('');
+    this.getTransactions();
   }
 
   openFilters(): void {
@@ -95,7 +120,7 @@ export class TransactionsComponent implements OnInit {
     this.visibleFilters = false;
   }
 
-  onSelect(catName: string) {
+  onSelect(catName: string): void {
     const index = this.selectedCategories.indexOf(catName);
     if (index > -1) {
       this.selectedCategories.splice(index, 1);
@@ -104,12 +129,16 @@ export class TransactionsComponent implements OnInit {
     }
   }
 
-  apply() {
+  apply(): void {
+    if (this.selectedCategories.length === 0 && !this.amountRange) {
+      this.clear();
+      return;
+    }
     this.loadingMore = false;
     this.app.showSpinner();
     this.closeFilters();
     let email;
-    this.app.userEmail.subscribe((m) => (email = m));
+    const subscription = this.app.userEmail.subscribe((m) => (email = m));
     const data = {
       email: email,
       categories: this.selectedCategories,
@@ -117,82 +146,62 @@ export class TransactionsComponent implements OnInit {
       max: this.amountRange ? this.amountRange[1] : null,
     };
     this.app.getFilterTxn(data).subscribe((data) => {
-      if (data) {
-        this.app.hideSpinner();
-        this.allTransactions = data as any[];
-        this.showDot = true;
-        this.message = 'No matching data found';
+      const txns = data as Transaction[];
+      this.app.hideSpinner();
+      this.allTransactions = txns;
+      this.showDot = true;
+      if (txns.length == 0) {
+        this.app.updateMessage('No matching transactions found');
       }
     });
+    this.subscriptions.push(subscription);
   }
 
-  clear() {
+  clear(): void {
     this.showDot = false;
     this.loadingMore = true;
     this.selectedCategories = [];
     this.amountRange = [];
+    this.closeFilters();
     this.getTransactions();
   }
 
-  openSort() {
+  openSort(): void {
     this.visibleSorting = true;
   }
 
-  closeSort() {
+  closeSort(): void {
     this.visibleSorting = false;
   }
 
+  sort(): void {
+    const sortingFunctions: {
+      [key: string]: (a: Transaction, b: Transaction) => number;
+    } = {
+      'date-asc': (a: Transaction, b: Transaction) =>
+        new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+      'date-desc': (a: Transaction, b: Transaction) =>
+        new Date(a.data.date).getTime() - new Date(b.data.date).getTime(),
+      'name-asc': (a: Transaction, b: Transaction) =>
+        a.data.title.toLowerCase().localeCompare(b.data.title.toLowerCase()),
+      'name-desc': (a: Transaction, b: Transaction) =>
+        b.data.title.toLowerCase().localeCompare(a.data.title.toLowerCase()),
+      'amount-asc': (a: Transaction, b: Transaction) =>
+        b.data.amount - a.data.amount,
+      'amount-desc': (a: Transaction, b: Transaction) =>
+        a.data.amount - b.data.amount,
+    };
+
+    this.allTransactions = this.allTransactions.sort(
+      sortingFunctions[this.sortingType]
+    );
+    this.closeSort();
+  }
+
   formatter(value: number): string {
-    if (this.currency != undefined) {
+    if (this.currency) {
       return `${this.currency} ${value}`;
     }
     return `${value}`;
-  }
-
-  sort() {
-    let sortedlist = [];
-    switch (this.sortingType) {
-      case 'date-asc':
-        sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return new Date(a.data.date) > new Date(b.data.date) ? -1 : 1;
-        });
-        break;
-
-      case 'date-desc':
-        sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return new Date(a.data.date) > new Date(b.data.date) ? 1 : -1;
-        });
-        break;
-
-      case 'name-asc':
-        sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.title.toLowerCase() > b.data.title.toLowerCase()
-            ? 1
-            : -1;
-        });
-        break;
-
-      case 'name-desc':
-        sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.title.toLowerCase() > b.data.title.toLowerCase()
-            ? -1
-            : 1;
-        });
-        break;
-
-      case 'amount-asc':
-        sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.amount > b.data.amount ? -1 : 1;
-        });
-        break;
-
-      case 'amount-desc':
-        sortedlist = this.allTransactions.sort((a: any, b: any) => {
-          return a.data.amount > b.data.amount ? 1 : -1;
-        });
-        break;
-    }
-    this.allTransactions = sortedlist;
-    this.closeSort();
   }
 }
