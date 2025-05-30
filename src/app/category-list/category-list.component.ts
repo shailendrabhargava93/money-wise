@@ -12,6 +12,9 @@ export class CategoryListComponent {
   @Input() labelListData: any[] = [];
   currency = this.app.currency$;
 
+  visbleTxnModal = false;
+  selectedCategory!: string;
+  selectedLabel!: string;
   constructor(private app: AppService) {}
 
   getLabelIcon(label: string): string {
@@ -20,5 +23,20 @@ export class CategoryListComponent {
       return `/assets/icons/${icon}.png`;
     }
     return `/assets/icons/other.png`;
+  }
+
+  showTxnListByCat(cat: string) {
+    this.visbleTxnModal = true;
+    this.selectedCategory = cat;
+  }
+
+  showTxnListByLabel(label: string) {
+    this.visbleTxnModal = true;
+    this.selectedLabel = label;
+  }
+  closeTxnList() {
+    this.visbleTxnModal = false;
+    this.selectedLabel = '';
+    this.selectedCategory = '';
   }
 }

@@ -12,7 +12,9 @@
           class="flex items-center justify-between py-3"
         >
           <div class="flex items-center space-x-3">
-            <div class="w-12 h-12 bg-gray-50 rounded-md flex items-center justify-center">
+            <div
+              class="w-12 h-12 bg-gray-50 rounded-md flex items-center justify-center"
+            >
               <img
                 [src]="getLabelIcon(lb.label)"
                 class="w-10 h-10 object-contain"
@@ -21,7 +23,14 @@
             </div>
             <div>
               <h3 class="text-sm font-medium text-gray-800">{{ lb.label }}</h3>
-              <p class="text-xs text-gray-500">{{ lb.count }} transactions</p>
+              <p
+                class="text-xs text-gray-500"
+                (click)="showTxnListByLabel(lb.label)"
+              >
+                {{ lb.count }} transactions&nbsp;<span class="text-[10px]"
+                  >↗</span
+                >
+              </p>
             </div>
           </div>
           <div class="text-sm font-medium text-gray-600">
@@ -33,7 +42,9 @@
 
     <!-- No Data State -->
     <ng-template #noLabels>
-      <div class="flex flex-col items-center justify-center py-8 text-gray-500 text-center">
+      <div
+        class="flex flex-col items-center justify-center py-8 text-gray-500 text-center"
+      >
         <div class="text-3xl mb-2">🏷️</div>
         <p class="text-sm font-medium">No label data available</p>
       </div>
@@ -43,7 +54,9 @@
 
 <!-- CATEGORIES SECTION -->
 <div class="py-2">
-  <h2 class="text-base sm:text-lg font-semibold text-gray-700">Category Breakdown</h2>
+  <h2 class="text-base sm:text-lg font-semibold text-gray-700">
+    Category Breakdown
+  </h2>
 </div>
 
 <div class="container mx-auto py-2">
@@ -59,8 +72,17 @@
               <app-category-icon [category]="cat.category"></app-category-icon>
             </div>
             <div>
-              <h3 class="text-sm font-medium text-gray-800">{{ cat.category }}</h3>
-              <p class="text-xs text-gray-500">{{ cat.count }} transactions</p>
+              <h3 class="text-sm font-medium text-gray-800">
+                {{ cat.category }}
+              </h3>
+              <p
+                class="text-xs text-gray-500"
+                (click)="showTxnListByCat(cat.category)"
+              >
+                {{ cat.count }} transactions&nbsp;<span class="text-[10px]"
+                  >↗</span
+                >
+              </p>
             </div>
           </div>
           <div class="text-sm font-medium text-gray-600">
@@ -72,10 +94,19 @@
 
     <!-- No Data State -->
     <ng-template #noCategories>
-      <div class="flex flex-col items-center justify-center py-8 text-gray-500 text-center">
+      <div
+        class="flex flex-col items-center justify-center py-8 text-gray-500 text-center"
+      >
         <div class="text-3xl mb-2">📂</div>
         <p class="text-sm font-medium">No category data available</p>
       </div>
     </ng-template>
   </div>
 </div>
+
+<app-txn-list-modal
+  [visible]="visbleTxnModal"
+  [category]="selectedCategory"
+  [label]="selectedLabel"
+  (closeModal)="closeTxnList()"
+></app-txn-list-modal>

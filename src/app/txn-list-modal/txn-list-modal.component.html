@@ -1,0 +1,28 @@
+<nz-drawer
+  [nzClosable]="false"
+  [nzVisible]="visible"
+  [nzPlacement]="'bottom'"
+  nzTitle="Transactions"
+  [nzExtra]="extra"
+  (nzOnClose)="close()"
+>
+  <ng-container *nzDrawerContent>
+    <div *ngIf="transactions.length > 0" class="mb-6">
+      <app-transaction-list
+        [allTransactions]="transactions"
+        [loadMore]="false"
+        [enableEmpty]="false"
+        [padded]="false"
+      ></app-transaction-list>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #extra>
+  <span
+    class="cursor-pointer"
+    nz-icon
+    nzType="close-circle"
+    nzTheme="outline"
+    (click)="close()"
+  ></span>
+</ng-template>
