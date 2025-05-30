@@ -37,6 +37,7 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { CategoryIconComponent } from './category-icon/category-icon.component';
 import { TxnDetailsComponent } from './txn-details/txn-details.component';
+import { TxnListModalComponent } from './txn-list-modal/txn-list-modal.component';
 
 registerLocaleData(en);
 
@@ -69,6 +70,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     ConfirmModalComponent,
     CategoryIconComponent,
     TxnDetailsComponent,
+    TxnListModalComponent,
   ],
   imports: [
     BrowserModule,

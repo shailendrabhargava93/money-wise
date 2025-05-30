@@ -1,6 +1,6 @@
 <div class="mx-auto flex items-center justify-end gap-3 px-4 py-2 w-full max-w-2xl">
   <!-- Search with Clear Button -->
-  <div class="relative w-[160px] sm:w-[180px]">
+  <div class="relative w-[160px] sm:w-[425px]">
     <input
       type="text"
       [(ngModel)]="searchQuery"
@@ -130,7 +130,6 @@
         nzRange
         [(ngModel)]="amountRange"
         [nzMax]="highestAmount"
-        [nzTipFormatter]="formatter"
       ></nz-slider>
     </div>
   </ng-container>

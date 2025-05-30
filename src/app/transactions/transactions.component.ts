@@ -198,10 +198,10 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.closeSort();
   }
 
-  formatter(value: number): string {
-    if (this.currency) {
-      return `${this.currency} ${value}`;
-    }
-    return `${value}`;
-  }
+  // formatter(value: number): string {
+  //   if (this.currency) {
+  //     return `${this.currency} ${value}`;
+  //   }
+  //   return `${value}`;
+  // }
 }
