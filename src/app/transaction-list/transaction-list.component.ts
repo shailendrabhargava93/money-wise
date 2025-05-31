@@ -10,6 +10,7 @@ export class TransactionListComponent implements OnInit{
   @Input() allTransactions!: any[];
   @Input() loadMore: boolean = false;
   @Input() enableEmpty: boolean = true;
+  @Input() enableAction: boolean = true;
   @Input() padded: boolean = true;
   @Input() emptyMessage!: string;
   @Output() loadMoreRecords: EventEmitter<any> = new EventEmitter<any>();
@@ -26,8 +27,10 @@ export class TransactionListComponent implements OnInit{
   }
 
   openDetails(txnId: string) {
-    this.selectedTxnId = txnId;
-    this.visibleDetails = true;
+    if(this.enableAction){
+      this.selectedTxnId = txnId;
+      this.visibleDetails = true;
+    }
   }
 
   onLoadMore() {
