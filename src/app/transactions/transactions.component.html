@@ -123,6 +123,28 @@
       </div>
     </div>
 
+    <div class="mb-4">
+      <span class="block text-sm font-semibold text-gray-600 mb-2">Select Label</span>
+      <div class="flex flex-wrap gap-2">
+        <button
+          type="button"
+          *ngFor="let lb of labels"
+          (click)="onSelectLabel(lb)"
+          class="cursor-pointer"
+        >
+          <span
+            [class.active]="selectedLabels.includes(lb)"
+            class="inline-flex items-center px-3 py-2 text-sm text-gray-600 bg-white border border-gray-300 rounded-full shadow-sm hover:bg-gray-50 transition"
+            [class.bg-indigo-100]="selectedLabels.includes(lb)"
+            [class.border-indigo-400]="selectedLabels.includes(lb)"
+          >
+            <!-- <span class="text-md w-5 h-5 mr-2 object-cover flex items-center justify-center">{{ lb.icon }}</span> -->
+            <span class="capitalize">{{ lb }}</span>
+          </span>
+        </button>
+      </div>
+    </div>
+
     <!-- Amount Slider Section -->
     <div class="mb-4">
       <span class="block text-sm font-semibold text-gray-600 mb-2">Amount</span>

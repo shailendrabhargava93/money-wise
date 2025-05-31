@@ -21,11 +21,13 @@ interface Transaction {
 export class TransactionsComponent implements OnInit, OnDestroy {
   allTransactions!: Transaction[];
   categories: any[] = [];
+  labels: any[] = [];
   sortingType = 'date-asc';
   visibleFilters = false;
   visibleSorting = false;
   showDot = false;
   selectedCategories: string[] = [];
+  selectedLabels: string[] = [];
   amountRange: number[] = [];
   highestAmount!: number;
   searchQuery = '';
@@ -66,6 +68,26 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         this.getTransactionsSuccess(data);
       });
     this.subscriptions.push(subscription);
+  }
+
+  getLabels() {
+    this.app.userEmail
+      .pipe(
+        switchMap((user) => this.app.getLabels(user as string)),
+        catchError((error) => {
+          console.error('Error occurred getLabels:', error);
+          this.app.hideSpinner();
+          return of([]);
+        })
+      )
+      .subscribe((data) => {
+        const labels = data as any[];
+        if (labels.length > 0) {
+          this.labels = data as string[];
+        } else {
+          this.labels = ['Not available'];
+        }
+      });
   }
 
   private getTransactionsSuccess(data: any): void {
@@ -110,6 +132,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   openFilters(): void {
     this.app.currency.subscribe((m) => (this.currency = m?.symbol));
     this.visibleFilters = true;
+    this.getLabels();
     this.categories = Object.entries(CAT_ICON)
       .map(([name, icon]) => ({ name, icon }))
       .sort((a, b) => a.name.localeCompare(b.name));
@@ -129,6 +152,15 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     }
   }
 
+  onSelectLabel(label: string): void {
+    const index = this.selectedLabels.indexOf(label);
+    if (index > -1) {
+      this.selectedLabels.splice(index, 1);
+    } else {
+      this.selectedLabels.push(label);
+    }
+  }
+
   apply(): void {
     if (this.selectedCategories.length === 0 && !this.amountRange) {
       this.clear();
@@ -142,6 +174,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     const data = {
       email: email,
       categories: this.selectedCategories,
+      labels: this.selectedLabels,
       min: this.amountRange ? this.amountRange[0] : null,
       max: this.amountRange ? this.amountRange[1] : null,
     };
@@ -162,6 +195,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.loadingMore = true;
     this.selectedCategories = [];
     this.amountRange = [];
+    this.selectedLabels = [];
     this.closeFilters();
     this.getTransactions();
   }
