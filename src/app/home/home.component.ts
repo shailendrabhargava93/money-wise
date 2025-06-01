@@ -1,5 +1,4 @@
 import { STATUS } from './../status.enum';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 import { switchMap, tap, catchError, take, map } from 'rxjs/operators';
@@ -37,21 +36,21 @@ export class HomeComponent implements OnInit {
     },
     {
       icon: '💰', // money bag
-      subheading: 'Allocate a specific amount for non-essential spending each month',
+      subheading:
+        'Allocate a specific amount for non-essential spending each month',
     },
     {
       icon: '📄', // document or statement
-      subheading: 'Regularly check your bank and credit card statements for any discrepancies',
+      subheading:
+        'Regularly check your bank and credit card statements for any discrepancies',
     },
   ];
 
-
-  constructor(private app: AppService, private message: NzMessageService) {
-    this.getGreeting();
-  }
+  constructor(private app: AppService) {}
 
   ngOnInit(): void {
-    const isBudgetAvailable = localStorage.getItem('isBudgetAvailable') === 'true';
+    const isBudgetAvailable =
+      localStorage.getItem('isBudgetAvailable') === 'true';
 
     this.app.userEmail
       .pipe(
@@ -72,10 +71,8 @@ export class HomeComponent implements OnInit {
             // Call all three APIs including budgets
             return forkJoin([
               this.app.getBudgets(user as string, STATUS.ACTIVE),
-              transactionsAndSpent$
-            ]).pipe(
-              map(([buds, [txns, data]]) => [buds, txns, data])
-            );
+              transactionsAndSpent$,
+            ]).pipe(map(([buds, [txns, data]]) => [buds, txns, data]));
           }
         }),
         take(1),
@@ -109,23 +106,5 @@ export class HomeComponent implements OnInit {
           this.weekSpening = spentData.totalAmountThisWeek;
         }
       });
-  }
-
-  getGreeting() {
-    var data: any = [
-        [22, 'Working late'],
-        [18, 'Good evening'],
-        [12, 'Good afternoon'],
-        [5, 'Good morning'],
-        [0, 'Whoa, early bird'],
-      ],
-      hr = new Date().getHours();
-    for (var i = 0; i < data.length; i++) {
-      if (hr >= data[i][0]) {
-        const text = data[i][1];
-        this.greeting = text;
-        break;
-      }
-    }
   }
 }
