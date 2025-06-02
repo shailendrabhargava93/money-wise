@@ -40,6 +40,7 @@ export class AppComponent implements AfterContentChecked, OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.redirect();
     this.subscriptions.push(
       this.app.showPopup$
         .pipe(tap((value) => (this.visible = value)))
@@ -71,6 +72,15 @@ export class AppComponent implements AfterContentChecked, OnInit, OnDestroy {
 
   get isInternetNotConnected(): boolean {
     return this.connectionStatus$.getValue() === 'offline';
+  }
+
+  redirect(){
+    const token = localStorage.getItem('user');
+    if (token != null) {
+      this.router.navigate(['home']);
+    } else {
+      localStorage.clear();
+    }
   }
 
   ngOnDestroy(): void {
