@@ -46,7 +46,7 @@ export class AddTransactionComponent implements OnInit {
     this.userEmail$.subscribe((user) =>
       this.txnForm.controls['user'].setValue(user)
     );
-
+    this.app.showSpinner();
     this.app.userEmail
       .pipe(
         switchMap((user) => this.app.getBudgets(user as string, STATUS.ACTIVE)),
@@ -57,6 +57,7 @@ export class AddTransactionComponent implements OnInit {
         })
       )
       .subscribe((data) => {
+        this.app.hideSpinner();
         if (data) {
           this.budgets = (data as any[]).map((el) => {
             return {
@@ -80,6 +81,7 @@ export class AddTransactionComponent implements OnInit {
         })
       )
       .subscribe((data) => {
+        this.app.hideSpinner();
         const labels = data as any[];
         if (labels.length > 0) {
           this.labels = data as string[];
@@ -124,16 +126,6 @@ export class AddTransactionComponent implements OnInit {
   shuffle = (array: string[]) => {
     return array.sort(() => Math.random() - 0.5);
   };
-
-  private formatDate(date: Date) {
-    return date
-      .toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      })
-      .replace(/ /g, '-');
-  }
 
   get selectedCatIcon() {
     const icon =

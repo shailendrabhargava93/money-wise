@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     const isBudgetAvailable =
       localStorage.getItem('isBudgetAvailable') === 'true';
-
+    this.app.showSpinner();
     this.app.userEmail
       .pipe(
         switchMap((user) => {
