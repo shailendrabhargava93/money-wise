@@ -4,6 +4,8 @@
   [nzPlacement]="'bottom'"
   nzTitle="Transactions"
   [nzExtra]="extra"
+  [nzSize]="transactions.length > 3 ? 'large': 'default'"
+  [nzBodyStyle]="{ padding: '16px 20px', backgroundColor: '#fafafa' }"
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>

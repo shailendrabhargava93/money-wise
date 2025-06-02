@@ -51,7 +51,8 @@ button.active > svg{
 
 button.active > span{
   color: #4f46e5;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 14px;
 }
 
 ::ng-deep.ant-spin-dot-item {

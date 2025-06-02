@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { switchMap, catchError, takeUntil } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AppService } from '../app.service';
 import { CAT_ICON } from '../category-icons';
@@ -36,10 +36,14 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   loadingMore = false;
   currency!: string | undefined;
   private subscriptions: Subscription[] = [];
+  private destroy$ = new Subject<void>();
 
   constructor(private app: AppService) {}
 
   ngOnInit(): void {
+    this.app.currency.pipe(takeUntil(this.destroy$)).subscribe((m) => {
+      this.currency = m?.symbol;
+    });
     this.getTransactions();
   }
 
@@ -130,7 +134,6 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   }
 
   openFilters(): void {
-    this.app.currency.subscribe((m) => (this.currency = m?.symbol));
     this.visibleFilters = true;
     this.getLabels();
     this.categories = Object.entries(CAT_ICON)
@@ -231,6 +234,14 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     );
     this.closeSort();
   }
+
+  hasActiveFilters(): boolean {
+    return this.selectedCategories.length > 0 || this.selectedLabels.length > 0;
+  }
+
+  formatTooltip = (value: number): string => {
+    return `₹${value.toLocaleString()}`;
+  };
 
   // formatter(value: number): string {
   //   if (this.currency) {

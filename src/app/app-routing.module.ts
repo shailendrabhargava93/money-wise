@@ -13,8 +13,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
-  { path: 'main', component: MainCarouselComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // { path: 'main', component: MainCarouselComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   {
