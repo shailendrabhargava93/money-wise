@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
+import { CATEGORIES } from '../category-icons';
 
 @Component({
   selector: 'app-more',
@@ -14,8 +15,10 @@ export class MoreComponent implements OnInit {
   appVersion = environment.appVersion;
   enableCurrencyModal = false;
   enableOtherModal = false;
+  enableCategoryModal = false;
   enableAbout = false;
   enableQuery = false;
+  categories:any[] = [];
 
   currency = this.app.currency$;
   userPhoto$ = this.app.userPhoto;
@@ -47,6 +50,11 @@ export class MoreComponent implements OnInit {
 
   openModal() {
     this.enableOtherModal = !this.enableOtherModal;
+  }
+
+  openCatModal() {
+    this.enableCategoryModal = !this.enableCategoryModal;
+    this.categories = CATEGORIES;
   }
 
   openAbout() {

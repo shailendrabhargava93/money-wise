@@ -150,7 +150,7 @@
         All Categories
       </nz-card>
       <ng-template #cat_title>
-        <span class="cursor-pointer" (click)="openModal()">
+        <span class="cursor-pointer" (click)="openCatModal()">
           Categories
           <span
             class="float-right icon-sm"
@@ -379,6 +379,53 @@
       nzType="close-circle"
       nzTheme="outline"
       (click)="openModal()"
+    ></span>
+  </ng-template>
+
+  <nz-drawer
+    [nzClosable]="false"
+    [nzVisible]="enableCategoryModal"
+    [nzPlacement]="'bottom'"
+    nzTitle="Categories"
+    [nzExtra]="extrasort"
+    (nzOnClose)="openCatModal()"
+    [nzBodyStyle]="{ padding: '16px 20px', backgroundColor: '#fafafa' }"
+
+  >
+    <ng-container *nzDrawerContent>
+      <div class="mb-6 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+
+        <div class="space-y-3">
+          <div
+            *ngFor="let cat of categories"
+            class="cursor-pointer group relative"
+          >
+            <div
+              class="flex items-start p-4 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:bg-gray-50 transition-all duration-200 hover:-translate-y-0.5"
+            >
+              <!-- Icon -->
+              <div class="flex-shrink-0 mr-4">
+                <span class="text-2xl group-hover:scale-110 transition-transform duration-200">{{ cat.icon }}</span>
+              </div>
+
+              <!-- Content -->
+              <div class="flex-grow min-w-0">
+                <h3 class="text-sm font-semibold text-gray-800 capitalize mb-1">{{ cat.name }}</h3>
+                <p class="text-xs text-gray-500 leading-relaxed">{{ cat.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </nz-drawer>
+  <ng-template #extrasort>
+    <span
+      class="cursor-pointer"
+      nz-icon
+      nzType="close-circle"
+      nzTheme="outline"
+      (click)="openCatModal()"
     ></span>
   </ng-template>
 
