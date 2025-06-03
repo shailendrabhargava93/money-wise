@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+::ng-deep.anticon{
+  vertical-align: 2px !important;
+}
+
 nz-header {
   background: #fff;
   padding: 0;

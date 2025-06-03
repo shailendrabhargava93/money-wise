@@ -22,7 +22,7 @@ export class LoginComponent {
     this.angularFireAuth
       .signInWithPopup(new GoogleAuthProvider())
       .then((data) => {
-        this.message.success(`Loggedin successfully !`);
+        this.message.success(`Logged in successfully !`);
         const user = {
           name: data.user?.displayName,
           email: data.user?.email,
@@ -34,16 +34,18 @@ export class LoginComponent {
       })
       .catch((error) => {
         console.error(error);
-        this.message.success(`${error}`);
+        if (error.code === 'auth/popup-closed-by-user') {
+          this.message.error(
+            `Authentication popup was closed. Please try again.`
+          );
+        } else {
+          this.message.error(`${error.message}`);
+        }
         this.router.navigate(['login']);
       });
   }
 
-  loginWithOther() {
-    this.message.warning('We are working on it!');
-  }
-
-  array = [
+  carasoul = [
     {
       heading: 'Welcome to Money Wise',
       subheading:
@@ -65,7 +67,7 @@ export class LoginComponent {
     {
       heading: 'Improve your saving habits',
       subheading:
-        'Boost your financial independence by leveling up your savings habit..',
+        'Boost your financial independence by leveling up your savings habit',
       image: 'assets/slider/Investing-pana.svg',
     },
   ];
