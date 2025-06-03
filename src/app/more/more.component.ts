@@ -18,7 +18,7 @@ export class MoreComponent implements OnInit {
   enableCategoryModal = false;
   enableAbout = false;
   enableQuery = false;
-  categories:any[] = [];
+  categories: any[] = [];
 
   currency = this.app.currency$;
   userPhoto$ = this.app.userPhoto;
@@ -53,8 +53,12 @@ export class MoreComponent implements OnInit {
   }
 
   openCatModal() {
-    this.enableCategoryModal = !this.enableCategoryModal;
+    this.enableCategoryModal = true;
     this.categories = CATEGORIES;
+  }
+
+  closeCatModal() {
+    this.enableCategoryModal = false;
   }
 
   openAbout() {
