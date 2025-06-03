@@ -1,7 +1,6 @@
 import { CompleteBudgetComponent } from './complete-budget/complete-budget.component';
 import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
-import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { BudgetsComponent } from './budgets/budgets.component';
 import { MoreComponent } from './more/more.component';
 import { AddTransactionComponent } from './add-transaction/add-transaction.component';
@@ -14,7 +13,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  // { path: 'main', component: MainCarouselComponent },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
   {

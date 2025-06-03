@@ -53,12 +53,8 @@ export class MoreComponent implements OnInit {
   }
 
   openCatModal() {
-    this.enableCategoryModal = true;
+    this.enableCategoryModal = ! this.enableCategoryModal;
     this.categories = CATEGORIES;
-  }
-
-  closeCatModal() {
-    this.enableCategoryModal = false;
   }
 
   openAbout() {
