@@ -4,11 +4,6 @@
   margin-top: 3px;
 }
 
-::ng-deep.ant-drawer-content{
-  border-top-left-radius: 1.2rem;
-  border-top-right-radius: 1.2rem;
-}
-
 ::ng-deep.ant-slider-track {
   background-color: #4f46e5;
 }

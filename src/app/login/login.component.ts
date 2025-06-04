@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider } from '@firebase/auth';
-import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzMessageRef, NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-login',
@@ -17,30 +17,37 @@ export class LoginComponent {
     private message: NzMessageService,
     private app: AppService
   ) {}
-
+  errorMes!: NzMessageRef;
   loginWithGoogle() {
+    const id = this.message.loading('Processing...').messageId;
     this.angularFireAuth
       .signInWithPopup(new GoogleAuthProvider())
       .then((data) => {
-        this.message.success(`Logged in successfully !`);
+        this.message.remove(id);
+        this.message.success('Logged in successfully!');
+
         const user = {
           name: data.user?.displayName,
           email: data.user?.email,
           photo: data.user?.photoURL,
         };
+
         localStorage.setItem('user', JSON.stringify(user));
         this.app.currentUserSubject.next(user as User);
         this.router.navigate(['home']);
       })
       .catch((error) => {
+        this.message.remove(id); // Remove loading message
         console.error(error);
+
         if (error.code === 'auth/popup-closed-by-user') {
-          this.message.error(
-            `Authentication popup was closed. Please try again.`
+          this.errorMes = this.message.error(
+            'Authentication popup was closed. Please try again.'
           );
         } else {
-          this.message.error(`${error.message}`);
+          this.errorMes = this.message.error(`${error.message}`);
         }
+
         this.router.navigate(['login']);
       });
   }

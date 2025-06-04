@@ -195,7 +195,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   clear(): void {
     this.showDot = false;
-    this.loadingMore = true;
+    this.loadingMore = false;
     this.selectedCategories = [];
     this.amountRange = [];
     this.selectedLabels = [];

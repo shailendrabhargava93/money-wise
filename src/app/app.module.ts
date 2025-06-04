@@ -23,7 +23,6 @@ import * as AllIcons from '@ant-design/icons-angular/icons';
 import { registerLocaleData } from '@angular/common';
 import { MoreComponent } from './more/more.component';
 import { BudgetsComponent } from './budgets/budgets.component';
-import { MainCarouselComponent } from './main-carousel/main-carousel.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { NgChartsModule } from 'ng2-charts';
 import { BudgetOverviewComponent } from './budget-overview/budget-overview.component';
@@ -58,7 +57,6 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     AddTransactionComponent,
     MoreComponent,
     BudgetsComponent,
-    MainCarouselComponent,
     AddBudgetComponent,
     BudgetOverviewComponent,
     CurrencyModalComponent,
