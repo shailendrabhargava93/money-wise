@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
-  appVersion : require('package.json').version,
-  apiUrl: 'https://budget-app-backend-ten.vercel.app/',
+  appVersion: require('package.json').version,
+  apiUrl: 'https://moneywise-api.vercel.app/',
+  //apiUrl: 'https://budget-app-backend-ten.vercel.app/',
   firebase: {
     apiKey: 'AIzaSyAi1PE68D-0MaaOwmyTTJPSy1p6sLXGE58',
     authDomain: 'budget-app-4f8a1.firebaseapp.com',

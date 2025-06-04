@@ -195,18 +195,12 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   clear(): void {
     this.showDot = false;
-    this.loadingMore = true;
+    this.loadingMore = false;
     this.selectedCategories = [];
     this.amountRange = [];
     this.selectedLabels = [];
     this.closeFilters();
-    if (
-      this.selectedCategories.length > 0 ||
-      this.amountRange.length > 0 ||
-      this.selectedLabels.length > 0
-    ) {
-      this.getTransactions();
-    }
+    this.getTransactions();
   }
 
   openSort(): void {
