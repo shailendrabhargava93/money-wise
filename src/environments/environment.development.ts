@@ -4,12 +4,12 @@ export const environment = {
   apiUrl: 'https://moneywise-api.vercel.app/',
   //apiUrl: 'https://budget-app-backend-ten.vercel.app/',
   firebase: {
-    apiKey: 'AIzaSyAi1PE68D-0MaaOwmyTTJPSy1p6sLXGE58',
-    authDomain: 'budget-app-4f8a1.firebaseapp.com',
-    projectId: 'budget-app-4f8a1',
-    storageBucket: 'budget-app-4f8a1.appspot.com',
-    messagingSenderId: '378193728036',
-    appId: '1:378193728036:web:bf8fcb50a1c300e4ef7eb1',
-    measurementId: 'G-F72YZ0S8TR',
+    apiKey: "AIzaSyBv1er2YEv-b0xNJLCX_NQrT0YyCgOvn5c",
+    authDomain: "moneywise-prod-3a838.firebaseapp.com",
+    projectId: "moneywise-prod-3a838",
+    storageBucket: "moneywise-prod-3a838.firebasestorage.app",
+    messagingSenderId: "723873141631",
+    appId: "1:723873141631:web:9c50b41bc9d299adefc04a",
+    measurementId: "G-BZSYGYNME1"
   },
 };
