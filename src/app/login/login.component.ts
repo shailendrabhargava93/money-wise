@@ -1,16 +1,18 @@
 import { AppService, User } from './../app.service';
-import { Component } from '@angular/core';
+import { Component,OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { GoogleAuthProvider } from '@firebase/auth';
 import { NzMessageRef, NzMessageService } from 'ng-zorro-antd/message';
+import { from, Subject } from 'rxjs';
+import { tap, catchError, map, switchMap, finalize, takeUntil } from 'rxjs/operators'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy{
   constructor(
     private angularFireAuth: AngularFireAuth,
     private router: Router,
@@ -18,38 +20,58 @@ export class LoginComponent {
     private app: AppService
   ) {}
   errorMes!: NzMessageRef;
+
+
+  private isLoginInProgress = false;
+
+  private destroy$ = new Subject<void>();
+
   loginWithGoogle() {
+    if (this.isLoginInProgress) {
+      this.errorMes = this.message.error('Another authentication popup is already open. Please try again.');
+      return;
+    }
+    this.isLoginInProgress = true;
+
     const id = this.message.loading('Processing...').messageId;
-    this.angularFireAuth
-      .signInWithPopup(new GoogleAuthProvider())
-      .then((data) => {
-        this.message.remove(id);
-        this.message.success('Logged in successfully!');
+    const authObservable = from(this.angularFireAuth.signInWithPopup(new GoogleAuthProvider()));
 
-        const user = {
-          name: data.user?.displayName,
-          email: data.user?.email,
-          photo: data.user?.photoURL,
-        };
-
+    authObservable.pipe(
+      takeUntil(this.destroy$),
+      tap(() => this.message.remove(id)),
+      map((data:any) => ({
+        name: data.user?.displayName,
+        email: data.user?.email,
+        photo: data.user?.photoURL,
+      })),
+      switchMap((user) => {
         localStorage.setItem('user', JSON.stringify(user));
         this.app.currentUserSubject.next(user as User);
-        this.router.navigate(['home']);
-      })
-      .catch((error) => {
-        this.message.remove(id); // Remove loading message
+        return this.router.navigate(['home']).then(() => user);
+      }),
+      tap(() => this.message.success('Logged in successfully!')),
+      catchError((error: any) => {
+        this.message.remove(id);
         console.error(error);
-
         if (error.code === 'auth/popup-closed-by-user') {
-          this.errorMes = this.message.error(
-            'Authentication popup was closed. Please try again.'
-          );
+          this.errorMes = this.message.error('Authentication popup was closed. Please try again.');
+        } else if (error.code === 'auth/cancelled-popup-request') {
+          this.errorMes = this.message.error('Another authentication popup is already open. Please try again.');
         } else {
           this.errorMes = this.message.error(`${error.message}`);
         }
-
         this.router.navigate(['login']);
-      });
+        throw error; // rethrow error
+      }),
+      finalize(() => {
+        this.isLoginInProgress = false;
+      })
+    ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   carasoul = [
