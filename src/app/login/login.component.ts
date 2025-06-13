@@ -20,10 +20,7 @@ export class LoginComponent implements OnDestroy{
     private app: AppService
   ) {}
   errorMes!: NzMessageRef;
-
-
-  private isLoginInProgress = false;
-
+  isLoginInProgress = false;
   private destroy$ = new Subject<void>();
 
   loginWithGoogle() {
@@ -32,13 +29,11 @@ export class LoginComponent implements OnDestroy{
       return;
     }
     this.isLoginInProgress = true;
-
-    const id = this.message.loading('Processing...').messageId;
-    const authObservable = from(this.angularFireAuth.signInWithPopup(new GoogleAuthProvider()));
+    const provider = new GoogleAuthProvider();
+    const authObservable = from(this.angularFireAuth.signInWithPopup(provider));
 
     authObservable.pipe(
       takeUntil(this.destroy$),
-      tap(() => this.message.remove(id)),
       map((data:any) => ({
         name: data.user?.displayName,
         email: data.user?.email,
@@ -51,7 +46,6 @@ export class LoginComponent implements OnDestroy{
       }),
       tap(() => this.message.success('Logged in successfully!')),
       catchError((error: any) => {
-        this.message.remove(id);
         console.error(error);
         if (error.code === 'auth/popup-closed-by-user') {
           this.errorMes = this.message.error('Authentication popup was closed. Please try again.');
