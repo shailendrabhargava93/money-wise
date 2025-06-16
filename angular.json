@@ -23,6 +23,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/privacy-policy.html",
+              "src/terms-and-conditions.html",
               {
                 "glob": "**/*",
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
