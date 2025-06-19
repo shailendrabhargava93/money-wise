@@ -180,7 +180,7 @@ export class StatsComponent implements OnInit {
     this.barChartData = [
       {
         data: dateAmounts.map((el) => el),
-        label: 'Expenditure',
+        label: 'Amount',
         backgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
         borderColor: 'white',
         hoverBackgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
