@@ -33,8 +33,13 @@
               </p>
             </div>
           </div>
-          <div class="text-sm font-medium text-gray-600">
-            {{ (currency | async)?.symbol }} {{ lb.sum }}
+          <div class="text-right">
+            <div class="text-sm font-medium text-gray-600">
+              {{ (currency | async)?.symbol }} {{ lb.sum }}
+            </div>
+            <div class="text-xs text-gray-400 mt-1">
+              {{ getSpentPercentage(lb.sum) }}%
+            </div>
           </div>
         </div>
       </div>
@@ -85,8 +90,13 @@
               </p>
             </div>
           </div>
-          <div class="text-sm font-medium text-gray-600">
-            {{ (currency | async)?.symbol }} {{ cat.sum }}
+          <div class="text-right">
+            <div class="text-sm font-medium text-gray-600">
+              {{ (currency | async)?.symbol }} {{ cat.sum }}
+            </div>
+            <div class="text-xs text-gray-400 mt-1">
+              {{ getCategorySpentPercentage(cat.sum) }}%
+            </div>
           </div>
         </div>
       </div>

@@ -39,4 +39,28 @@ export class CategoryListComponent {
     this.selectedLabel = '';
     this.selectedCategory = '';
   }
+
+  getTotalAmount(): number {
+    return this.labelListData.reduce((total, label) => total + label.sum, 0);
+  }
+
+  getSpentPercentage(amount: number): string {
+    const total = this.getTotalAmount();
+    if (total === 0) return '0';
+    const percentage = (amount / total) * 100;
+    return percentage.toFixed(1);
+  }
+
+  getCategoryTotalAmount(): number {
+    return this.categoryData.reduce(
+      (total, category) => total + category.sum,
+      0
+    );
+  }
+  getCategorySpentPercentage(amount: number): string {
+    const total = this.getCategoryTotalAmount();
+    if (total === 0) return '0';
+    const percentage = (amount / total) * 100;
+    return percentage.toFixed(1);
+  }
 }
