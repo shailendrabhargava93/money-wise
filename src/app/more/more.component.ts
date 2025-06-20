@@ -1,10 +1,10 @@
+import { CATEGORIES } from './../category-config';
 import { environment } from './../../environments/environment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
-import { CATEGORIES } from '../category-icons';
 
 @Component({
   selector: 'app-more',

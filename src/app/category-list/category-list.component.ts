@@ -1,6 +1,6 @@
-import { LABEL_ICON } from './../category-icons';
 import { AppService } from './../app.service';
 import { Component, Input } from '@angular/core';
+import { LABEL_ICON } from '../category-config';
 
 @Component({
   selector: 'app-category-list',
