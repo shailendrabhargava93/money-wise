@@ -1,7 +1,7 @@
+import { CAT_ICON } from './../category-config';
 import { STATUS } from './../status.enum';
 import { switchMap, catchError, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CAT_ICON } from './../category-icons';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';

@@ -36,7 +36,7 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'archived',
+    path: 'completed',
     component: CompleteBudgetComponent,
     canActivate: [authGuard],
   },

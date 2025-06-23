@@ -1,5 +1,5 @@
-import { CAT_ICON } from './../category-icons';
 import { Component, Input } from '@angular/core';
+import { CategoryConfig, getCategoryConfig } from '../category-config';
 
 @Component({
   selector: 'app-category-icon',
@@ -8,12 +8,21 @@ import { Component, Input } from '@angular/core';
 })
 export class CategoryIconComponent {
   @Input() category!: string;
-  dafultIcon = '📦';
+
+  get categoryConfig(): CategoryConfig {
+    return getCategoryConfig(this.category);
+  }
 
   get iconUrl(): string {
-    if (this.category in CAT_ICON) {
-      return CAT_ICON[this.category as keyof typeof CAT_ICON];
-    }
-    return this.dafultIcon;
+    return this.categoryConfig.icon;
+  }
+
+  get bgColor(): string {
+    return this.categoryConfig.bgColor;
+  }
+
+  // For backward compatibility, keep the old method name if needed elsewhere
+  get dafultIcon(): string {
+    return '📦';
   }
 }

@@ -9,3 +9,25 @@
   margin-right: 0 !important;
   padding-right: 0 !important;
 }
+
+@keyframes loadProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: calc(var(--progress-width) * 1%);
+  }
+}
+
+.progress-fill {
+  width: 0;
+}
+
+.animation{
+  animation: loadProgress 2s forwards;
+  background-image: linear-gradient(
+    to right,
+    var(--progress-color-start),
+    var(--progress-color-end)
+  );
+}

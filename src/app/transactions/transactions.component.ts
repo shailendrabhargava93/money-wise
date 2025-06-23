@@ -1,9 +1,9 @@
+import { CAT_ICON } from './../category-config';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { switchMap, catchError, takeUntil } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AppService } from '../app.service';
-import { CAT_ICON } from '../category-icons';
 
 interface Transaction {
   data: {

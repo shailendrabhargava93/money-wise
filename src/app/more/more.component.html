@@ -1,6 +1,6 @@
 <!-- header -->
 <div class="mx-auto flex flow-root p-1 w-full">
-  <div class="p-1 mt-1">
+  <div class="p-1">
     <div nz-col>
       <!-- profile section : start -->
 
@@ -15,7 +15,7 @@
           class="ring-2 ring-gray-100 ring-offset-2"
         ></nz-avatar>
         <span
-          class="mt-3 text-gray-800 text-sm font-medium text-center leading-tight"
+          class="ml-1 mt-3 text-gray-800 text-sm font-medium text-center leading-tight"
         >
           {{ userEmail$ | async }}
         </span>
@@ -185,8 +185,6 @@
         </span>
       </ng-template>
     </div>
-    <br />
-    <br />
     <!-- settings: end -->
 
     <!-- Others : start -->
@@ -308,11 +306,10 @@
         </svg>
       </span>
     </ng-template>
-    <br />
     <!-- signout -->
     <button
       nz-button
-      class="mb-2 bg-red-500 text-white hover:bg-red-600 hover:text-white rounded-full w-full"
+      class="mb-1 mt-1 bg-red-500 text-white hover:bg-red-600 hover:text-white rounded-full w-full"
       (click)="logout()"
     >
       <div class="flex flex-row justify-center">

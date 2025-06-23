@@ -2,9 +2,9 @@
   [nzClosable]="false"
   [nzVisible]="visible"
   [nzPlacement]="'bottom'"
-  nzTitle="Transactions"
+  [nzTitle]="category ? categoryTemplate : labelTemplate"
   [nzExtra]="extra"
-  [nzSize]="transactions.length > 3 ? 'large': 'default'"
+  [nzSize]="transactions.length > 3 ? 'large' : 'default'"
   [nzBodyStyle]="{ padding: '16px 20px', backgroundColor: '#fafafa' }"
   (nzOnClose)="close()"
 >
@@ -29,3 +29,6 @@
     (click)="close()"
   ></span>
 </ng-template>
+
+<ng-template #categoryTemplate>Spent on {{ category }}</ng-template>
+<ng-template #labelTemplate>Spent by {{ label }}</ng-template>
