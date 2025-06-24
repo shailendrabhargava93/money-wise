@@ -121,10 +121,17 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     if (query.trim() === '') {
       this.getTransactions();
     } else {
-      // const subscription = this.app.getTransactionsBySearch(query).subscribe((data) => {
-      //   this.allTransactions = data;
-      // });
-      // this.subscriptions.push(subscription);
+      const filteredTransactions = this.allTransactions.filter(transaction => {
+        const title = transaction.data.title.toLowerCase();
+        const date = transaction.data.date.toLowerCase();
+        const amount = transaction.data.amount.toString().toLowerCase();
+        const searchQuery = query.toLowerCase();
+
+        return title.includes(searchQuery) || date.includes(searchQuery) || amount.includes(searchQuery);
+      });
+
+      // Update your transactions array with the filtered results
+      this.allTransactions = filteredTransactions;
     }
   }
 

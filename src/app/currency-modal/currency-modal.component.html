@@ -1,4 +1,5 @@
 <nz-drawer
+  [nzHeight]="'655px'"
   [nzClosable]="false"
   [nzVisible]="visible"
   [nzPlacement]="'bottom'"
@@ -9,104 +10,121 @@
   (nzOnClose)="close()"
 >
   <ng-container *nzDrawerContent>
-    <!-- Search Input Container -->
-    <div class="mb-6 px-4">
-      <div class="relative max-w-md mx-auto">
-        <nz-input-group [nzSuffix]="suffixIconSearch" class="search-input-wrapper">
-          <input
-            type="text"
-            nz-input
-            [(ngModel)]="searchCurrency"
-            placeholder="Search currency..."
-            class="search-input"
-            (input)="onSearchInput($event)"
-            (keyup.enter)="search()"
-          />
-        </nz-input-group>
+    <!-- Search Input -->
+    <div
+      class="bg-white w-full mb-2 rounded-2xl shadow-sm flex items-center p-4 transition duration-300 ease-in-out"
+    >
+      <div class="relative flex-1">
+        <input
+          type="text"
+          [(ngModel)]="searchCurrency"
+          (ngModelChange)="onSearchInput($event)"
+          placeholder="Search currency"
+          class="pl-9 pr-8 py-1.5 w-full text-sm text-gray-700 bg-gray-100 border-0 rounded-xl focus:outline-none focus:ring-0"
+        />
 
-        <ng-template #suffixIconSearch>
-          <div class="flex items-center space-x-2">
-            <span
-              *ngIf="searchCurrency && searchCurrency.length > 0"
-              nz-icon
-              nzType="close-circle"
-              nzTheme="fill"
-              class="text-gray-400 hover:text-gray-600 cursor-pointer transition-colors duration-200"
-              (click)="clearSearch()"
-              title="Clear search"
-            ></span>
-            <span
-              nz-icon
-              nzType="search"
-              class="text-gray-400"
-            ></span>
-          </div>
-        </ng-template>
+        <!-- Search Icon -->
+        <svg
+          class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+          />
+        </svg>
+
+        <!-- Clear Button -->
+        <button
+          *ngIf="searchCurrency"
+          type="button"
+          (click)="clearSearch()"
+          class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 transition focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
       </div>
     </div>
 
-    <!-- Currency List Container -->
-    <div class="currency-list-container">
-      <div class="max-w-2xl mx-auto px-4">
-        <!-- No Results Message -->
-        <div
-          *ngIf="filteredCurrencies.length === 0 && searchCurrency"
-          class="text-center py-8 text-gray-500"
-        >
-          <span nz-icon nzType="search" class="text-2xl mb-2 block"></span>
-          No currencies found for "{{ searchCurrency }}"
-        </div>
-
-        <!-- Currency Radio Group -->
-        <nz-radio-group
-          [(ngModel)]="selectedCurrency"
-          (ngModelChange)="update()"
-          class="w-full"
-        >
-          <div class="space-y-3">
-            <div *ngFor="let c of filteredCurrencies; trackBy: trackByCurrency">
-              <label
-                class="currency-option"
-                nz-radio
-                [nzValue]="c.currency"
-              >
-                <div class="flex items-center space-x-3 w-full min-w-0">
-                  <!-- Flag -->
-                  <div class="flex-shrink-0">
-                    <img
-                      class="w-8 h-6 rounded object-cover border border-gray-200 shadow-sm"
-                      [src]="c.flag"
-                      [alt]="c.currency"
-                      (error)="onImageError($event)"
-                    />
-                  </div>
-
-                  <!-- Currency Info -->
-                  <div class="flex-1 min-w-0">
-                    <div class="font-semibold text-gray-900 truncate">
-                      {{ c.currency }}
-                      <span class="text-sm font-normal text-gray-600 ml-1">({{ c.symbol }})</span>
-                    </div>
-                    <div class="text-sm text-gray-500 truncate">
-                      {{ c.name || c.currency }}
-                    </div>
-                  </div>
-                </div>
-              </label>
-            </div>
-          </div>
-        </nz-radio-group>
+    <!-- Currency List -->
+    <div class="max-w-2xl mx-auto">
+      <!-- No Results Message -->
+      <div
+        *ngIf="filteredCurrencies.length === 0 && searchCurrency"
+        class="text-center py-10 text-gray-500"
+      >
+        <span nz-icon nzType="search" class="text-2xl mb-2 block"></span>
+        No currencies found for "{{ searchCurrency }}"
       </div>
+
+      <!-- Currency Options -->
+      <nz-radio-group
+        [(ngModel)]="selectedCurrency"
+        (ngModelChange)="update()"
+        class="w-full"
+      >
+        <ul class="flex flex-col space-y-3">
+          <li *ngFor="let c of filteredCurrencies; trackBy: trackByCurrency">
+            <label
+              class="bg-white cursor-pointer w-full rounded-2xl shadow-sm p-4 flex items-center space-x-4 transition duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md"
+            >
+              <!-- Radio Button -->
+              <label nz-radio class="flex-shrink-0" [nzValue]="c.currency"></label>
+
+              <!-- Flag -->
+              <div class="flex-shrink-0">
+                <img
+                  class="w-8 h-6 rounded object-cover border border-gray-200 shadow-sm"
+                  [src]="c.flag"
+                  [alt]="c.currency"
+                  (error)="onImageError($event)"
+                />
+              </div>
+
+              <!-- Currency Info -->
+              <div class="flex-1 min-w-0">
+                <div class="font-semibold text-gray-800 truncate">
+                  {{ c.currency }}
+                  <span class="text-sm font-normal text-gray-600 ml-1"
+                    >({{ c.symbol }})</span
+                  >
+                </div>
+                <div class="text-sm text-gray-500 truncate">
+                  {{ c.name || c.currency }}
+                </div>
+              </div>
+            </label>
+          </li>
+        </ul>
+      </nz-radio-group>
     </div>
   </ng-container>
 </nz-drawer>
 
-<!-- Close Icon Template -->
+<!-- Close Icon -->
 <ng-template #extrasort>
   <span
     class="cursor-pointer text-gray-500 hover:text-gray-700 transition-colors duration-200 p-1 rounded-full hover:bg-gray-100"
     nz-icon
-    nzType="close-circle"
+    nzType="close"
     nzTheme="outline"
     (click)="close()"
     title="Close"
