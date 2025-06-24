@@ -107,10 +107,9 @@ export class CurrencyModalComponent implements OnInit, OnDestroy {
     return modifiedObjects;
   }
 
-  onSearchInput(event: Event) {
-    const target = event.target as HTMLInputElement;
-    this.searchCurrency = target.value;
-    this.searchSubject.next(this.searchCurrency);
+  onSearchInput(value: string) {
+    this.searchCurrency = value;
+    this.searchSubject.next(value);
   }
 
   search() {

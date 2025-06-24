@@ -1,6 +1,6 @@
 <!-- header -->
-<div class="mx-auto flex flow-root p-1 w-full">
-  <div class="p-1">
+<div class="mx-auto flex flow-root w-full">
+  <div class="px-4">
     <div nz-col>
       <!-- profile section : start -->
 
@@ -373,13 +373,14 @@
     <span
       class="cursor-pointer"
       nz-icon
-      nzType="close-circle"
+      nzType="close"
       nzTheme="outline"
       (click)="openModal()"
     ></span>
   </ng-template>
 
   <nz-drawer
+    [nzHeight]="'655px'"
     [nzClosable]="false"
     [nzVisible]="enableCategoryModal"
     [nzPlacement]="'bottom'"
@@ -420,7 +421,7 @@
     <span
       class="cursor-pointer"
       nz-icon
-      nzType="close-circle"
+      nzType="close"
       nzTheme="outline"
       (click)="openCatModal()"
     ></span>
@@ -484,7 +485,7 @@
     <span
       class="cursor-pointer"
       nz-icon
-      nzType="close-circle"
+      nzType="close"
       nzTheme="outline"
       (click)="openAbout()"
     ></span>
@@ -521,7 +522,7 @@
     <span
       class="cursor-pointer"
       nz-icon
-      nzType="close-circle"
+      nzType="close"
       nzTheme="outline"
       (click)="openQuery()"
     ></span>

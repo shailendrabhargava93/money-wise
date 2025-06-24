@@ -101,6 +101,7 @@
 
 <!-- Filter section -->
 <nz-drawer
+  [nzHeight]="'655px'"
   [nzClosable]="false"
   [nzVisible]="visibleFilters"
   [nzPlacement]="'bottom'"
@@ -239,7 +240,7 @@
   <span
     class="cursor-pointer"
     nz-icon
-    nzType="close-circle"
+    nzType="close"
     nzTheme="outline"
     (click)="closeFilters()"
   ></span>
@@ -515,7 +516,7 @@
   <span
     class="cursor-pointer"
     nz-icon
-    nzType="close-circle"
+    nzType="close"
     nzTheme="outline"
     (click)="closeSort()"
   ></span>

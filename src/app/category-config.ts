@@ -41,7 +41,7 @@ export const CATEGORY_CONFIG: { [key: string]: CategoryConfig } = {
     name: 'Groceries',
     icon: '🛒',
     description: 'Food shopping and household supplies',
-    bgColor: 'bg-darkgray-100'
+    bgColor: 'bg-gray-100'
   },
   'Healthcare': {
     name: 'Healthcare',

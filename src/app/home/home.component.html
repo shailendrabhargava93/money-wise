@@ -1,7 +1,7 @@
 <!-- component -->
 <div class="container mx-auto px-4 md:px-6 lg:px-8">
   <div
-    class="py-4 mb-6 bg-white rounded-2xl shadow-sm flex flex-col items-center"
+    class="py-4 bg-white rounded-2xl shadow-sm flex flex-col items-center"
     *ngIf="!(isBudgetAvailable | async)"
   >
     <h1 class="text-2xl font-semibold text-indigo-500 flex items-center justify-center">
@@ -51,7 +51,7 @@
 
 <!-- Spending Section with vertical layout for better alignment -->
 <div class="container mx-auto px-4 md:px-6 lg:px-8">
-  <div class="py-2 mb-4" *ngIf="isBudgetAvailable | async">
+  <div class="py-2 mb-2" *ngIf="isBudgetAvailable | async">
     <span class="text-xl font-bold text-gray-800 tracking-tight">Spending</span>
   </div>
   <div class="py-6 mb-4 bg-white rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
@@ -105,7 +105,7 @@
 <!-- Recent Transactions with modern card design -->
 <div class="container mx-auto px-4 md:px-6 lg:px-8">
   <!-- Header -->
-  <div class="py-2 mb-4 flex items-center justify-between">
+  <div class="py-2 mb-2 flex items-center justify-between">
     <span class="text-xl font-bold text-gray-800 tracking-tight">Recent transactions</span>
     <span *ngIf="recentTxns.length > 0">
       <a
@@ -125,9 +125,9 @@
   </div>
 
   <!-- Empty State -->
-  <div *ngIf="recentTxns.length === 0" class="mb-6">
+  <div *ngIf="recentTxns.length === 0" class="mb-8">
     <div
-      class="h-48 bg-white text-base flex items-center justify-center text-center px-8 py-12 rounded-2xl shadow-sm border-0"
+      class="bg-white text-md flex items-center justify-center text-center px-8 py-12 rounded-2xl shadow-sm border-0"
     >
       <div class="flex flex-col items-center">
         <div class="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
@@ -140,7 +140,7 @@
   </div>
 
   <!-- Transaction List -->
-  <div *ngIf="recentTxns.length > 0" class="mb-6">
+  <div *ngIf="recentTxns.length > 0">
       <app-transaction-list
         [allTransactions]="recentTxns"
         [loadMore]="false"
@@ -152,7 +152,7 @@
 
 <!-- Personalized Tips with enhanced carousel styling -->
 <div class="container mx-auto px-4 md:px-6 lg:px-8">
-  <div class="py-2 mb-4" *ngIf="isBudgetAvailable | async">
+  <div class="py-2 mb-2" *ngIf="isBudgetAvailable | async">
     <span class="text-xl font-bold text-gray-800 tracking-tight">Personalized Tips</span>
   </div>
   <div class="py-6 mb-8 bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl shadow-sm border-0" *ngIf="isBudgetAvailable | async">
