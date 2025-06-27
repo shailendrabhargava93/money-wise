@@ -242,18 +242,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.closeSort();
   }
 
-  hasActiveFilters(): boolean {
-    return this.selectedCategories.length > 0 || this.selectedLabels.length > 0;
-  }
-
   formatTooltip = (value: number): string => {
     return `₹${value.toLocaleString()}`;
   };
-
-  // formatter(value: number): string {
-  //   if (this.currency) {
-  //     return `${this.currency} ${value}`;
-  //   }
-  //   return `${value}`;
-  // }
 }
