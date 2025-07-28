@@ -128,7 +128,7 @@
   <!-- Label -->
   <div class="txn-item w-full max-w-2xl mx-auto px-4">
     <label class="block mb-2 font-medium text-gray-800 text-sm" for="label">
-      Label <span class="text-red-500">*</span>
+      Paid By <span class="text-red-500">*</span>
     </label>
     <div
       class="bg-white w-full rounded-2xl shadow-sm p-4 hover:shadow-md transition duration-300 ease-in-out"
@@ -139,13 +139,18 @@
             formControlName="label"
             nzButtonStyle="solid"
             class="w-full"
-          >
+          >            
             <label
               nz-radio-button
-              *ngFor="let la of labels"
-              [nzValue]="la"
+              *ngFor="let lb of labels"
+              [nzValue]="lb"
               class="text-gray-700"
-              >{{ la }}</label
+              >
+              <span class="flex items-center">
+                <img class="w-6 h-6 mr-2" [src]="lb.avatar" />
+                <span class="capitalize">{{ lb.name }}</span>
+              </span>
+              </label
             >
           </nz-radio-group>
           <ng-template #tagtemp>

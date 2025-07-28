@@ -73,20 +73,20 @@ export class AddTransactionComponent implements OnInit {
 
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getLabels(user as string)),
+        switchMap((user) => this.app.getMembers(user as string)),
         catchError((error) => {
-          console.error('Error occurred getLabels:', error);
+          console.error('Error occurred getMembers:', error);
           this.app.hideSpinner();
           return of([]);
         })
       )
       .subscribe((data) => {
         this.app.hideSpinner();
-        const labels = data as any[];
-        if (labels.length > 0) {
-          this.labels = data as string[];
+        const members = data as any[];
+        if (members.length > 0) {
+          this.labels = members;
         } else {
-          this.labels = ['Not available'];
+          this.labels = [];
         }
       });
 

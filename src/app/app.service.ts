@@ -117,8 +117,12 @@ export class AppService {
     return this.http.get(this.BASE_URL + `budget/all/${email}/${status}`);
   }
 
-  getLabels(email: string) {
-    return this.http.get(this.BASE_URL + `label/all/${email}`);
+  getMembers(email: string) {
+    return this.http.get(this.BASE_URL + `member/${email}`);
+  }
+
+  createMembers(data: any) {
+    return this.http.post(this.BASE_URL + `member/create`, data);
   }
 
   createBudget(data: any) {

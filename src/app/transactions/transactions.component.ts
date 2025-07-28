@@ -74,22 +74,22 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
   }
 
-  getLabels() {
+  getMembers() {
     this.app.userEmail
       .pipe(
-        switchMap((user) => this.app.getLabels(user as string)),
+        switchMap((user) => this.app.getMembers(user as string)),
         catchError((error) => {
-          console.error('Error occurred getLabels:', error);
+          console.error('Error occurred getMembers:', error);
           this.app.hideSpinner();
           return of([]);
         })
       )
       .subscribe((data) => {
-        const labels = data as any[];
-        if (labels.length > 0) {
-          this.labels = data as string[];
+        const members = data as any[];
+        if (members.length > 0) {
+          this.labels = members;
         } else {
-          this.labels = ['Not available'];
+          this.labels = [];
         }
       });
   }
@@ -104,11 +104,11 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     if (this.allTransactions && this.allTransactions.length > 0) {
       this.sort();
       this.highestAmount = data.max;
+      this.loadingMore = data.count > this.allTransactions.length;
     }
-    if (this.allTransactions.length == 0) {
+    if (this.allTransactions && this.allTransactions.length == 0) {
       this.app.updateMessage('You have no transactions');
     }
-    this.loadingMore = data.count > this.allTransactions.length;
   }
 
   private getTransactionsError(error: any): void {
@@ -142,7 +142,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   openFilters(): void {
     this.visibleFilters = true;
-    this.getLabels();
+    this.getMembers();
     this.categories = Object.entries(CAT_ICON)
       .map(([name, icon]) => ({ name, icon }))
       .sort((a, b) => a.name.localeCompare(b.name));
