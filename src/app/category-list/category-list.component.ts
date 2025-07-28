@@ -1,13 +1,13 @@
 import { AppService } from './../app.service';
-import { Component, Input } from '@angular/core';
-import { LABEL_ICON } from '../category-config';
+import { Component, Input, OnInit } from '@angular/core';
+import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
 })
-export class CategoryListComponent {
+export class CategoryListComponent implements OnInit {
   @Input() categoryData: any[] = [];
   @Input() labelListData: any[] = [];
   currency = this.app.currency$;
@@ -15,14 +15,32 @@ export class CategoryListComponent {
   visbleTxnModal = false;
   selectedCategory!: string;
   selectedLabel!: string;
-  constructor(private app: AppService) {}
+  labels: any[] = [];
+  constructor(private app: AppService) { }
+  ngOnInit(): void {
+    this.app.userEmail
+      .pipe(
+        switchMap((user) => this.app.getMembers(user as string)),
+        catchError((error) => {
+          console.error('Error occurred getMembers:', error);
+          this.app.hideSpinner();
+          return of([]);
+        })
+      )
+      .subscribe((data) => {
+        this.app.hideSpinner();
+        const members = data as any[];
+        if (members.length > 0) {
+          this.labels = members;
+        } else {
+          this.labels = [];
+        }
+      });
+  }
 
   getLabelIcon(label: string): string {
-    if (label in LABEL_ICON) {
-      const icon = LABEL_ICON[label as keyof typeof LABEL_ICON];
-      return `/assets/icons/${icon}.png`;
-    }
-    return `/assets/icons/other.png`;
+    const foundLabel = this.labels.find((el) => el.name === label);
+    return foundLabel ? foundLabel.avatar : '';
   }
 
   showTxnListByCat(cat: string) {
