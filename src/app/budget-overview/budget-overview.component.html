@@ -1,7 +1,10 @@
-<div class="mx-auto max-w-2xl p-4">
-  <div class="flex items-center justify-between w-full">
+<div class="mx-auto max-w-7xl p-4">
+  <!-- Budget Header Card -->
+  <div
+    class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex items-center justify-between mb-6"
+  >
     <!-- Budget Name -->
-    <div class="text-base font-medium text-gray-800 truncate">
+    <div class="text-lg font-bold text-gray-800 truncate">
       {{ budgetData?.name }}
     </div>
 
@@ -12,10 +15,10 @@
         *ngIf="budgetData?.status === 'active'"
         type="button"
         (click)="onAction('complete')"
-        class="flex items-center gap-1.5 px-3 py-1.5 bg-green-100 text-green-800 text-xs font-medium border border-green-300 rounded-full shadow-sm hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-400"
+        class="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 text-xs font-medium border border-green-300 rounded hover:bg-green-200"
       >
+        <span nz-icon nzType="check-circle" class="w-3 h-3"></span>
         <span class="leading-4">Complete</span>
-        <span nz-icon nzType="check-circle" class="w-4 h-4"></span>
       </button>
 
       <!-- Delete Button -->
@@ -23,150 +26,198 @@
         *ngIf="budgetData?.status === 'active'"
         type="button"
         (click)="onAction('delete')"
-        class="flex items-center gap-1.5 px-3 py-1.5 bg-red-100 text-red-800 text-xs font-medium border border-red-300 rounded-full shadow-sm hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-400"
+        class="flex items-center gap-1 px-2 py-1 bg-red-100 text-red-800 text-xs font-medium border border-red-300 rounded hover:bg-red-200"
       >
+        <span nz-icon nzType="delete" class="w-3 h-3"></span>
         <span class="leading-4">Delete</span>
-        <span nz-icon nzType="delete" class="w-4 h-4"></span>
       </button>
     </div>
   </div>
-</div>
 
-<div class="mx-auto flex flex-col justify-center px-4 py-6 w-full max-w-7xl" *ngIf="budgetData">
-
- <!-- Budget Summary Cards: Responsive layout with scrollable row on small screens -->
-<div class="flex overflow-x-auto gap-6 pb-4">
-  <!-- Total Budget Card -->
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex-shrink-0 w-[240px]">
-    <div class="flex items-center mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-      </svg>
-      <p class="text-lg font-bold text-gray-800">Total Budget</p>
-    </div>
-    <p class="text-3xl font-semibold text-gray-700 whitespace-nowrap">
-      {{ (currency | async)?.symbol }}&nbsp;{{ budgetData.totalBudget | number }}
-    </p>
-  </div>
-
-  <!-- Spent Amount Card -->
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex-shrink-0 w-[240px]">
-    <div class="flex items-center mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-      </svg>
-      <p class="text-lg font-bold text-gray-800">Spent</p>
-    </div>
-    <p class="text-3xl font-semibold text-gray-700 whitespace-nowrap">
-      {{ (currency | async)?.symbol }}&nbsp;{{ budgetData.spentAmount | number }}
-    </p>
-  </div>
-
-  <!-- Remaining Amount Card -->
-  <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex-shrink-0 w-[240px]">
-    <div class="flex items-center mb-4">
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <p class="text-lg font-bold text-gray-800">Remaining</p>
-    </div>
-    <p class="text-3xl font-semibold text-gray-700 whitespace-nowrap">
-      {{ (currency | async)?.symbol }}&nbsp;{{ (budgetData.totalBudget - budgetData.spentAmount) | number }}
-    </p>
-  </div>
-</div>
-
-  <!-- Status Notification Box -->
-  <div
-    class="mt-6 bg-white border-l-4 p-4 shadow rounded-xl"
-    [ngClass]="{
-      'border-green-400': !budgetData.overspent,
-      'border-red-400': budgetData.overspent
-    }"
-  >
-    <div class="flex items-start gap-3">
-      <div>
-        <img
-          *ngIf="budgetData.status === 'completed' && !budgetData.overspent"
-          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif"
-          alt="🥳"
-          width="24"
-          height="24"
-          class="mt-1"
-        />
-        <img
-          *ngIf="budgetData.status === 'active' && !budgetData.overspent"
-          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif"
-          alt="👍"
-          width="24"
-          height="24"
-          class="mt-1"
-        />
-        <img
-          *ngIf="budgetData.status === 'completed' && budgetData.overspent"
-          src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif"
-          alt="❗"
-          width="24"
-          height="24"
-          class="mt-1"
-        />
-        <img
-          *ngIf="budgetData.status === 'active' && budgetData.overspent"
-          src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif"
-          alt="😥"
-          width="24"
-          height="24"
-          class="mt-1"
-        />
+  <!-- Budget Summary Cards: Responsive layout with scrollable row on small screens -->
+  <div class="flex overflow-x-auto gap-4 pb-4">
+    <!-- Total Budget Card -->
+    <div
+      class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex-shrink-0 w-[180px]"
+    >
+      <div class="flex items-center mb-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 mr-2 text-indigo-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+          />
+        </svg>
+        <p class="text-sm font-bold text-gray-800">Total Budget</p>
       </div>
-      <div class="text-sm sm:text-base">
-        <!-- Completed & Not Overspent -->
-        <div *ngIf="budgetData.status === 'completed' && !budgetData.overspent">
-          <p class="font-semibold text-green-700">Congratulations!</p>
-          <p class="text-gray-700">
-            You have saved
-            <span class="font-bold">
-              {{ (currency | async)?.symbol }}
-              {{ (budgetData.totalBudget - budgetData.spentAmount) | number }}
-            </span>
-            from your total budget.
-          </p>
-        </div>
+      <p class="text-xl font-semibold text-gray-700 whitespace-nowrap">
+        {{ (currency | async)?.symbol }}&nbsp;{{
+          budgetData?.totalBudget | number
+        }}
+      </p>
+    </div>
 
-        <!-- Active & Not Overspent -->
-        <div *ngIf="budgetData.status === 'active' && !budgetData.overspent">
-          <p class="font-semibold text-green-700">Great Going!</p>
-          <p class="text-gray-700">You are within your budget.</p>
-        </div>
-
-        <!-- Completed & Overspent -->
-        <div *ngIf="budgetData.status === 'completed' && budgetData.overspent">
-          <p class="font-semibold text-red-700">Oops!</p>
-          <p class="text-gray-700">
-            You’ve overspent
-            <span class="font-bold">
-              {{ (currency | async)?.symbol }}
-              {{ (budgetData.totalBudget - budgetData.spentAmount) | number }}
-            </span>
-            from your total budget.
-          </p>
-        </div>
-
-        <!-- Active & Overspent -->
-        <div *ngIf="budgetData.status === 'active' && budgetData.overspent">
-          <p class="font-semibold text-red-700">Slow Down!</p>
-          <p class="text-gray-700">You're on track to exhaust your budget.</p>
-        </div>
+    <!-- Spent Amount Card -->
+    <div
+      class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex-shrink-0 w-[180px]"
+    >
+      <div class="flex items-center mb-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 mr-2 text-red-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+          />
+        </svg>
+        <p class="text-sm font-bold text-gray-800">Spent</p>
       </div>
+      <p class="text-xl font-semibold text-gray-700 whitespace-nowrap">
+        {{ (currency | async)?.symbol }}&nbsp;{{
+          budgetData?.spentAmount | number
+        }}
+      </p>
+    </div>
+
+    <!-- Remaining Amount Card -->
+    <div
+      class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex-shrink-0 w-[180px]"
+    >
+      <div class="flex items-center mb-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 mr-2 text-green-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <p class="text-sm font-bold text-gray-800">Remaining</p>
+      </div>
+      <p class="text-xl font-semibold text-gray-700 whitespace-nowrap">
+        {{ (currency | async)?.symbol }}&nbsp;{{
+          budgetData.totalBudget - budgetData.spentAmount | number
+        }}
+      </p>
     </div>
   </div>
 
-  <!-- Stats Component -->
-  <div class="mt-6">
-    <app-stats [budgetId]="budgetId"></app-stats>
+  <!-- Status Notification Box and Stats Component -->
+  <div class="flex flex-col gap-6">
+    <!-- Status Notification Box -->
+    <div
+      class="bg-white border-l-4 p-4 shadow rounded-xl"
+      [ngClass]="{
+        'border-green-400': !budgetData.overspent,
+        'border-red-400': budgetData.overspent
+      }"
+    >
+      <div class="flex items-start gap-3">
+        <div>
+          <img
+            *ngIf="budgetData.status === 'completed' && !budgetData.overspent"
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f973/512.gif"
+            alt="🥳"
+            width="24"
+            height="24"
+            class="mt-1"
+          />
+          <img
+            *ngIf="budgetData.status === 'active' && !budgetData.overspent"
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d_1f3fb/512.gif"
+            alt="👍"
+            width="24"
+            height="24"
+            class="mt-1"
+          />
+          <img
+            *ngIf="budgetData.status === 'completed' && budgetData.overspent"
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/2757/512.gif"
+            alt="❗"
+            width="24"
+            height="24"
+            class="mt-1"
+          />
+          <img
+            *ngIf="budgetData.status === 'active' && budgetData.overspent"
+            src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f625/512.gif"
+            alt="😥"
+            width="24"
+            height="24"
+            class="mt-1"
+          />
+        </div>
+        <div class="text-sm sm:text-base">
+          <!-- Completed & Not Overspent -->
+          <div
+            *ngIf="budgetData.status === 'completed' && !budgetData.overspent"
+          >
+            <p class="font-semibold text-green-700">Congratulations!</p>
+            <p class="text-gray-700">
+              You have saved
+              <span class="font-bold">
+                {{ (currency | async)?.symbol }}
+                {{ budgetData.totalBudget - budgetData.spentAmount | number }}
+              </span>
+              from your total budget.
+            </p>
+          </div>
+
+          <!-- Active & Not Overspent -->
+          <div *ngIf="budgetData.status === 'active' && !budgetData.overspent">
+            <p class="font-semibold text-green-700">Great Going!</p>
+            <p class="text-gray-700">You are within your budget.</p>
+          </div>
+
+          <!-- Completed & Overspent -->
+          <div
+            *ngIf="budgetData.status === 'completed' && budgetData.overspent"
+          >
+            <p class="font-semibold text-red-700">Oops!</p>
+            <p class="text-gray-700">
+              You’ve overspent
+              <span class="font-bold">
+                {{ (currency | async)?.symbol }}
+                {{ budgetData.totalBudget - budgetData.spentAmount | number }}
+              </span>
+              from your total budget.
+            </p>
+          </div>
+
+          <!-- Active & Overspent -->
+          <div *ngIf="budgetData.status === 'active' && budgetData.overspent">
+            <p class="font-semibold text-red-700">Slow Down!</p>
+            <p class="text-gray-700">You're on track to exhaust your budget.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Component -->
+    <div>
+      <app-stats [budgetId]="budgetId"></app-stats>
+    </div>
   </div>
 </div>
-
 
 <app-confirm-modal
   [action]="action"

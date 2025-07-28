@@ -157,7 +157,7 @@
       <div class="flex items-center justify-between mb-3">
         <span class="text-base font-semibold text-gray-800 flex items-center">
           <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-          Select Label
+          Paid By
         </span>
         <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
           {{ selectedLabels.length }} selected
@@ -173,7 +173,8 @@
           <span
             [ngClass]="selectedLabels.includes(lb) ? 'selected-label' : 'unselected-label'"
           >
-            <span class="capitalize font-medium">{{ lb }}</span>
+            <span class="w-8 h-8 mr-2"><img [src]=lb.avatar /></span>
+            <span class="capitalize font-medium">{{ lb.name }}</span>
             <!-- Selection indicator for labels -->
             <span
               *ngIf="selectedLabels.includes(lb)"

@@ -97,7 +97,6 @@ export class AppComponent implements AfterContentChecked, OnInit, OnDestroy {
   showMenu() {
     return (
       this.currentRoute &&
-      this.currentRoute !== 'main' &&
       this.currentRoute !== 'login' &&
       this.currentRoute !== 'home'
     );

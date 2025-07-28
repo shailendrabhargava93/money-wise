@@ -44,7 +44,7 @@ export class ConfirmModalComponent {
       (data) => {
         if (data) {
           this.app.hideSpinner();
-          this.notification.success('Mark Completed !');
+          this.notification.success('Budget completed successfully !');
           this.router.navigate(['budgets']);
         }
       },
@@ -64,7 +64,7 @@ export class ConfirmModalComponent {
       (data) => {
         if (data) {
           this.app.hideSpinner();
-          this.notification.success('Mark Deleted !');
+          this.notification.success('Budget deleted successfully !');
           this.router.navigate(['budgets']);
         }
       },

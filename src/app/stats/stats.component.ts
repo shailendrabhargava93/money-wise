@@ -1,6 +1,7 @@
 import { AppService } from './../app.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from 'chart.js';
+import { CATEGORIES } from '../category-config';
 
 export class WeeklyData {
   [key: string]: { [date: string]: number };
@@ -97,6 +98,7 @@ export class StatsComponent implements OnInit {
     const dateSum = data.datesData;
 
     const categories: string[] = [];
+    const categoriesBgColor: string[] = [];
     const amounts: number[] = [];
 
     // Create an array of category objects
@@ -117,11 +119,16 @@ export class StatsComponent implements OnInit {
     // Get top 5 categories
     const topCategories = categoryArray.slice(0, 5);
 
-    // Loop through top categories
     for (const category of topCategories) {
       this.categoryListData.push(category);
       categories.push(category.category);
       amounts.push(category.sum);
+      const categoryObj = CATEGORIES.find(cat => cat.name === category.category);
+      let bgColor = '#cccccc';
+      if (categoryObj) {
+        bgColor = categoryObj.textColor || bgColor;
+      }
+      categoriesBgColor.push(bgColor);
     }
 
     for (const label in labelsSumData) {
@@ -138,9 +145,9 @@ export class StatsComponent implements OnInit {
     this.doughnutChartDatasets = [
       {
         data: amounts.map((el) => el),
-        backgroundColor: this.colorScheme.slice(0, amounts.length),
+        backgroundColor: categoriesBgColor,
         borderColor: 'white',
-        hoverBackgroundColor: this.colorScheme.slice(0, amounts.length),
+        hoverBackgroundColor: categoriesBgColor,
         hoverBorderColor: 'white',
         hoverOffset: 5,
       },
@@ -181,9 +188,9 @@ export class StatsComponent implements OnInit {
       {
         data: dateAmounts.map((el) => el),
         label: 'Amount',
-        backgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
+        backgroundColor: '#4f46e5',
         borderColor: 'white',
-        hoverBackgroundColor: this.colorScheme2.slice(0, dateAmounts.length),
+        hoverBackgroundColor: '#4f46e5',
         hoverBorderColor: 'white',
         barThickness: 15,
       },
@@ -223,8 +230,4 @@ export class StatsComponent implements OnInit {
       return Math.ceil(totalDays / 7);
     }
   }
-
-  colorScheme = ['#74bdcb', '#ffa384', '#efe7bc', '#a888a0', '#cd6858'];
-
-  colorScheme2 = ['#145da0', '#75e6da', '#167d7f', '#98d7c2', '#a3ebb1'];
 }
