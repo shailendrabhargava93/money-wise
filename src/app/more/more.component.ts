@@ -5,7 +5,6 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
-import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-more',
@@ -15,18 +14,12 @@ import { catchError, of, switchMap } from 'rxjs';
 export class MoreComponent implements OnInit {
   appVersion = environment.appVersion;
   enableCurrencyModal = false;
-  enableOtherModal = false;
+  enableMemberModal = false;
   enableCategoryModal = false;
   enableAbout = false;
   enableQuery = false;
   categories: any[] = [];
   labels!: any[];
-  defaultImages = [
-    'https://avatar.iran.liara.run/public/8',
-    'https://avatar.iran.liara.run/public/17',
-    'https://avatar.iran.liara.run/public/46',
-    'https://avatar.iran.liara.run/public/37'
-  ]
 
   currency = this.app.currency$;
   userPhoto$ = this.app.userPhoto;
@@ -57,31 +50,7 @@ export class MoreComponent implements OnInit {
   }
 
   openModal() {
-    this.enableOtherModal = !this.enableOtherModal;
-    if (this.enableOtherModal) {
-      this.app.userEmail
-        .pipe(
-          switchMap((user) => this.app.getMembers(user as string)),
-          catchError((error) => {
-            console.error('Error occurred getMembers:', error);
-            this.app.hideSpinner();
-            return of([]);
-          })
-        )
-        .subscribe((data) => {
-          this.app.hideSpinner();
-          const members = data as any[];
-          if (members.length > 0) {
-            this.labels = members;
-          } else {
-            this.labels = [];
-          }
-        });
-    }
-  }
-
-  updateLabel(item:any){
-    console.log(item);
+    this.enableMemberModal = !this.enableMemberModal;
   }
 
   openCatModal() {

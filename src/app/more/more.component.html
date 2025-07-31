@@ -216,51 +216,7 @@
     </span>
   </div>
 
-  <nz-drawer [nzClosable]="false" [nzVisible]="enableOtherModal" [nzPlacement]="'bottom'" nzTitle="Members"
-    [nzExtra]="extrasort" (nzOnClose)="openModal()">
-    <ng-container *nzDrawerContent>
-      <div class="flex flex-col items-start mt-2 space-y-4">
-        <div *ngFor="let lb of labels; let i = index" class="w-full">
-          <div class="flex items-center justify-between w-full">
-            <div class="flex items-center space-x-3 text-gray-700">
-              <img class="w-10 h-10 rounded-full" [src]="lb.avatar" />
-              <span class="capitalize text-base">{{ lb.name }}</span>
-            </div>
-            <button nz-button nzType="text" (click)="lb.editing = !lb.editing">
-              <span nz-icon nzType="edit" nzTheme="outline"></span>
-            </button>
-          </div>
-          <div *ngIf="lb.editing" class="mt-2 p-3 rounded-lg bg-gray-50 border border-gray-200">
-            <div class="flex items-center space-x-2">
-              <input nz-input [(ngModel)]="lb.name" class="capitalize text-base w-1/2" />
-              <div class="flex items-center space-x-2">
-                <ng-container *ngFor="let img of defaultImages.slice(0, 4)">
-                  <div class="flex items-center">
-                    <img
-                      [src]="img"
-                      class="w-8 h-8 rounded-full cursor-pointer border-2"
-                      [class.border-indigo-500]="lb.avatar === img"
-                      [class.border-gray-300]="lb.avatar !== img"
-                      (click)="lb.avatar = img"
-                    />
-                  </div>
-                </ng-container>
-              </div>
-              <button nz-button nzType="primary" (click)="updateLabel(i)">
-                <span nz-icon nzType="save" nzTheme="outline"></span>
-              </button>
-              <button nz-button nzType="default" (click)="lb.editing = false">
-                <span nz-icon nzType="close" nzTheme="outline"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-container>
-  </nz-drawer>
-  <ng-template #extrasort>
-    <span class="cursor-pointer" nz-icon nzType="close" nzTheme="outline" (click)="openModal()"></span>
-  </ng-template>
+  <app-member-modal [visible]="enableMemberModal" (closeModal)="openModal()"></app-member-modal>
 
   <nz-drawer [nzHeight]="'655px'" [nzClosable]="false" [nzVisible]="enableCategoryModal" [nzPlacement]="'bottom'"
     nzTitle="Categories" [nzExtra]="extraCatModal" (nzOnClose)="openCatModal()"

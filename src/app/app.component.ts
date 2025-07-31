@@ -37,7 +37,7 @@ export class AppComponent implements AfterContentChecked, OnInit, OnDestroy {
     private app: AppService,
     private cdref: ChangeDetectorRef,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscriptions.push(
@@ -98,7 +98,12 @@ export class AppComponent implements AfterContentChecked, OnInit, OnDestroy {
     return (
       this.currentRoute &&
       this.currentRoute !== 'login' &&
+      this.currentRoute !== 'setup' &&
       this.currentRoute !== 'home'
     );
+  }
+
+  hideFooter() {
+    return this.currentRoute && this.currentRoute !== 'setup';
   }
 }

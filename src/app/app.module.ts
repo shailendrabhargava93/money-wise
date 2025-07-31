@@ -37,6 +37,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { CategoryIconComponent } from './category-icon/category-icon.component';
 import { TxnDetailsComponent } from './txn-details/txn-details.component';
 import { TxnListModalComponent } from './txn-list-modal/txn-list-modal.component';
+import { SetupComponent } from './setup/setup.component';
+import { MemberComponent } from './member/member.component';
 
 registerLocaleData(en);
 
@@ -69,6 +71,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
     CategoryIconComponent,
     TxnDetailsComponent,
     TxnListModalComponent,
+    SetupComponent,
+    MemberComponent
   ],
   imports: [
     BrowserModule,
