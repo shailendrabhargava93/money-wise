@@ -54,14 +54,7 @@ export class AppService {
 
     this.currentUserSubject.next(JSON.parse(token as string));
     this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
-    this.currencySub.next(
-      JSON.parse(currency as any) != null
-        ? JSON.parse(currency as any)
-        : {
-            name: 'Indian Rupee',
-            symbol: '₹',
-          }
-    );
+    this.currencySub.next(JSON.parse(currency as any));
 
     this.isSpinning$ = this.isSpinningSub.asObservable();
     this.currentUser = this.currentUserSubject.asObservable();

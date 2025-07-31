@@ -1,46 +1,58 @@
-<nz-drawer [nzClosable]="false" [nzVisible]="visible" [nzPlacement]="'bottom'" nzTitle="Members"
-    [nzExtra]="extrasort" (nzOnClose)="close()">
-    <ng-container *nzDrawerContent>
-      <div class="flex flex-col items-start mt-2 space-y-4">
-        <div *ngFor="let lb of labels; let i = index" class="w-full">
-          <div *ngIf="!lb.editing" class="flex items-center justify-between w-full">
-            <div class="flex items-center space-x-3 text-gray-700">
-              <img class="w-10 h-10 rounded-full" [src]="lb.avatar" />
-              <span class="capitalize text-base">{{ lb.name }}</span>
-            </div>
-            <button nz-button nzType="text" (click)="lb.editing = !lb.editing">
-              <span nz-icon nzType="edit" nzTheme="outline"></span>
-            </button>
+<nz-drawer [nzClosable]="false" [nzVisible]="visible" [nzPlacement]="'bottom'" nzTitle="Members" [nzExtra]="extrasort"
+  [nzHeight]="'655px'" [nzClosable]="false" nzSize="large"
+  [nzBodyStyle]="{ padding: '16px', backgroundColor: '#f8fafc' }" (nzOnClose)="close()">
+  <ng-container *nzDrawerContent>
+    <div class="flex flex-col items-start mt-2 space-y-4">
+      <div *ngFor="let lb of labels; let i = index" class="w-full">
+        <div *ngIf="!lb.editing" class="flex items-center justify-between w-full">
+          <div class="flex items-center space-x-3 text-gray-700">
+            <img class="w-10 h-10 rounded-full" [src]="lb.avatar" />
+            <span class="capitalize text-base">{{ lb.name }}</span>
           </div>
-          <div *ngIf="lb.editing" class="mt-2 p-3 rounded-lg bg-gray-50 border border-gray-200">
-            <div class="flex items-center space-x-2">
-              <input placeholder="Enter Name" [(ngModel)]="lb.name" class="capitalize text-base w-1/2" />
+          <button nz-button nzType="text" (click)="lb.editing = !lb.editing">
+            <span nz-icon nzType="edit" nzTheme="outline"></span>
+          </button>
+        </div>
+        <div *ngIf="lb.editing" class="mt-2 p-4 rounded-lg bg-white border border-gray-200 shadow-sm">
+          <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-4">
+            <div class="flex flex-col w-full md:w-1/2">
+              <label class="text-sm font-medium text-gray-600 mb-1">Name</label>
+              <input placeholder="Enter Name" [(ngModel)]="lb.name"
+                class="capitalize text-base w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            </div>
+            <div class="flex flex-col w-full md:w-1/2">
+              <label class="text-sm font-medium text-gray-600 mb-1">Choose Avatar</label>
               <div class="flex items-center space-x-2">
-                <label>Select Avatar</label>
-                <ng-container *ngFor="let img of defaultImages.slice(0, 4)">
-                  <div class="flex items-center">
-                    <img
-                      [src]="img"
-                      class="w-8 h-8 rounded-full cursor-pointer border-2"
-                      [class.border-indigo-500]="lb.avatar === img"
-                      [class.border-gray-300]="lb.avatar !== img"
-                      (click)="lb.avatar = img"
-                    />
+                <ng-container *ngFor="let img of defaultImages">
+                  <div class="relative">
+                    <img [src]="img"
+                      class="w-8 h-8 rounded-full cursor-pointer border-2 hover:border-indigo-500 transition duration-200"
+                      [class.border-indigo-500]="lb.avatar === img" [class.border-gray-300]="lb.avatar !== img"
+                      (click)="lb.avatar = img" />
+                    <span *ngIf="lb.avatar === img"
+                      class="absolute bottom-0 right-0 bg-indigo-500 rounded-full p-0.5 border border-white w-4 h-4 flex justify-center items-center">
+                      <span nz-icon nzType="check" nzTheme="outline" class="text-white text-[10px]"></span>
+                    </span>
                   </div>
                 </ng-container>
               </div>
-              <button nz-button nzType="primary" (click)="updateMember(i)">
-                <span nz-icon nzType="save" nzTheme="outline"></span>
-              </button>
-              <button nz-button nzType="default" (click)="lb.editing = false">
-                <span nz-icon nzType="close" nzTheme="outline"></span>
-              </button>
             </div>
+          </div>
+          <div class="flex items-center justify-end space-x-2 mt-4">
+            <button nz-button nzType="default" (click)="lb.editing = false">
+              <span nz-icon nzType="close" nzTheme="outline"></span>
+              Cancel
+            </button>
+            <button nz-button class="bg-indigo-500 text-white" (click)="updateMember(lb)">
+              <span nz-icon nzType="save" nzTheme="outline"></span>
+              Save
+            </button>
           </div>
         </div>
       </div>
-    </ng-container>
-  </nz-drawer>
-  <ng-template #extrasort>
-    <span class="cursor-pointer" nz-icon nzType="close" nzTheme="outline" (click)="close()"></span>
-  </ng-template>
+    </div>
+  </ng-container>
+</nz-drawer>
+<ng-template #extrasort>
+  <span class="cursor-pointer" nz-icon nzType="close" nzTheme="outline" (click)="close()"></span>
+</ng-template>

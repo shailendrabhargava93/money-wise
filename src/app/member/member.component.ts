@@ -1,11 +1,17 @@
+import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from '../app.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   Component,
   Input,
   EventEmitter,
   Output,
+  AfterViewInit,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
+import emailjs from '@emailjs/browser';
 import { catchError, of, switchMap } from 'rxjs';
 
 @Component({
@@ -17,7 +23,11 @@ export class MemberComponent {
     'https://avatar.iran.liara.run/public/8',
     'https://avatar.iran.liara.run/public/17',
     'https://avatar.iran.liara.run/public/46',
-    'https://avatar.iran.liara.run/public/37'
+    'https://avatar.iran.liara.run/public/37',
+    'https://avatar.iran.liara.run/public/60',
+    'https://avatar.iran.liara.run/public/64',
+    'https://avatar.iran.liara.run/public/81',
+    'https://avatar.iran.liara.run/public/85'
   ]
   private _visible: boolean = false;
   labels: any[] = [];
@@ -58,23 +68,32 @@ export class MemberComponent {
   }
 
   updateMember(item: any) {
-    if (item.name.trim() === '') {
-      this.message.error('Name cannot be empty');
+    if (item.name.trim() === '' || !item.avatar) {
+      this.message.error('Please fill in all required fields');
       return;
     }
-    item['user'] = this.app.userEmail
-    this.app.showSpinner();
-    this.app.createMembers(item).subscribe({
-      next: (res) => {
-        this.app.hideSpinner();
-        this.message.success('Member updated successfully');
-        item.editing = false;
-      },
-      error: (err) => {
-        console.error('Error updating member:', err);
-        this.app.hideSpinner();
-        this.message.error('Failed to update member');
+    this.app.userEmail.subscribe(email => {
+      item['email'] = email;
+      const data = {
+        members: {
+          name: item.name,
+          avatar: item.avatar,
+        },
+        email: item.email
       }
+      this.app.showSpinner();
+      this.app.createMembers(data).subscribe({
+        next: (res) => {
+          this.app.hideSpinner();
+          this.message.success('Member updated successfully');
+          item.editing = false;
+        },
+        error: (err) => {
+          console.error('Error updating member:', err);
+          this.app.hideSpinner();
+          this.message.error('Failed to update member');
+        }
+      });
     });
   }
 

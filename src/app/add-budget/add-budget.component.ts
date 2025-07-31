@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from './../app.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-add-budget',
@@ -19,6 +19,8 @@ export class AddBudgetComponent {
   budgetAmountSuggestions!: number[];
   dateFormat = 'dd-MMM-yyyy';
   budgetId: string | null = null;
+  @Input() fromSetup = false;
+  enableCompleteSetup = false;
 
   constructor(
     private fb: FormBuilder,
@@ -72,7 +74,12 @@ export class AddBudgetComponent {
           if (res) {
             this.app.hideSpinner();
             this.message.success(`Budget created !`);
-            this.router.navigate(['budgets']);
+            if (!this.fromSetup) {
+              this.router.navigate(['budgets']);
+            } else {
+              this.enableCompleteSetup = true;
+              this.app.isBudgetAvailableSub.next(true);
+            }
           }
         },
         (err) => {
@@ -128,5 +135,9 @@ export class AddBudgetComponent {
         }
       );
     }
+  }
+
+  closeCompSetup(){
+    this.enableCompleteSetup = !this.enableCompleteSetup
   }
 }

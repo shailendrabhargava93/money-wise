@@ -13,7 +13,7 @@ export class SetupComponent {
   enableMemberModal = false;
   enableAddBudget = false
   currency = this.app.currency$;
-  constructor(private app: AppService) {}
+  constructor(private app: AppService) { }
 
   toggleCurrencyModal() {
     this.enableCurrencyModal = !this.enableCurrencyModal;
@@ -31,6 +31,7 @@ export class SetupComponent {
   start() {
     this.isStart = false;
     this.isCurrency = true;
+    this.app.currencySub.next({ name: '', symbol: '' });
   }
 
   goBackToStart() {
