@@ -1,4 +1,3 @@
-import { STATUS } from './../status.enum';
 import { AppService } from './../app.service';
 import { Component, OnInit } from '@angular/core';
 import { switchMap, tap, catchError, take, map } from 'rxjs/operators';
@@ -46,54 +45,30 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor(private app: AppService) {}
+  constructor(private app: AppService) { }
 
   ngOnInit(): void {
-    const isBudgetAvailable =
-      localStorage.getItem('isBudgetAvailable') === 'true';
     this.app.showSpinner();
     this.app.userEmail
       .pipe(
         switchMap((user) => {
-          // Always call transactions and spent data APIs
           const transactionsAndSpent$ = forkJoin([
             this.app.getTransactions(user as string, 1, 4),
             this.app.getSpentByUser(user as string),
           ]);
-
-          // Conditionally call budgets API only if not available in localStorage
-          if (isBudgetAvailable) {
-            // Skip budget API call, return only transactions and spent data
-            return transactionsAndSpent$.pipe(
-              map(([txns, data]) => [[], txns, data]) // Empty array for budgets
-            );
-          } else {
-            // Call all three APIs including budgets
-            return forkJoin([
-              this.app.getBudgets(user as string, STATUS.ACTIVE),
-              transactionsAndSpent$,
-            ]).pipe(map(([buds, [txns, data]]) => [buds, txns, data]));
-          }
+          return transactionsAndSpent$;
         }),
         take(1),
         tap(() => this.app.hideSpinner()),
         catchError((error) => {
           console.error('Error occurred:', error);
           this.app.hideSpinner();
-          return of([[], null, null]); // Return default structure
+          return of([null, null]); // Return default structure
         })
       )
-      .subscribe(([buds, txns, data]) => {
-        const budgets = buds as any[];
+      .subscribe(([txns, data]) => {
         const transactions = txns as any;
         const spentData = data as any;
-
-        // Only process budgets if we actually fetched them (when isBudgetAvailable was false)
-        if (!isBudgetAvailable && budgets && budgets.length > 0) {
-          const budgetsExist = budgets.length > 0;
-          localStorage.setItem('isBudgetAvailable', String(budgetsExist));
-          this.app.isBudgetAvailableSub.next(budgetsExist);
-        }
 
         // Process transactions
         if (transactions && transactions.txns && transactions.txns.length > 0) {

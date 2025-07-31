@@ -7,6 +7,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
@@ -49,7 +50,7 @@ export class CurrencyModalComponent implements OnInit, OnDestroy {
   currencyData: Currency[] = [];
   filteredCurrencies: Currency[] = [];
 
-  constructor(private app: AppService) {}
+  constructor(private app: AppService, private message: NzMessageService) {}
 
   ngOnInit() {
     // Subscribe to currency changes
@@ -144,6 +145,7 @@ export class CurrencyModalComponent implements OnInit, OnDestroy {
       const updated = { name: obj.currency, symbol: obj.symbol };
       localStorage.setItem('currency', JSON.stringify(updated));
       this.app.currencySub.next(updated);
+      this.message.success(`Currency updated to ${obj.currency}`);
     }
     this.close();
   }

@@ -1,0 +1,54 @@
+<!-- Container for all sections -->
+<div *ngIf="!enableAddBudget" class="container py-8 bg-white rounded-2xl shadow-sm flex flex-col items-center h-[82vh]">
+  <!-- Start Section -->
+  <div *ngIf="isStart" class="w-full flex flex-col items-center">
+    <h1 class="text-2xl font-semibold text-indigo-500 mb-4">Welcome to Moneywise!</h1>
+    <img class="h-72 mb-4" src="assets/strategy-pana.svg" alt="Strategy illustration" />
+    <h3 class="text-sm text-center text-gray-500 mb-6 px-4">Let's help you take control of your finances!</h3>
+    <button nz-button class="primary rounded-full w-36" (click)="start()">Get Started</button>
+  </div>
+
+  <!-- Currency Section -->
+  <div *ngIf="isCurrency" class="w-full flex flex-col items-center">
+    <h1 class="text-2xl font-semibold text-indigo-500 mb-4">Main Currency</h1>
+    <img class="h-72 mb-4" src="assets/strategy-pana.svg" alt="Strategy illustration" />
+    <h3 class="text-sm text-center text-gray-500 mb-6 px-4">Select your main currency to start tracking your expenses and budget effectively.</h3>
+    <h3 class="text-sm text-center text-gray-500 mb-6 px-4" *ngIf="(currency | async)?.name">Your currency will be :  {{ (currency | async)?.name }}</h3>
+    <div class="flex justify-between w-72 gap-2">
+      <button nz-icon nzType="arrow-left" class="rounded-full" (click)="goBackToStart()">
+      </button>
+      <button nz-button class="primary rounded-full flex-1" (click)="toggleCurrencyModal()">Select Currency</button>
+      <button nz-button class="primary rounded-full flex-1" (click)="moveToMembers()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Members Section -->
+  <div *ngIf="isMember" class="w-full flex flex-col items-center">
+    <h1 class="text-2xl font-semibold text-indigo-500 mb-4">Add Members</h1>
+    <img class="h-72 mb-4" src="assets/strategy-pana.svg" alt="Strategy illustration" />
+    <h3 class="text-sm text-center text-gray-500 mb-6 px-4">Add your partners, family, or friends to manage expenses and budgets.</h3>
+    <div class="flex justify-between w-72 gap-2">
+      <button nz-icon nzType="arrow-left" class="rounded-full" (click)="goBackToCurrency()">
+      </button>
+      <button nz-button class="primary rounded-full flex-1" (click)="toggleMemModal()">Add Members</button>
+      <button nz-button class="primary rounded-full flex-1" (click)="moveToBudget()">Continue</button>
+    </div>
+  </div>
+
+  <!-- Budget Section -->
+  <div *ngIf="isBudget" class="w-full flex flex-col items-center">
+    <h1 class="text-2xl font-semibold text-indigo-500 mb-4">Add Budget</h1>
+    <img class="h-72 mb-4" src="assets/strategy-pana.svg" alt="Strategy illustration" />
+    <h3 class="text-sm text-center text-gray-500 mb-6 px-4">One last step! Set your budget to start tracking your expenses and savings.</h3>
+    <div class="flex justify-between w-72 gap-2">
+      <button nzType="arrow-left" class="rounded-full" (click)="goBackToMembers()">
+      </button>
+      <button nz-button class="primary rounded-full flex-1" (click)="toggleBudgetModal()">Set Budget</button>
+    </div>
+  </div>
+</div>
+<app-currency-modal [visible]="enableCurrencyModal" (closeModal)="toggleCurrencyModal()"></app-currency-modal>
+<app-member-modal [visible]="enableMemberModal" [enableAdd]="true" (closeModal)="toggleMemModal()"></app-member-modal>
+<app-add-budget *ngIf="enableAddBudget"></app-add-budget>
+
+
