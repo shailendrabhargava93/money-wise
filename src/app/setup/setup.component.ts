@@ -13,6 +13,7 @@ export class SetupComponent {
   enableMemberModal = false;
   enableAddBudget = false
   currency = this.app.currency$;
+  members = this.app.members$;
   constructor(private app: AppService) { }
 
   toggleCurrencyModal() {

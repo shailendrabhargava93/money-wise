@@ -87,6 +87,17 @@ export class MemberComponent {
           this.app.hideSpinner();
           this.message.success('Member updated successfully');
           item.editing = false;
+          const savedMembers = data.members;
+          let existingMembers = JSON.parse(localStorage.getItem('members') || '[]');
+          // Check if existingMembers is indeed an array
+          if (!Array.isArray(existingMembers)) {
+            existingMembers = [];
+          }
+          // Add savedMembers to the existing array
+          existingMembers.push(savedMembers);
+
+          localStorage.setItem('members', JSON.stringify(existingMembers));
+          this.app.membersSub.next(existingMembers);
         },
         error: (err) => {
           console.error('Error updating member:', err);

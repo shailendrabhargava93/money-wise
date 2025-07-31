@@ -14,6 +14,11 @@ export interface Currency {
   symbol: string;
 }
 
+export interface Member {
+  name: string;
+  avatar: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -45,22 +50,28 @@ export class AppService {
     }
   );
   public currency$: Observable<Currency>;
+
+   public membersSub: BehaviorSubject<Member[]> = new BehaviorSubject<Member[]>([]);
+  public members$: Observable<Member[]>;
   private messageSubject = new BehaviorSubject<string>('');
 
   constructor(private http: HttpClient) {
     const token = localStorage.getItem('user');
     const isAvailable = localStorage.getItem('isBudgetAvailable');
     const currency = localStorage.getItem('currency');
+    const memebers = localStorage.getItem('members');
 
     this.currentUserSubject.next(JSON.parse(token as string));
     this.isBudgetAvailableSub.next(JSON.parse(isAvailable as string));
     this.currencySub.next(JSON.parse(currency as any));
+    this.membersSub.next(JSON.parse(memebers as any));
 
     this.isSpinning$ = this.isSpinningSub.asObservable();
     this.currentUser = this.currentUserSubject.asObservable();
     this.isBudgetAvailableObs$ = this.isBudgetAvailableSub.asObservable();
     this.showPopup$ = this.showPopupSub.asObservable();
     this.currency$ = this.currencySub.asObservable();
+    this.members$ = this.membersSub.asObservable();
   }
 
   public getJSON(): Observable<any> {

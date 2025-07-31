@@ -102,4 +102,8 @@ export class AppComponent implements AfterContentChecked, OnInit, OnDestroy {
       this.currentRoute !== 'home'
     );
   }
+
+  hideFooter() {
+    return this.currentRoute && this.currentRoute !== 'setup';
+  }
 }
