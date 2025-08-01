@@ -1,17 +1,11 @@
-import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { AppService } from '../app.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   Component,
   Input,
   EventEmitter,
   Output,
-  AfterViewInit,
-  OnChanges,
-  SimpleChanges,
 } from '@angular/core';
-import emailjs from '@emailjs/browser';
 import { catchError, of, switchMap } from 'rxjs';
 
 @Component({

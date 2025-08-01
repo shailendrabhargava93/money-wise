@@ -16,12 +16,12 @@
         <div *ngIf="lb.editing" class="mt-2 p-4 rounded-lg bg-white border border-gray-200 shadow-sm">
           <div class="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-4">
             <div class="flex flex-col w-full md:w-1/2">
-              <label class="text-sm font-medium text-gray-600 mb-1">Name</label>
+              <label class="text-sm font-medium text-gray-600 mb-1">Name<span class="text-red-500">*</span></label>
               <input placeholder="Enter Name" [(ngModel)]="lb.name"
                 class="capitalize text-base w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
             </div>
             <div class="flex flex-col w-full md:w-1/2">
-              <label class="text-sm font-medium text-gray-600 mb-1">Choose Avatar</label>
+              <label class="text-sm font-medium text-gray-600 mb-1">Choose Avatar<span class="text-red-500">*</span></label>
               <div class="flex items-center space-x-2">
                 <ng-container *ngFor="let img of defaultImages">
                   <div class="relative">
@@ -39,7 +39,7 @@
             </div>
           </div>
           <div class="flex items-center justify-end space-x-2 mt-4">
-            <button nz-button nzType="default" (click)="lb.editing = false">
+            <button *ngIf="!lb.editing" nz-button nzType="default" (click)="lb.editing = false">
               <span nz-icon nzType="close" nzTheme="outline"></span>
               Cancel
             </button>
